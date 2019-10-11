@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const errorHandler = require('./controllers/error');
-const db = require('./models');
 const authRoutes = require('./routes/auth');
 const supermarketRoutes = require('./routes/supermarket');
 const { loginRequired, ensureCorrectUser } = require('./middleware/auth');
@@ -20,7 +19,6 @@ app.use('/auth', authRoutes);
 app.use('/supermarket', loginRequired, ensureCorrectUser, supermarketRoutes);
 
 //TODO: Add User routes
-
 //TODO: Add Payment Card routes ? -> check if needed
 
 app.use('/', (req, res, next) => {
