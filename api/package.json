@@ -18,6 +18,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.7.4",
     "mongoose-uuid2": "^2.3.0",
+    "node-rsa": "^1.0.6",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
