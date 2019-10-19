@@ -16,12 +16,16 @@ const paymentCardSchema = new mongoose.Schema(
       required: true,
       maxlength: 16
     },
-    valid_date: {
-      type: Date,
+    valid_date_month: {
+      type: Number,
+      required: true
+    },
+    valid_date_year: {
+      type: Number,
       required: true
     },
     cvc: {
-      type: String,
+      type: Number,
       required: true,
       maxlength: 3
     },

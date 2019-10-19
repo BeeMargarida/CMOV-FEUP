@@ -1,10 +1,11 @@
-package feup.cmov.mobile;
+package feup.cmov.mobile.auth;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,7 +24,11 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.Arrays;
+import java.util.Calendar;
 
+import feup.cmov.mobile.MainActivity;
+import feup.cmov.mobile.R;
 import feup.cmov.mobile.common.Preferences;
 import feup.cmov.mobile.operations.RegisterOperation;
 
@@ -32,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
     private EditText name, username, email, password, cardName, cardNumber, cardCvc;
     private Spinner cardMonth, cardYear;
     private Context context;
+    private Long passwordToSave;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,6 +80,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
                     String cardMonthValue = cardMonth.getSelectedItem().toString();
                     String cardYearValue = cardYear.getSelectedItem().toString();
 
+
                     if (TextUtils.isEmpty(nameString) || TextUtils.isEmpty(usernameString) || TextUtils.isEmpty(emailString)
                             || TextUtils.isEmpty(passwordString) || TextUtils.isEmpty(cardNameString)
                             || TextUtils.isEmpty(cardNumberString) || TextUtils.isEmpty(cardCvcString)
@@ -83,8 +90,20 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
 
                     } else {
 
-                        int cardNumberValue = Integer.parseInt(cardNumberString);
                         int cardCvcValue = Integer.parseInt(cardCvcString);
+                        int cardYearNumber = Integer.parseInt(cardYearValue);
+                        passwordToSave = Long.parseLong(passwordString);
+                        int cardMonthNumber = Arrays.asList(getResources().getStringArray(R.array.months)).indexOf(cardMonthValue) + 1;
+
+                        if(cardMonthNumber == 0) {
+                            throw new Exception("An error happened, please try again.");
+                        }
+
+                        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+                        int currentMonth = Calendar.getInstance().get(Calendar.MONTH);
+                        if(cardYearNumber < currentYear || (cardYearNumber == currentYear && cardMonthNumber < currentMonth)) {
+                            throw new Exception("Payment Card Expired, please insert other.");
+                        }
 
                         // generate private/public key
                         KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
@@ -97,11 +116,10 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
                         Preferences preferences = new Preferences(context);
                         preferences.saveKey(privateKey);
 
-
                         // make request to server
                         RegisterOperation registerOperation = new RegisterOperation(context,
-                                nameString, usernameString, emailString, cardNameString, cardNumberValue,
-                                cardMonthValue, cardYearValue, cardCvcValue, Base64.encodeToString(publicKey.getEncoded(), Base64.DEFAULT));
+                                nameString, usernameString, emailString, cardNameString, cardNumberString,
+                                cardMonthNumber, cardYearNumber, cardCvcValue, Base64.encodeToString(publicKey.getEncoded(), Base64.DEFAULT));
 
                         Thread thread = new Thread(registerOperation);
                         thread.start();
@@ -110,9 +128,11 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
 
                 }
                 catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
                     Toast.makeText(context, "Error generating private/public keys, please try again.", Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e) {
+                    e.printStackTrace();
                     System.out.println(e.getMessage());
                     Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -123,28 +143,30 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
     }
 
     @Override
-    public void done(String response) {
-
+    public void done(boolean success, JSONObject response, String error) {
+        System.out.println(response);
 
         //TODO: Store received info
-        if(response.equals("")) {
-            Toast.makeText(context, "Something went wrong, please try registering again", Toast.LENGTH_SHORT).show();
+        if(!success) {
+            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
         }
         else {
             try {
-
-                // Get user UUID and supermarket public key
-                JSONObject jsonObject = new JSONObject(response);
+                Log.d("REGISTRATION", "Finishing Registration process");
 
                 // store user uuid and supermarket public key
                 Preferences preferences = new Preferences(context);
-                preferences.logIn(jsonObject.getString("_id"), jsonObject.getString("supermarket_public_key"));
+                preferences.registerIn(response.getString("_id"), response.getString("supermarket_public_key"));
+                preferences.savePassword(passwordToSave);
+
+                Log.d("REGISTRATION", "Saved user preferences");
 
                 // redirect to main page
                 startActivity(new Intent(context, MainActivity.class));
                 finish();
 
             } catch (JSONException e) {
+                System.out.println(e.getMessage());
                 Toast.makeText(context, "Something went wrong, please try registering again", Toast.LENGTH_SHORT).show();
             }
         }

@@ -52,8 +52,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="numberPassword"
                 android:hint="Password"
+                android:maxLength="4"
                 android:id="@+id/input_password"/>
 
             <EditText
@@ -66,8 +67,9 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="text"
                 android:hint="Credit Card Number"
+                android:maxLength="12"
                 android:id="@+id/card_number"/>
 
             <TextView
@@ -97,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:hint="Credit Card CVC"
+                android:maxLength="3"
                 android:id="@+id/card_cvc"/>
 
             <Button

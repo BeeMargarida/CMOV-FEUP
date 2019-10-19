@@ -44,4 +44,6 @@
     <string name="private_key">private_key</string>
     <string name="supermarket_public_key">supermarket_public_key</string>
     <string name="user_uuid">user_uuid</string>
+    <string name="password">password</string>
+    <string name="login_status">login_status</string>
 </resources>

@@ -2,28 +2,32 @@ package feup.cmov.mobile.operations;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class RegisterOperation implements Runnable {
 
-    String name, username, email, cardName, cardMonth, cardYear, userPublicKey;
-    int cardNumber, cardCvc;
+    String name, username, email, cardName, cardNumber, userPublicKey;
+    int cardCvc, cardMonth, cardYear;
     public Register register;
 
     public interface Register {
-        void done(String response);
+        void done(boolean success, JSONObject response, String error);
     }
 
     public RegisterOperation(Context context, String name, String username, String email,
-                             String cardName, int cardNumber, String cardMonth,
-                             String cardYear, int cardCvc, String userPublicKey) {
+                             String cardName, String cardNumber, int cardMonth,
+                             int cardYear, int cardCvc, String userPublicKey) {
 
         this.name = name;
         this.username = username;
@@ -42,64 +46,58 @@ public class RegisterOperation implements Runnable {
         }catch (Exception e){
             e.printStackTrace();
         }
-
-
     }
 
     @Override
     public void run() {
 
-        URL url;
-        HttpURLConnection connection = null;
-
         try {
-
-            url = new URL("http://localhost:8081/auth/signup");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            connection.setRequestProperty("Accept", "application/json");
-
+            RequestQueue queue = Volley.newRequestQueue((Context) register);
+            String url = "http://10.0.2.2:8081/auth/signup";
             JSONObject auth = new JSONObject();
             auth.put("name", this.name);
             auth.put("username", this.username);
             auth.put("email", this.email);
-            auth.put("cardName", this.cardName);
-            auth.put("cardNumber", this.cardNumber);
-            auth.put("cardMonth", this.cardMonth);
-            auth.put("cardYear", this.cardYear);
-            auth.put("cardCvc", this.cardCvc);
-            auth.put("userPublicKey", this.userPublicKey);
+            auth.put("card_name", this.cardName);
+            auth.put("card_number", this.cardNumber);
+            auth.put("card_month", this.cardMonth);
+            auth.put("card_year", this.cardYear);
+            auth.put("card_cvc", this.cardCvc);
+            auth.put("user_public_key", this.userPublicKey);
 
-            OutputStreamWriter writer= new OutputStreamWriter(connection.getOutputStream());
-            writer.write(auth.toString());
-            writer.flush();
-            writer.close();
 
-            String response = "";
-            int responseCode = connection.getResponseCode();
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.POST, url, auth, new Response.Listener<JSONObject>() {
 
-            if(responseCode == HttpURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br=new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                while ((line=br.readLine()) != null) {
-                    response+=line;
-                }
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.d("REGISTER", "Registration successful");
+                            register.done(true, response, "");
 
-                register.done(response);
-            }
+                        }
+                    }, new Response.ErrorListener() {
 
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("REGISTER", "Registration not successful");
+
+                            try {
+                                String errorMessage = (new JSONObject(new String(error.networkResponse.data))).getJSONObject("error").getString("message");
+                                register.done(false, null, errorMessage);
+                            }
+                            catch (JSONException e) {
+                                register.done(false, null, "Error in the registration process, please try again.");
+                            }
+                        }
+                    });
+
+            // Access the RequestQueue through your singleton class.
+            queue.add(jsonObjectRequest);
         }
-        catch(Exception e) {
-            register.done("");
+        catch (JSONException e) {
+            register.done(false, null, "Error in the registration process, please try again.");
         }
-        finally {
-            if(connection != null) {
-                connection.disconnect();
-            }
-        }
+
 
     }
 }

@@ -24,11 +24,35 @@ public class Preferences {
         editor.commit();
     }
 
-    public void logIn(String userUUID, String supermarketPublicKey) {
+    public void savePassword(long password) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(context.getResources().getString(R.string.supermarket_public_key), supermarketPublicKey);
-        editor.putString(context.getResources().getString(R.string.user_uuid), userUUID);
+        editor.putLong(context.getResources().getString(R.string.password), password);
         editor.commit();
     }
 
+    public long getPassword() {
+        return sharedPreferences.getLong(context.getResources().getString(R.string.password), -1);
+    }
+
+    public void registerIn(String userUUID, String supermarketPublicKey) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getResources().getString(R.string.supermarket_public_key), supermarketPublicKey);
+        editor.putString(context.getResources().getString(R.string.user_uuid), userUUID);
+        editor.putBoolean(context.getResources().getString(R.string.login_status), true);
+        editor.commit();
+    }
+
+    public void changeLogStatus(boolean value) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(context.getResources().getString(R.string.login_status), value);
+        editor.commit();
+    }
+
+    public boolean getRegisterStatus() {
+        return !sharedPreferences.getString(context.getResources().getString(R.string.user_uuid), "").equals("");
+    }
+
+    public boolean getLoginStatus() {
+        return sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status), false);
+    }
 }
