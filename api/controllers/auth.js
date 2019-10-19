@@ -32,7 +32,9 @@ exports.signin = async function(req, res, next) {
 
 exports.signup = async function(req, res, next) {
   try {
-    let user = await db.User.create(req.body);
+    // req.body contains username, name, email, password and user public key
+    let user_info = { username: req.body.username, name: req.body.name, email: req.body.email, password: req.body.password, public_key: req.body.public_key}
+    let user = await db.User.create(user_info);
     let { _id, username, name } = user;
 
     return res.status(200).json({
