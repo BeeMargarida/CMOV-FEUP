@@ -1,5 +1,7 @@
 # ACME Electronic Supermarket
 
+[Pratical Assignement Instructions](https://paginas.fe.up.pt/~apm/CM/docs/lab2019_1.pdf)
+
 ## API
 
 ### Setup
