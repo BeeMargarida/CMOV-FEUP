@@ -129,10 +129,10 @@
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/card_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:inputType="text"
-                android:id="@+id/card_name"
                 android:fontFamily="@font/raleway"
                 android:textColor="@color/colorText"
                 android:background="@drawable/rounded_corners_input"
@@ -151,10 +151,10 @@
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/card_number"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:inputType="text"
-                android:id="@+id/card_number"
+                android:inputType="number"
                 android:fontFamily="@font/raleway"
                 android:textColor="@color/colorText"
                 android:background="@drawable/rounded_corners_input"
@@ -218,11 +218,11 @@
                 android:textSize="15sp" />
 
             <EditText
+                android:id="@+id/card_cvc"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:inputType="number"
                 android:maxLength="3"
-                android:id="@+id/card_cvc"
                 android:fontFamily="@font/raleway"
                 android:textColor="@color/colorText"
                 android:background="@drawable/rounded_corners_input"

@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 
 import feup.cmov.mobile.auth.LogInActivity;
 import feup.cmov.mobile.auth.RegisterActivity;
@@ -25,9 +30,17 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LogInActivity.class));
         }
 
-        // TODO: Add menu
+        //TODO: Add buttons to Basket and History activities, as well as logout
+        // para fazer logout é só fazer o que os métodos abaixo estão a fazer e a fazer novo
+        // start activity para LogInActivity
+    }
 
-        // TODO: Implement QRCode reading, checkout and listing of transactions
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Preferences preferences = new Preferences(this);
+        preferences.changeLogStatus(false);
     }
 
     @Override

@@ -82,8 +82,12 @@ public class RegisterOperation implements Runnable {
                             Log.d("REGISTER", "Registration not successful");
 
                             try {
-                                String errorMessage = (new JSONObject(new String(error.networkResponse.data))).getJSONObject("error").getString("message");
-                                register.done(false, null, errorMessage);
+                                if(error.networkResponse != null) {
+                                    String errorMessage = (new JSONObject(new String(error.networkResponse.data))).getJSONObject("error").getString("message");
+                                    register.done(false, null, errorMessage);
+                                } else {
+                                    register.done(false, null, "Error in the registration process, please try again.");
+                                }
                             }
                             catch (JSONException e) {
                                 register.done(false, null, "Error in the registration process, please try again.");
