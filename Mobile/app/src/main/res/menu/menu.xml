@@ -4,9 +4,11 @@
     android:layout_width="match_parent"
     >
 
-    <item android:id="@+id/buy_products"
-        android:title="Buy Products" />
     <item android:id="@+id/history"
-        android:title="Previous Baskets" />
+        android:title="History and Discounts" />
+    <item android:id="@+id/basket"
+        android:title="Basket" />
+    <item android:id="@+id/logout"
+        android:title="Logout" />
 
 </menu>

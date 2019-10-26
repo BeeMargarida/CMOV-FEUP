@@ -36,10 +36,13 @@ public class HistoryActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.buy_products:
+            case R.id.history:
 
                 return true;
-            case R.id.history:
+            case R.id.basket:
+
+                return true;
+            case R.id.logout:
 
                 return true;
             default:

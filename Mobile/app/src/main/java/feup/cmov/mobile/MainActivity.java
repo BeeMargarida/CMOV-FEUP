@@ -12,6 +12,7 @@ import android.widget.PopupMenu;
 
 import feup.cmov.mobile.auth.LogInActivity;
 import feup.cmov.mobile.auth.RegisterActivity;
+import feup.cmov.mobile.BasketActivity;
 import feup.cmov.mobile.common.Preferences;
 
 public class MainActivity extends AppCompatActivity {
@@ -22,13 +23,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // check if user is logged in or registered
-        Preferences preferences = new Preferences(this);
+        /*Preferences preferences = new Preferences(this);
         if(!preferences.getRegisterStatus()) {
             startActivity(new Intent(this, RegisterActivity.class));
         }
         else if(!preferences.getLoginStatus()) {
             startActivity(new Intent(this, LogInActivity.class));
-        }
+        }*/
+
+        //TEST INTERFACE//
+        startActivity(new Intent(this, BasketActivity.class));
 
         //TODO: Add buttons to Basket and History activities, as well as logout
         // para fazer logout é só fazer o que os métodos abaixo estão a fazer e a fazer novo
