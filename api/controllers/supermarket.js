@@ -14,7 +14,11 @@ exports.checkoutBasket = async function (req, res, next) {
 
 exports.listBaskets = async function (req, res, next) {
   try {
-    res.status(200).json('List Baskets Route in the works...');
+    db.ShoppingBasket.find({ user: req.body.user_id })
+      .then((baskets) => {
+        res.status(200).json(baskets);
+      })
+      .catch((err) => next(err));
   } catch (error) {
     next(error);
   }
@@ -22,7 +26,11 @@ exports.listBaskets = async function (req, res, next) {
 
 exports.listVouchers = async function (req, res, next) {
   try {
-    res.status(200).json('List Vouchers Route in the works...');
+    db.Voucher.find({ user: req.body.user_id })
+      .then((vouchers) => {
+        res.status(200).json(vouchers);
+      })
+      .catch((err) => next(err));
   } catch (error) {
     next(error);
   }
