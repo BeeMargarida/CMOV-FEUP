@@ -1,5 +1,6 @@
 package feup.cmov.mobile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,9 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HistoryActivity extends AppCompatActivity {
 
+    public Context context;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context=this;
+        setContentView(R.layout.activity_history);
 
         //TODO: List previous transactions and vouchers
     }

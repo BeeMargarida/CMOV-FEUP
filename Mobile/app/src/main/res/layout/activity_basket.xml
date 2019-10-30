@@ -22,7 +22,7 @@
             app:srcCompat="@drawable/logo"
             />
 
-        <ImageButton
+        <!--<ImageButton
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:src="@drawable/round_menu_black_18dp"
@@ -30,8 +30,17 @@
             android:background="@color/colorGrey"
             android:onClick="showPopup"
             android:fontFamily="@font/raleway"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"/>-->
 
     </RelativeLayout >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/raleway_bold"
+        android:text="Basket"
+        android:textColor="@color/colorOrange"
+        android:textSize="20sp" />
 
 </LinearLayout>
