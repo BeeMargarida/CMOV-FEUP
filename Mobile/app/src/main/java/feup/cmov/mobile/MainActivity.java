@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, LogInActivity.class));
         }*/
 
-
         context = this;
 
         //TODO: Add buttons to Basket and History activities, as well as logout
