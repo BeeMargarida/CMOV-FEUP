@@ -5,22 +5,29 @@
     android:layout_height="fill_parent"
     android:background="@color/colorGrey"
     android:orientation="vertical"
-    android:paddingTop="25dp"
     android:paddingLeft="25dp"
+    android:paddingTop="20dp"
     android:paddingRight="25dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        >
+        android:layout_marginBottom="20dp">
 
-        <ImageView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_bold"
+            android:text="basket"
+            android:textAlignment="center"
+            android:textColor="@color/colorOrange"
+            android:textSize="40sp" />
+
+        <!--<ImageView
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/logo"
-            />
+            app:srcCompat="@drawable/logo" />-->
 
         <!--<ImageButton
             android:layout_width="wrap_content"
@@ -32,15 +39,184 @@
             android:fontFamily="@font/raleway"
             android:layout_alignParentRight="true"/>-->
 
-    </RelativeLayout >
+    </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
+    <Button
+        style="@android:style/Widget.Button.Inset"
+        android:layout_width="wrap_content"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        android:layout_gravity="right"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/secondary_button"
         android:fontFamily="@font/raleway_bold"
-        android:text="Basket"
+        android:text="add product"
         android:textColor="@color/colorOrange"
-        android:textSize="20sp" />
+        android:textSize="18dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorWhite"
+                android:elevation="15dp"
+                android:orientation="vertical"
+                android:outlineProvider="paddedBounds"
+                android:padding="20dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="Lorem Ipsum"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/raleway"
+                        android:text="123€"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp"
+                        android:gravity="right"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorWhite"
+                android:elevation="15dp"
+                android:orientation="vertical"
+                android:outlineProvider="paddedBounds"
+                android:padding="20dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="Dolor Sit"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/raleway"
+                        android:text="456€"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp"
+                        android:gravity="right"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@color/colorWhite"
+                android:elevation="15dp"
+                android:orientation="vertical"
+                android:outlineProvider="paddedBounds"
+                android:padding="20dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/raleway_bold"
+                        android:text="Amet Consectetur"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="10dp"
+                        android:fontFamily="@font/raleway"
+                        android:text="789€"
+                        android:textColor="@color/colorText"
+                        android:textSize="20dp"
+                        android:gravity="right"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/raleway_bold"
+                android:text="Total: 23983€"
+                android:textColor="@color/colorText"
+                android:textSize="20dp" />
+
+            <Button
+                style="@android:style/Widget.Button.Inset"
+                android:layout_width="fill_parent"
+                android:layout_gravity="right"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/primary_button"
+                android:fontFamily="@font/raleway_bold"
+                android:text="checkout"
+                android:textColor="@color/colorWhite"
+                android:textSize="18dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

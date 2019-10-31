@@ -33,7 +33,7 @@
             android:background="@drawable/primary_button"
             android:elevation="5dp"
             android:fontFamily="@font/raleway_bold"
-            android:text="history and discounts"
+            android:text="vouchers &amp; history"
             android:textColor="@color/colorWhite"
             android:textSize="18sp"/>
 

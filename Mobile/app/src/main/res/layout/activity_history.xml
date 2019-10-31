@@ -14,11 +14,20 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp">
 
-        <ImageView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/raleway_bold"
+            android:text="vouchers &amp; history"
+            android:textAlignment="center"
+            android:textColor="@color/colorOrange"
+            android:textSize="40sp" />
+
+        <!--<ImageView
             android:id="@+id/logo"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/logo" />-->
 
         <!--<ImageButton
             android:layout_width="wrap_content"
@@ -52,17 +61,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/raleway_bold"
+                android:fontFamily="@font/raleway"
                 android:text="Number of Vouchers"
                 android:textAlignment="center"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorText"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/raleway"
+                android:fontFamily="@font/raleway_bold"
                 android:text="3"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
@@ -80,17 +89,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/raleway_bold"
+                android:fontFamily="@font/raleway"
                 android:text="Accumulated Discount"
                 android:textAlignment="center"
-                android:textColor="@color/colorOrange"
+                android:textColor="@color/colorText"
                 android:textSize="20sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="@font/raleway"
+                android:fontFamily="@font/raleway_bold"
                 android:text="148€"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
@@ -99,15 +108,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/raleway_bold"
-        android:text="History"
-        android:textColor="@color/colorOrange"
-        android:textSize="20sp" />
 
     <ScrollView
         android:layout_width="match_parent"
