@@ -238,7 +238,7 @@
                 android:background="@drawable/primary_button"
                 android:elevation="5dp"
                 android:fontFamily="@font/raleway_bold"
-                android:text="register"
+                android:text="REGISTER"
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"/>
 
