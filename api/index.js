@@ -7,7 +7,7 @@ const authRoutes = require('./routes/auth');
 const supermarketRoutes = require('./routes/supermarket');
 const { loginRequired, ensureCorrectUser } = require('./middleware/auth');
 
-const PORT = 8081;
+const PORT = 8080;
 const app = express();
 
 // TODO: Get supermarket public key
