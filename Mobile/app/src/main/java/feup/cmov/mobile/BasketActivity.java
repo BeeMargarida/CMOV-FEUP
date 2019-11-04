@@ -7,8 +7,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
@@ -72,9 +74,9 @@ public class BasketActivity extends AppCompatActivity {
     private void setBasket() throws JSONException {
         Preferences preferences = new Preferences(context);
         ArrayList<Product> basketP = preferences.getBasket();
-        for (int i = 0; i < basketP.size(); i++) {
-            //TODO: LIST VIEW
-        }
+        ListView listView=(ListView)findViewById(R.id.list);
+        BasketAdapter adapter = new BasketAdapter(basketP,getApplicationContext());
+        listView.setAdapter(adapter);
     }
 
     private void setDiscount(){
