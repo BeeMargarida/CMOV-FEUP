@@ -2,14 +2,25 @@ package feup.cmov.mobile;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+
+import feup.cmov.mobile.common.Preferences;
+import feup.cmov.mobile.common.Product;
 
 public class BasketActivity extends AppCompatActivity {
 
@@ -20,38 +31,64 @@ public class BasketActivity extends AppCompatActivity {
         context=this;
         setContentView(R.layout.activity_basket);
 
-        //TODO: Ler QRCode, mostrar info do produto, adicionar a uma lista de produtos
-        //TODO: Adicionar voucher
+        //TODO: Chamada a API para atualizar preferencias (n vouchers, dicounts)
+
+        try {
+            setBasket();
+            setVouchersSize();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        setDiscount();
+
+
+        Button addProductButton = findViewById(R.id.addProductButton);
+        addProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Ler QRCode
+                //TODO: Mostrar info do produto
+                //TODO: Adicionar à lista de produtos
+                //TODO: Atualizar soma total
+            }
+        });
+
+
+        Button checkoutButton = findViewById(R.id.checkoutButton);
+        checkoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: Verificar se quer discount
+                //TODO: Verificar se quer voucher
+                //TODO: Criar QRCode
+                //TODO: Atualizar preferencias (n vouchers, discount)
+            }
+        });
     }
 
-    public void showPopup(View v) {
-        PopupMenu popup = new PopupMenu(this, v);
-        MenuInflater inflater = popup.getMenuInflater();
-        inflater.inflate(R.menu.menu, popup.getMenu());
-        popup.show();
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
+    //TODO: Quando sair da atividade, atualizar basket nas preferencias
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.history:
-
-                return true;
-            case R.id.basket:
-
-                return true;
-            case R.id.logout:
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    private void setBasket() throws JSONException {
+        Preferences preferences = new Preferences(context);
+        ArrayList<Product> basketP = preferences.getBasket();
+        for (int i = 0; i < basketP.size(); i++) {
+            //TODO: LIST VIEW
         }
     }
+
+    private void setDiscount(){
+        Preferences preferences = new Preferences(context);
+        float discount = preferences.getDiscount();
+        CheckBox checkboxDiscount = findViewById(R.id.checkbox_discount);
+        checkboxDiscount.setText("Use accumulated discount of " + Float.toString(discount) + "€");
+    }
+
+    private void setVouchersSize() throws JSONException {
+        Preferences preferences = new Preferences(context);
+        int vouchersSize = preferences.getVouchers().size();
+        CheckBox checkboxVouchers = findViewById(R.id.checkbox_vouchers);
+        checkboxVouchers.setText("Use one of the " + vouchersSize + " voucher");
+    }
+
 }
