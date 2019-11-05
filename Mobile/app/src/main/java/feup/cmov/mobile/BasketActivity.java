@@ -35,21 +35,22 @@ public class BasketActivity extends AppCompatActivity {
 
         //TODO: Chamada a API para atualizar preferencias (n vouchers, dicounts)
 
+        //Update display values
         try {
             setBasket();
+            setTotal();
             setVouchersSize();
+            setDiscount();
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        setDiscount();
-
 
         Button addProductButton = findViewById(R.id.addProductButton);
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: Ler QRCode
-                //TODO: Mostrar info do produto
+                //TODO: Mostrar info do produto (?)
                 //TODO: Adicionar à lista de produtos
                 //TODO: Atualizar soma total
             }
@@ -60,10 +61,31 @@ public class BasketActivity extends AppCompatActivity {
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Verificar se quer discount
-                //TODO: Verificar se quer voucher
+                CheckBox checkboxDiscount = (CheckBox)findViewById(R.id.checkbox_discount);
+                CheckBox checkboxVouchers = (CheckBox)findViewById(R.id.checkbox_vouchers);
+                Boolean useDiscount = checkboxDiscount.isChecked();
+                Boolean useVouchers = checkboxVouchers.isChecked();
+
+
                 //TODO: Criar QRCode
                 //TODO: Atualizar preferencias (n vouchers, discount)
+            }
+        });
+
+        Button clearBasketButton = findViewById(R.id.clearBasketButton);
+        clearBasketButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Preferences preferences = new Preferences(context);
+                ArrayList <Product> basket = new ArrayList();
+                preferences.saveBasket(basket);
+                try {
+                    setBasket();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -77,6 +99,17 @@ public class BasketActivity extends AppCompatActivity {
         ListView listView=(ListView)findViewById(R.id.list);
         BasketAdapter adapter = new BasketAdapter(basketP,getApplicationContext());
         listView.setAdapter(adapter);
+    }
+
+    private void setTotal() throws JSONException {
+        Preferences preferences = new Preferences(context);
+        ArrayList<Product> basketP = preferences.getBasket();
+        float total = 0;
+        for (int i = 0; i < basketP.size(); i++){
+            total = total + basketP.get(i).getPrice();
+        }
+        TextView textviewTotal = findViewById(R.id.textview_total);
+        textviewTotal.setText(String.format ("%.2f", total)+"€");
     }
 
     private void setDiscount(){

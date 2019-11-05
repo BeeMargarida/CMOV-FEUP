@@ -30,13 +30,15 @@ public class HistoryActivity extends AppCompatActivity {
 
         //TODO: Chamada a API para atualizar preferencias (n vouchers, dicounts)
 
-        setDiscount();
         try {
+            setDiscount();
             setVouchersSize();
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         //TODO: Chamada à API para obter as transferencias
+        //TODO: Set history
     }
 
     private void setVouchersSize() throws JSONException {
