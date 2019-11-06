@@ -3,8 +3,16 @@ package feup.cmov.mobile.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
+import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.security.PrivateKey;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import feup.cmov.mobile.R;
 
@@ -34,6 +42,10 @@ public class Preferences {
         return sharedPreferences.getLong(context.getResources().getString(R.string.password), -1);
     }
 
+    public String getSupermarketPublicKey() {
+        return sharedPreferences.getString(context.getResources().getString(R.string.supermarket_public_key), "");
+    }
+
     public void registerIn(String userUUID, String supermarketPublicKey) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getResources().getString(R.string.supermarket_public_key), supermarketPublicKey);
@@ -54,5 +66,69 @@ public class Preferences {
 
     public boolean getLoginStatus() {
         return sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status), false);
+    }
+
+    public void saveVouchers(ArrayList<String> vouchers){
+        JSONArray jsArray = new JSONArray(vouchers);
+        String jsonString = jsArray.toString();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("vouchers" , jsonString);
+        editor.commit();
+    }
+
+    public ArrayList<String> getVouchers() throws JSONException {
+        String jsonString = sharedPreferences.getString("vouchers", (new JSONArray()).toString());
+        JSONArray arr = new JSONArray(jsonString);
+        ArrayList<String> vouchers = new ArrayList<String>();
+
+        if (arr != null) {
+            for (int i=0;i<arr.length();i++){
+                vouchers.add(arr.getString(i));
+            }
+        }
+
+        return vouchers;
+    }
+
+    public void saveDiscount(float discount){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat("discount", discount);
+        editor.commit();
+    }
+
+    public float getDiscount(){
+        float discount = sharedPreferences.getFloat("discount", 0);
+        return discount;
+    }
+
+    public void saveBasket(ArrayList<Product> basket){
+        ArrayList<String> basketString = new ArrayList<>();
+        for(int i = 0; i < basket.size(); i++){
+            basketString.add(basket.get(i).toString());
+        }
+        JSONArray jsArray = new JSONArray(basketString);
+        String jsonString = jsArray.toString();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("basket" , jsonString);
+        editor.commit();
+    }
+
+    public ArrayList<Product> getBasket() throws JSONException {
+        String jsonString = sharedPreferences.getString("basket", (new JSONArray()).toString());
+        JSONArray arr = new JSONArray(jsonString);
+        ArrayList<String> basketString = new ArrayList<>();
+
+        if (arr != null) {
+            for (int i=0;i<arr.length();i++){
+                basketString.add(arr.getString(i));
+            }
+        }
+
+        ArrayList<Product> basket = new ArrayList<Product>();
+        for(int i = 0; i < basketString.size(); i++){
+            basket.add(new Product(basketString.get(i)));
+        }
+
+        return basket;
     }
 }

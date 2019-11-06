@@ -9,38 +9,16 @@
     android:paddingTop="20dp"
     android:paddingRight="25dp">
 
-    <RelativeLayout
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/raleway_bold"
-            android:text="vouchers &amp; history"
-            android:textAlignment="center"
-            android:textColor="@color/colorOrange"
-            android:textSize="40sp" />
-
-        <!--<ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/logo" />-->
-
-        <!--<ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@drawable/round_menu_black_18dp"
-            android:contentDescription="Show menu"
-            android:background="@color/colorGrey"
-            android:onClick="showPopup"
-            android:fontFamily="@font/raleway"
-            android:layout_alignParentRight="true"/>-->
-
-    </RelativeLayout>
-
+        android:fontFamily="@font/raleway_bold"
+        android:text="vouchers &amp; history"
+        android:textAlignment="center"
+        android:textColor="@color/colorOrange"
+        android:textSize="40sp"
+        android:layout_marginBottom="15dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,9 +43,10 @@
                 android:text="Number of Vouchers"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/textview_vouchers_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -75,7 +54,7 @@
                 android:text="3"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="50sp" />
+                android:textSize="40sp" />
 
         </LinearLayout>
 
@@ -93,9 +72,10 @@
                 android:text="Accumulated Discount"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/textview_discount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
@@ -103,7 +83,7 @@
                 android:text="148€"
                 android:textAlignment="center"
                 android:textColor="@color/colorText"
-                android:textSize="50sp" />
+                android:textSize="40sp" />
 
         </LinearLayout>
 
@@ -111,7 +91,9 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scrollbarStyle="outsideInset"
+        android:paddingRight="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -143,7 +125,7 @@
                         android:fontFamily="@font/raleway_bold"
                         android:text="ID: "
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -153,7 +135,7 @@
                         android:fontFamily="@font/raleway"
                         android:text="184738"
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 
@@ -166,7 +148,7 @@
                     android:fontFamily="@font/raleway_bold"
                     android:text="Products:"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
 
                 <TextView
@@ -176,7 +158,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Lorem Ipsum - 123€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -185,7 +167,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Dolor Sit - 456€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -194,7 +176,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Amet Consectetur - 789€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -209,7 +191,7 @@
                         android:fontFamily="@font/raleway_bold"
                         android:text="Total Price: "
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -218,7 +200,7 @@
                         android:fontFamily="@font/raleway"
                         android:text="184€"
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 
@@ -248,7 +230,7 @@
                         android:fontFamily="@font/raleway_bold"
                         android:text="ID: "
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -258,7 +240,7 @@
                         android:fontFamily="@font/raleway"
                         android:text="184738"
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 
@@ -271,7 +253,7 @@
                     android:fontFamily="@font/raleway_bold"
                     android:text="Products:"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
 
                 <TextView
@@ -281,7 +263,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Lorem Ipsum - 123€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -290,7 +272,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Dolor Sit - 456€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -299,7 +281,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Amet Consectetur - 789€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -314,7 +296,7 @@
                         android:fontFamily="@font/raleway_bold"
                         android:text="Total Price: "
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -323,7 +305,7 @@
                         android:fontFamily="@font/raleway"
                         android:text="184€"
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 
@@ -353,7 +335,7 @@
                         android:fontFamily="@font/raleway_bold"
                         android:text="ID: "
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -363,7 +345,7 @@
                         android:fontFamily="@font/raleway"
                         android:text="184738"
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 
@@ -376,7 +358,7 @@
                     android:fontFamily="@font/raleway_bold"
                     android:text="Products:"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
 
                 <TextView
@@ -386,7 +368,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Lorem Ipsum - 123€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -395,7 +377,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Dolor Sit - 456€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -404,7 +386,7 @@
                     android:fontFamily="@font/raleway"
                     android:text="Amet Consectetur - 789€"
                     android:textColor="@color/colorText"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -419,7 +401,7 @@
                         android:fontFamily="@font/raleway_bold"
                         android:text="Total Price: "
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -428,7 +410,7 @@
                         android:fontFamily="@font/raleway"
                         android:text="184€"
                         android:textColor="@color/colorText"
-                        android:textSize="20dp" />
+                        android:textSize="17dp" />
 
                 </LinearLayout>
 

@@ -144,9 +144,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
 
     @Override
     public void done(boolean success, JSONObject response, String error) {
-        System.out.println(response);
-
-        //TODO: Store received info
         if(!success) {
             Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
         }

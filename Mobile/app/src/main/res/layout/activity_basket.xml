@@ -9,214 +9,101 @@
     android:paddingTop="20dp"
     android:paddingRight="25dp">
 
-    <RelativeLayout
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp">
+        android:fontFamily="@font/raleway_bold"
+        android:text="basket"
+        android:textAlignment="center"
+        android:textColor="@color/colorOrange"
+        android:textSize="40sp"
+        android:layout_marginBottom="15dp"/>
 
-        <TextView
-            android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/addProductButton"
+            style="@android:style/Widget.Button.Inset"
+            android:layout_width="wrap_content"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/primary_button"
             android:fontFamily="@font/raleway_bold"
-            android:text="basket"
-            android:textAlignment="center"
-            android:textColor="@color/colorOrange"
-            android:textSize="40sp" />
+            android:text="ADD PRODUCT"
+            android:textColor="@color/colorWhite"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:textSize="17dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"/>
 
-        <!--<ImageView
-            android:id="@+id/logo"
+        <Button
+            android:id="@+id/clearBasketButton"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/logo" />-->
-
-        <!--<ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:src="@drawable/round_menu_black_18dp"
-            android:contentDescription="Show menu"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:background="@color/colorGrey"
-            android:onClick="showPopup"
-            android:fontFamily="@font/raleway"
-            android:layout_alignParentRight="true"/>-->
+            android:fontFamily="@font/raleway_bold"
+            android:text="CLEAR BASKET"
+            android:textColor="@color/colorOrange"
+            android:textSize="17dp"
+            android:layout_marginLeft="5dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_weight="1"/>
 
-    </RelativeLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+
+    <TextView
+        android:id="@+id/textview_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="15dp"
+        android:fontFamily="@font/raleway_bold"
+        android:text="Total: 23983€"
+        android:textColor="@color/colorText"
+        android:textSize="17dp" />
+
+    <CheckBox android:id="@+id/checkbox_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use accumulated discount of 23€"
+        android:fontFamily="@font/raleway"/>
+    <CheckBox android:id="@+id/checkbox_vouchers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use one of the 3 voucher"
+        android:fontFamily="@font/raleway"/>
 
     <Button
+        android:id="@+id/checkoutButton"
         style="@android:style/Widget.Button.Inset"
-        android:layout_width="wrap_content"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
+        android:layout_width="fill_parent"
         android:layout_gravity="right"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/secondary_button"
+        android:background="@drawable/primary_button"
         android:fontFamily="@font/raleway_bold"
-        android:text="add product"
-        android:textColor="@color/colorOrange"
-        android:textSize="18dp"/>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@color/colorWhite"
-                android:elevation="15dp"
-                android:orientation="vertical"
-                android:outlineProvider="paddedBounds"
-                android:padding="20dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/raleway_bold"
-                        android:text="Lorem Ipsum"
-                        android:textColor="@color/colorText"
-                        android:textSize="20dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/raleway"
-                        android:text="123€"
-                        android:textColor="@color/colorText"
-                        android:textSize="20dp"
-                        android:gravity="right"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@color/colorWhite"
-                android:elevation="15dp"
-                android:orientation="vertical"
-                android:outlineProvider="paddedBounds"
-                android:padding="20dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/raleway_bold"
-                        android:text="Dolor Sit"
-                        android:textColor="@color/colorText"
-                        android:textSize="20dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/raleway"
-                        android:text="456€"
-                        android:textColor="@color/colorText"
-                        android:textSize="20dp"
-                        android:gravity="right"/>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@color/colorWhite"
-                android:elevation="15dp"
-                android:orientation="vertical"
-                android:outlineProvider="paddedBounds"
-                android:padding="20dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/raleway_bold"
-                        android:text="Amet Consectetur"
-                        android:textColor="@color/colorText"
-                        android:textSize="20dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginBottom="10dp"
-                        android:fontFamily="@font/raleway"
-                        android:text="789€"
-                        android:textColor="@color/colorText"
-                        android:textSize="20dp"
-                        android:gravity="right"/>
-
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_weight="1"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/raleway_bold"
-                android:text="Total: 23983€"
-                android:textColor="@color/colorText"
-                android:textSize="20dp" />
-
-            <Button
-                style="@android:style/Widget.Button.Inset"
-                android:layout_width="fill_parent"
-                android:layout_gravity="right"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/primary_button"
-                android:fontFamily="@font/raleway_bold"
-                android:text="checkout"
-                android:textColor="@color/colorWhite"
-                android:textSize="18dp"/>
-
-        </LinearLayout>
-
-    </ScrollView>
+        android:text="CHECKOUT"
+        android:textColor="@color/colorWhite"
+        android:textSize="17dp"
+        android:layout_marginTop="20dp"/>
 
 </LinearLayout>

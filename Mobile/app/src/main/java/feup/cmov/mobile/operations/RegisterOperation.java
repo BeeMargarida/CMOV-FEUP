@@ -53,7 +53,7 @@ public class RegisterOperation implements Runnable {
 
         try {
             RequestQueue queue = Volley.newRequestQueue((Context) register);
-            String url = "http://10.0.2.2:8081/auth/signup";
+            String url = "http://96f60678.ngrok.io/auth/signup";
             JSONObject auth = new JSONObject();
             auth.put("name", this.name);
             auth.put("username", this.username);
