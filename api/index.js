@@ -7,7 +7,6 @@ const errorHandler = require('./controllers/error');
 const authRoutes = require('./routes/auth');
 const supermarketRoutes = require('./routes/supermarket');
 const qrCodeRoutes = require('./routes/qrcode');
-const { loginRequired, ensureCorrectUser } = require('./middleware/auth');
 
 const PORT = 8080;
 const app = express();
@@ -25,7 +24,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/auth', authRoutes);
-app.use('/supermarket', loginRequired, ensureCorrectUser, supermarketRoutes);
+app.use('/supermarket', supermarketRoutes);
 
 //TODO: Add User routes
 //TODO: Add Payment Card routes ? -> check if needed

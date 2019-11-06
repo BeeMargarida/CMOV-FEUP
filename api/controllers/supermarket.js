@@ -26,9 +26,21 @@ exports.listBaskets = async function (req, res, next) {
 
 exports.listVouchers = async function (req, res, next) {
   try {
-    db.Voucher.find({ user: req.body.user_id })
+    db.Voucher.find({ user: req.query.user_id })
       .then((vouchers) => {
         res.status(200).json(vouchers);
+      })
+      .catch((err) => next(err));
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.getDiscount = async function (req, res, next) {
+  try {
+    db.User.findOne({ _id: req.query.user_id })
+      .then((user) => {
+        res.status(200).json(user.total_accumulated);
       })
       .catch((err) => next(err));
   } catch (error) {

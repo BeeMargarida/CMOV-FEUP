@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // check if user is logged in or registered
-        Preferences preferences = new Preferences(this);
+        final Preferences preferences = new Preferences(this);
         if(!preferences.getRegisterStatus()) {
             startActivity(new Intent(this, RegisterActivity.class));
         }
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button historyButton = findViewById(R.id.historyButton);
         Button basketButton = findViewById(R.id.basketButton);
+        Button logoutButton = findViewById(R.id.logoutButton);
 
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +71,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preferences.changeLogStatus(false);
+                startActivity(new Intent(context, LogInActivity.class));
+            }
+        });
 
         // TODO: logout
+
         // para fazer logout é só fazer o que os métodos abaixo estão a fazer e a fazer novo
         // start activity para LogInActivity
     }
@@ -115,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //BASKET
-        ArrayList <Product> basket = new ArrayList();
+        /*ArrayList <Product> basket = new ArrayList();
         Product product1 = new Product(UUID.randomUUID(),"um", 12.3f);
         Product product2 = new Product(UUID.randomUUID(),"dois", 15.6f);
         Product product3 = new Product(UUID.randomUUID(),"tres", 11.5f);
@@ -125,10 +133,10 @@ public class MainActivity extends AppCompatActivity {
         Product product7 = new Product(UUID.randomUUID(),"sete", 12.3f);
         Product product8 = new Product(UUID.randomUUID(),"oito", 15.6f);
         Product product9 = new Product(UUID.randomUUID(),"nove", 11.5f);
-        /*Product product10 = new Product(UUID.randomUUID(),"dez", 12.3f);
+        Product product10 = new Product(UUID.randomUUID(),"dez", 12.3f);
         Product product11 = new Product(UUID.randomUUID(),"onze", 15.6f);
         Product product12 = new Product(UUID.randomUUID(),"doze", 11.5f);
-        Product product13 = new Product(UUID.randomUUID(),"treze", 12.3f);*/
+        Product product13 = new Product(UUID.randomUUID(),"treze", 12.3f);
         basket.add(product1);
         basket.add(product2);
         basket.add(product3);
@@ -138,15 +146,15 @@ public class MainActivity extends AppCompatActivity {
         basket.add(product7);
         basket.add(product8);
         basket.add(product9);
-        /*basket.add(product10);
+        basket.add(product10);
         basket.add(product11);
         basket.add(product12);
-        basket.add(product13);*/
+        basket.add(product13);
         preferences.saveBasket(basket);
         ArrayList<Product> basketP = preferences.getBasket();
         for (int i = 0; i < basketP.size(); i++) {
             Log.d("TEST", basketP.get(i).getName() + " " + basketP.get(i).getPrice());
-        }
+        }*/
 
     }
 }

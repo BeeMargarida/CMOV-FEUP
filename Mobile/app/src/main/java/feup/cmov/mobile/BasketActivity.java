@@ -38,7 +38,7 @@ public class BasketActivity extends AppCompatActivity {
     public Context context;
 
     private ArrayList<Product> basketP = new ArrayList<>();
-    BasketAdapter adapter;
+    private BasketAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -128,14 +128,12 @@ public class BasketActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Preferences preferences = new Preferences(context);
-        preferences.saveBasket(this.basketP);
+        preferences.saveBasket(basketP);
     }
-
-    //TODO: Quando sair da atividade, atualizar basket nas preferencias
 
     private void setBasket() throws JSONException {
         Preferences preferences = new Preferences(context);
-        this.basketP = preferences.getBasket();
+        basketP = preferences.getBasket();
         ListView listView=(ListView)findViewById(R.id.list);
         adapter = new BasketAdapter(basketP,getApplicationContext());
         listView.setAdapter(adapter);
@@ -180,17 +178,21 @@ public class BasketActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
+        System.out.println(requestCode);
+
+        if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
 
-                String result = data.getStringExtra("product");
+                System.out.println(data.getData().toString());
+                String result = data.getData().toString();
                 Product prod = new Product(result);
+
                 System.out.println(prod.getUuid().toString());
-                this.basketP.add(prod);
-                System.out.println("HERE");
-                adapter.setListData(this.basketP);
-                adapter.notifyDataSetChanged();
+
+                basketP.add(prod);
+                Preferences preferences = new Preferences(context);
+                preferences.saveBasket(basketP);
+
                 setTotal();
 
             }

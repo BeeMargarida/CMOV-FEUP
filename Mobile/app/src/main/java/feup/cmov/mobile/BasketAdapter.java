@@ -69,7 +69,10 @@ public class BasketAdapter extends ArrayAdapter<Product> implements View.OnClick
         return convertView;
     }
 
-    public void setListData(ArrayList<Product> data) {
-        this.dataSet = data;
+    public void insertProduct(ArrayList<Product> products) {
+        this.clear();
+        this.addAll(products);
+        this.notifyDataSetChanged();
     }
+
 }

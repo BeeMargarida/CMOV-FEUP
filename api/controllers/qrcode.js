@@ -10,6 +10,10 @@ exports.peachQRCode = async function (req, res, next) {
     generateQRCode("Peach", 0, 25, res, next);
 }
 
+exports.mangaQRCode = async function (req, res, next) {
+    generateQRCode("Manga", 3, 0, res, next);
+}
+
 function generateQRCode(name, priceEuros, priceCents, res, next) {
     const prod_uuid = new Array();
     uuid(null, prod_uuid, 0);
