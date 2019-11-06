@@ -40,8 +40,9 @@ public class LogInActivity extends AppCompatActivity {
                     Toast.makeText(context, "Please insert your PIN Code.", Toast.LENGTH_SHORT).show();
                 }
                 else if(Long.parseLong(passwordString) == storedPassword){
-                    preferences.changeLogStatus(true);
-                    startActivity(new Intent(context, MainActivity.class));
+                    setResult(RESULT_OK);
+                    finish();
+                    //startActivity(new Intent(context, MainActivity.class));
                 }
                 else {
                     Toast.makeText(context, "Wrong PIN Code", Toast.LENGTH_SHORT).show();
@@ -50,5 +51,10 @@ public class LogInActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

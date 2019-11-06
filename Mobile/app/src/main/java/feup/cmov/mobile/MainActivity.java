@@ -1,7 +1,9 @@
 package feup.cmov.mobile;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +32,8 @@ import feup.cmov.mobile.common.Product;
 public class MainActivity extends AppCompatActivity {
 
     public Context context;
+    private boolean isLoggedIn = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, RegisterActivity.class));
         }
         else if(!preferences.getLoginStatus()) {
-            startActivity(new Intent(this, LogInActivity.class));
+            startActivityForResult(new Intent(this, LogInActivity.class), 0);
         }
 
         context = this;
@@ -60,21 +64,29 @@ public class MainActivity extends AppCompatActivity {
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, HistoryActivity.class));
+                Intent intent = new Intent(context, HistoryActivity.class);
+                Bundle extras = new Bundle();
+                extras.putBoolean("isLoggedIn", isLoggedIn);
+                intent.putExtras(extras);
+                startActivity(intent);
             }
         });
 
         basketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, BasketActivity.class));
+                Intent intent = new Intent(context, BasketActivity.class);
+                Bundle extras = new Bundle();
+                extras.putBoolean("isLoggedIn", isLoggedIn);
+                intent.putExtras(extras);
+                startActivity(intent);
             }
         });
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                preferences.changeLogStatus(false);
+                isLoggedIn = false;
                 startActivity(new Intent(context, LogInActivity.class));
             }
         });
@@ -85,12 +97,21 @@ public class MainActivity extends AppCompatActivity {
         // start activity para LogInActivity
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(getIntent().getExtras() != null && getIntent().getExtras().getBoolean("isLoggedIn")) {
+            isLoggedIn = getIntent().getExtras().getBoolean("isLoggedIn");
+        }
+        if(!isLoggedIn) {
+            startActivityForResult(new Intent(this, LogInActivity.class), 0);
+        }
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
         Preferences preferences = new Preferences(this);
-        preferences.changeLogStatus(false);
     }
 
     @Override
@@ -98,6 +119,18 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Preferences preferences = new Preferences(this);
         preferences.changeLogStatus(false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                this.isLoggedIn = true;
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                this.isLoggedIn = false;
+            }
+        }
     }
 
     void testPreferences() throws JSONException {

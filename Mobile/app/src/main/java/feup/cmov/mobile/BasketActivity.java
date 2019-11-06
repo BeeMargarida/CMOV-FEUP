@@ -70,7 +70,13 @@ public class BasketActivity extends AppCompatActivity {
                         new String[]{Manifest.permission.CAMERA},
                             CAMERA_PERMISSIONS_CODE);
                 } else {
-                    startActivityForResult(new Intent(context, QRCodeActivity.class), 0);
+
+                    Intent intent = new Intent(context, QRCodeActivity.class);
+                    Bundle extras = intent.getExtras();
+                    extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
+                    intent.putExtras(extras);
+                    startActivityForResult(intent, 0);
+
                 }
             }
         });
@@ -167,32 +173,30 @@ public class BasketActivity extends AppCompatActivity {
         switch (requestCode) {
             case CAMERA_PERMISSIONS_CODE: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startActivityForResult(new Intent(context, QRCodeActivity.class), 0);
+
+                    Intent intent = new Intent(context, QRCodeActivity.class);
+                    Bundle extras = intent.getExtras();
+                    extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
+                    intent.putExtras(extras);
+                    startActivityForResult(intent, 0);
+
                 } else {
                     Toast.makeText(context, "Can't access the camera. Try again later.", Toast.LENGTH_SHORT).show();
                 }
-                return;
             }
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        System.out.println(requestCode);
-
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
 
-                System.out.println(data.getData().toString());
                 String result = data.getData().toString();
                 Product prod = new Product(result);
-
-                System.out.println(prod.getUuid().toString());
-
                 basketP.add(prod);
                 Preferences preferences = new Preferences(context);
                 preferences.saveBasket(basketP);
-
                 setTotal();
 
             }
