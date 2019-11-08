@@ -72,7 +72,7 @@ public class BasketActivity extends AppCompatActivity {
 
         t.start();
 
-        //TODO: Chamada a API para atualizar preferencias (n vouchers, dicounts)
+        //TODO: Chamada a API para atualizar preferencias (n vouchers, dicounts) - fazer com encriptação do user id
 
         Button addProductButton = findViewById(R.id.addProductButton);
         addProductButton.setOnClickListener(new View.OnClickListener() {
@@ -194,17 +194,23 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private byte[] buildQRMessage(ArrayList<Product> products, boolean useDiscount, boolean useVoucher) {
+        Preferences preferences = new Preferences(context);
+        String userUUID = preferences.getUserUUID();
+        UUID uuid = UUID.fromString(userUUID);
+
         ArrayList<UUID> prod_uuids = new ArrayList<>();
         for(int i = 0; i < products.size(); i++) {
             prod_uuids.add(products.get(i).getUuid());
         }
-        ByteBuffer bb = ByteBuffer.allocate((prod_uuids.size()*16) + 1 + 1 + 1 + 512/8);
+        ByteBuffer bb = ByteBuffer.allocate((prod_uuids.size()*16) + 16 + 1 + 1 + 1 + 512/8);
         bb.put((byte)prod_uuids.size());
         for(int i = 0; i < prod_uuids.size(); i++) {
             System.out.println(prod_uuids.get(i));
             bb.putLong(prod_uuids.get(i).getMostSignificantBits());
             bb.putLong(prod_uuids.get(i).getLeastSignificantBits());
         }
+        bb.putLong(uuid.getMostSignificantBits());
+        bb.putLong(uuid.getLeastSignificantBits());
         bb.put((byte)(useDiscount ? 1 : 0));
         bb.put((byte)(useVoucher ? 1 : 0));
         byte[] message = bb.array();
@@ -217,8 +223,8 @@ public class BasketActivity extends AppCompatActivity {
 
             Signature sg = Signature.getInstance("SHA256WithRSA");
             sg.initSign(pri);
-            sg.update(message, 0, (prod_uuids.size()*16) + 1 + 1 + 1);
-            sg.sign(message, (prod_uuids.size()*16) + 1 + 1 + 1, 512/8);
+            sg.update(message, 0, (prod_uuids.size()*16) + 16 + 1 + 1 + 1);
+            sg.sign(message, (prod_uuids.size()*16) + 16 + 1 + 1 + 1, 512/8);
         }
         catch (Exception e) {
             System.out.println("AN ERROR OCCURRED: " + e.getMessage());

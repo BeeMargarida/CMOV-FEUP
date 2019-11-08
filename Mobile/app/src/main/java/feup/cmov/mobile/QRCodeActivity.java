@@ -10,19 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.zxing.Result;
 
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.UUID;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 
 import feup.cmov.mobile.common.Preferences;
 import feup.cmov.mobile.common.Product;
@@ -44,14 +38,6 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
         mScannerView.setResultHandler(QRCodeActivity.this);
         mScannerView.startCamera();
     }
-
-    /*@Override
-    public void onPause() {
-        super.onPause();
-        if (mScannerView != null) {
-            mScannerView.stopCamera();
-        }
-    }*/
 
     @Override
     protected void onStop() {

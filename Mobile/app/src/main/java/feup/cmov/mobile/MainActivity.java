@@ -99,19 +99,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        Preferences preferences = new Preferences(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Preferences preferences = new Preferences(this);
-        preferences.changeLogStatus(false);
-    }
-
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {

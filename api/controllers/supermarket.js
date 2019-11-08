@@ -6,6 +6,7 @@ const db = require('../models');
  */
 exports.checkoutBasket = async function (req, res, next) {
   try {
+    console.log(req);
     res.status(200).json('Checkout Basket Route in the works...');
   } catch (error) {
     next(error);

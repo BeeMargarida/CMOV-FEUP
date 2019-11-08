@@ -26,12 +26,6 @@ public class Preferences {
         this.sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.login), Context.MODE_PRIVATE);
     }
 
-    /*public void saveKey(PrivateKey key) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(context.getResources().getString(R.string.private_key), Base64.encodeToString(key.getEncoded(), Base64.DEFAULT));
-        editor.commit();
-    }*/
-
     public void savePassword(long password) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putLong(context.getResources().getString(R.string.password), password);
@@ -46,10 +40,6 @@ public class Preferences {
         return sharedPreferences.getString(context.getResources().getString(R.string.supermarket_public_key), "");
     }
 
-    public String getUserPrivateKey() {
-        return sharedPreferences.getString(context.getResources().getString(R.string.private_key), "");
-    }
-
     public void registerIn(String userUUID, String supermarketPublicKey) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getResources().getString(R.string.supermarket_public_key), supermarketPublicKey);
@@ -58,18 +48,12 @@ public class Preferences {
         editor.commit();
     }
 
-    public void changeLogStatus(boolean value) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(context.getResources().getString(R.string.login_status), value);
-        editor.commit();
+    public String getUserUUID() {
+        return sharedPreferences.getString(context.getResources().getString(R.string.user_uuid), "");
     }
 
     public boolean getRegisterStatus() {
         return !sharedPreferences.getString(context.getResources().getString(R.string.user_uuid), "").equals("");
-    }
-
-    public boolean getLoginStatus() {
-        return sharedPreferences.getBoolean(context.getResources().getString(R.string.login_status), false);
     }
 
     public void saveVouchers(ArrayList<String> vouchers){
