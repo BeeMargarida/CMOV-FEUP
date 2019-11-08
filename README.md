@@ -24,5 +24,10 @@
 
   - To run, just do: ``` mongod ``` in a terminal
 
+#### Tools 
+- **NGrok**
+  - Run `ngrok http 8080`
+  - Copy the address (ex: http://319c5d33.ngrok.io) to the RegisterOperation.java in the *Mobile* directory in the module **operations**.
+
 ##### Notes:
 If there is any error with mongoose-uuid2, change in file *api/node_modules/mongoose-uuid2/node_modules/bson/lib/bson/objectid.js* the line **const hostname = require('os').hostname;** to **const hostname = require('os').hostname();**;

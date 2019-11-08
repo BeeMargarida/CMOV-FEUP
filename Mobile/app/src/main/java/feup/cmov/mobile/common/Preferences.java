@@ -26,11 +26,11 @@ public class Preferences {
         this.sharedPreferences = context.getSharedPreferences(context.getResources().getString(R.string.login), Context.MODE_PRIVATE);
     }
 
-    public void saveKey(PrivateKey key) {
+    /*public void saveKey(PrivateKey key) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getResources().getString(R.string.private_key), Base64.encodeToString(key.getEncoded(), Base64.DEFAULT));
         editor.commit();
-    }
+    }*/
 
     public void savePassword(long password) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -44,6 +44,10 @@ public class Preferences {
 
     public String getSupermarketPublicKey() {
         return sharedPreferences.getString(context.getResources().getString(R.string.supermarket_public_key), "");
+    }
+
+    public String getUserPrivateKey() {
+        return sharedPreferences.getString(context.getResources().getString(R.string.private_key), "");
     }
 
     public void registerIn(String userUUID, String supermarketPublicKey) {

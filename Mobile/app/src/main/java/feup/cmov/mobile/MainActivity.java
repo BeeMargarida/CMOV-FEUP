@@ -8,26 +8,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.PopupMenu;
-import android.widget.Toast;
-
 import org.json.JSONException;
 
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.UUID;
 
 import feup.cmov.mobile.auth.LogInActivity;
 import feup.cmov.mobile.auth.RegisterActivity;
-import feup.cmov.mobile.BasketActivity;
 import feup.cmov.mobile.common.Preferences;
-import feup.cmov.mobile.common.Product;
+import feup.cmov.mobile.common.PubKey;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         if(!preferences.getRegisterStatus()) {
             startActivity(new Intent(this, RegisterActivity.class));
         }
-        else if(!preferences.getLoginStatus()) {
+        else if(!isLoggedIn) {
             startActivityForResult(new Intent(this, LogInActivity.class), 0);
         }
 
@@ -87,14 +82,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isLoggedIn = false;
-                startActivity(new Intent(context, LogInActivity.class));
+                startActivityForResult(new Intent(context, LogInActivity.class), 0);
             }
         });
-
-        // TODO: logout
-
-        // para fazer logout é só fazer o que os métodos abaixo estão a fazer e a fazer novo
-        // start activity para LogInActivity
     }
 
     @Override
@@ -131,6 +121,40 @@ public class MainActivity extends AppCompatActivity {
                 this.isLoggedIn = false;
             }
         }
+    }
+
+    PubKey getPubKey() {
+        PubKey pkey = new PubKey();
+        try {
+            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+            ks.load(null);
+            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            PublicKey pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+            pkey.modulus = ((RSAPublicKey)pub).getModulus().toByteArray();
+            pkey.exponent = ((RSAPublicKey)pub).getPublicExponent().toByteArray();
+        }
+        catch (Exception e) {
+            Log.d("DEBUG", e.getMessage());
+        }
+        return pkey;
+    }
+
+    byte[] getPrivExp() {
+        byte[] exp = null;
+
+        try {
+            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+            ks.load(null);
+            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            PrivateKey priv = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+            exp = ((RSAPrivateKey)priv).getPrivateExponent().toByteArray();
+        }
+        catch (Exception e) {
+            Log.d("DEBUG", e.getMessage());
+        }
+        if (exp == null)
+            exp = new byte[0];
+        return exp;
     }
 
     void testPreferences() throws JSONException {
@@ -188,6 +212,5 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < basketP.size(); i++) {
             Log.d("TEST", basketP.get(i).getName() + " " + basketP.get(i).getPrice());
         }*/
-
     }
 }

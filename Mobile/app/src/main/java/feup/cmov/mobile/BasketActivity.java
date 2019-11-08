@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,7 +28,15 @@ import androidx.core.content.ContextCompat;
 
 import org.json.JSONException;
 
+import java.nio.ByteBuffer;
+import java.security.KeyFactory;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import feup.cmov.mobile.common.Preferences;
 import feup.cmov.mobile.common.Product;
@@ -46,15 +55,22 @@ public class BasketActivity extends AppCompatActivity {
         context=this;
         setContentView(R.layout.activity_basket);
 
-        try {
-            setBasket();
-            setTotal();
-            setDiscount();
-            setVouchersSize();
-        }
-        catch (JSONException e) {
-            Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_SHORT).show();
-        }
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    setBasket();
+                    setTotal();
+                    setDiscount();
+                    setVouchersSize();
+                }
+                catch (JSONException e) {
+                    Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        t.start();
 
         //TODO: Chamada a API para atualizar preferencias (n vouchers, dicounts)
 
@@ -62,7 +78,10 @@ public class BasketActivity extends AppCompatActivity {
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(context,
+                if(basketP.size() >= 10){
+                    Toast.makeText(context, "You can only add 10 items to your basket.",Toast.LENGTH_SHORT).show();
+                }
+                else if (ContextCompat.checkSelfPermission(context,
                         Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
 
@@ -72,7 +91,7 @@ public class BasketActivity extends AppCompatActivity {
                 } else {
 
                     Intent intent = new Intent(context, QRCodeActivity.class);
-                    Bundle extras = intent.getExtras();
+                    Bundle extras = new Bundle();
                     extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
                     intent.putExtras(extras);
                     startActivityForResult(intent, 0);
@@ -91,8 +110,15 @@ public class BasketActivity extends AppCompatActivity {
                 Boolean useDiscount = checkboxDiscount.isChecked();
                 Boolean useVouchers = checkboxVouchers.isChecked();
 
+                byte[] message = buildQRMessage(basketP, useDiscount, useVouchers);
+                System.out.println(new String(message));
+                Intent intent = new Intent(context, CheckoutActivity.class);
+                Bundle extras = new Bundle();
+                extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
+                extras.putByteArray("data", message);
+                intent.putExtras(extras);
+                startActivity(intent);
 
-                //TODO: Criar QRCode
                 //TODO: Atualizar preferencias (n vouchers, discount)
             }
         });
@@ -127,7 +153,6 @@ public class BasketActivity extends AppCompatActivity {
         catch (JSONException e) {
             Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override
@@ -168,6 +193,39 @@ public class BasketActivity extends AppCompatActivity {
         checkboxVouchers.setText("Use one of the " + vouchersSize + " voucher");
     }
 
+    private byte[] buildQRMessage(ArrayList<Product> products, boolean useDiscount, boolean useVoucher) {
+        ArrayList<UUID> prod_uuids = new ArrayList<>();
+        for(int i = 0; i < products.size(); i++) {
+            prod_uuids.add(products.get(i).getUuid());
+        }
+        ByteBuffer bb = ByteBuffer.allocate((prod_uuids.size()*16) + 1 + 1 + 1 + 512/8);
+        bb.put((byte)prod_uuids.size());
+        for(int i = 0; i < prod_uuids.size(); i++) {
+            System.out.println(prod_uuids.get(i));
+            bb.putLong(prod_uuids.get(i).getMostSignificantBits());
+            bb.putLong(prod_uuids.get(i).getLeastSignificantBits());
+        }
+        bb.put((byte)(useDiscount ? 1 : 0));
+        bb.put((byte)(useVoucher ? 1 : 0));
+        byte[] message = bb.array();
+
+        try {
+            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+            ks.load(null);
+            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            PrivateKey pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+
+            Signature sg = Signature.getInstance("SHA256WithRSA");
+            sg.initSign(pri);
+            sg.update(message, 0, (prod_uuids.size()*16) + 1 + 1 + 1);
+            sg.sign(message, (prod_uuids.size()*16) + 1 + 1 + 1, 512/8);
+        }
+        catch (Exception e) {
+            System.out.println("AN ERROR OCCURRED: " + e.getMessage());
+        }
+        return message;
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -175,7 +233,7 @@ public class BasketActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     Intent intent = new Intent(context, QRCodeActivity.class);
-                    Bundle extras = intent.getExtras();
+                    Bundle extras = new Bundle();
                     extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
                     intent.putExtras(extras);
                     startActivityForResult(intent, 0);
@@ -189,6 +247,7 @@ public class BasketActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
 
@@ -201,7 +260,7 @@ public class BasketActivity extends AppCompatActivity {
 
             }
             if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(context, "QRCode isn't valid.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "QRCode isn't valid.", Toast.LENGTH_SHORT).show();
             }
         }
     }

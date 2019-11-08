@@ -3,6 +3,7 @@ package feup.cmov.mobile.auth;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.security.KeyPairGeneratorSpec;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -19,17 +20,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.AlgorithmParameterSpec;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+
+import javax.security.auth.x500.X500Principal;
 
 import feup.cmov.mobile.MainActivity;
 import feup.cmov.mobile.R;
 import feup.cmov.mobile.common.Preferences;
+import feup.cmov.mobile.common.PubKey;
 import feup.cmov.mobile.operations.RegisterOperation;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterOperation.Register {
@@ -106,20 +115,21 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
                         }
 
                         // generate private/public key
-                        KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+                        generateAndStoreKeys();
+                        /*KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
                         kpg.initialize(512);
                         KeyPair keyPair = kpg.generateKeyPair();
                         PrivateKey privateKey = keyPair.getPrivate();
-                        PublicKey publicKey = keyPair.getPublic();
+                        PublicKey publicKey = keyPair.getPublic();*/
 
                         // save private key
-                        Preferences preferences = new Preferences(context);
-                        preferences.saveKey(privateKey);
+                        /*Preferences preferences = new Preferences(context);
+                        preferences.saveKey(privateKey);*/
 
                         // make request to server
                         RegisterOperation registerOperation = new RegisterOperation(context,
                                 nameString, usernameString, emailString, cardNameString, cardNumberString,
-                                cardMonthNumber, cardYearNumber, cardCvcValue, Base64.encodeToString(publicKey.getEncoded(), Base64.DEFAULT));
+                                cardMonthNumber, cardYearNumber, cardCvcValue, Base64.encodeToString(getPubKey().publicKey.getEncoded(), Base64.DEFAULT));
 
                         Thread thread = new Thread(registerOperation);
                         thread.start();
@@ -140,6 +150,50 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
             }
         });
 
+    }
+
+    private void generateAndStoreKeys(){
+        try {
+            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+            ks.load(null);
+            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            if (entry == null) {
+                Calendar start = new GregorianCalendar();
+                Calendar end = new GregorianCalendar();
+                end.add(Calendar.YEAR, 20);
+                KeyPairGenerator kgen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
+                AlgorithmParameterSpec spec = new KeyPairGeneratorSpec.Builder(this)
+                        .setKeySize(512)
+                        .setAlias("userKey")
+                        .setSubject(new X500Principal("CN=" + "userKey"))   // Usually the full name of the owner (person or organization)
+                        .setSerialNumber(BigInteger.valueOf(12121212))
+                        .setStartDate(start.getTime())
+                        .setEndDate(end.getTime())
+                        .build();
+                kgen.initialize(spec);
+                kgen.generateKeyPair();
+            }
+        }
+        catch (Exception ex) {
+            Toast.makeText(context, "Problem generating the user keys.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    PubKey getPubKey() {
+        PubKey pkey = new PubKey();
+        try {
+            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+            ks.load(null);
+            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            PublicKey pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+            pkey.publicKey = pub;
+            pkey.modulus = ((RSAPublicKey)pub).getModulus().toByteArray();
+            pkey.exponent = ((RSAPublicKey)pub).getPublicExponent().toByteArray();
+        }
+        catch (Exception e) {
+            Log.d("DEBUG", e.getMessage());
+        }
+        return pkey;
     }
 
     @Override

@@ -5,6 +5,7 @@ const nodeRSA = require('node-rsa');
 const fs = require('fs');
 const path = require('path');
 const iconv = require("iconv-lite");
+const db = require("../models");
 
 exports.peachQRCode = async function (req, res, next) {
     generateQRCode("Peach", 0, 25, res, next);
@@ -42,9 +43,15 @@ function generateQRCode(name, priceEuros, priceCents, res, next) {
     QRCode.toDataURL(encrypted)
         .then(url => {
             var base64Data = url.replace(/^data:image\/png;base64,/, "");
-            fs.writeFile(`QRCodes/${name}.png`, base64Data, 'base64', function (err) {
+            fs.writeFile(`QRCodes/${name}_${prod_uuid_string}.png`, base64Data, 'base64', function (err) {
                 if (err) throw err
-                return res.status(200).sendFile(path.join(__dirname, '../QRCodes', `${name}.png`));
+                db.Product.create({
+                    _id: prod_uuid_string,
+                    name: name,
+                    price: priceEuros + 0.01*priceCents,
+                    qr_code: `QRCodes/${name}_${prod_uuid_string}.png`
+                });
+                return res.status(200).sendFile(path.join(__dirname, '../QRCodes', `${name}_${prod_uuid_string}.png`));
             });
         })
         .catch(err => {

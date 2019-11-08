@@ -34,17 +34,41 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         mScannerView = new ZXingScannerView(QRCodeActivity.this);
         setContentView(mScannerView);
         mScannerView.setResultHandler(QRCodeActivity.this);
         mScannerView.startCamera();
     }
 
-    @Override
+    /*@Override
     public void onPause() {
         super.onPause();
         if (mScannerView != null) {
+            mScannerView.stopCamera();
+        }
+    }*/
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mScannerView != null) {
+            mScannerView.setResultHandler(null);
+            mScannerView.stopCameraPreview();
+            mScannerView.stopCamera();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mScannerView != null) {
+            mScannerView.setResultHandler(null);
+            mScannerView.stopCameraPreview();
             mScannerView.stopCamera();
         }
     }
@@ -52,9 +76,13 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result result) {
 
-        try {
-            Intent data = new Intent();
+        Intent data = new Intent();
+        Bundle extras = new Bundle();
+        System.out.println(getIntent().getExtras().getBoolean("isLoggedIn"));
+        extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
+        data.putExtras(extras);
 
+        try {
             // Get supermarket public key
             Preferences preferences = new Preferences(this);
             String supermarketPublicKey = preferences.getSupermarketPublicKey();
@@ -91,6 +119,7 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
             System.out.println(id.toString());
             Product prod = new Product(id, name, (float)(euros + cents*0.01));
             data.setData(Uri.parse(prod.toString()));
+
             setResult(RESULT_OK, data);
 
         }

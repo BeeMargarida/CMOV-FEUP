@@ -42,7 +42,6 @@ public class LogInActivity extends AppCompatActivity {
                 else if(Long.parseLong(passwordString) == storedPassword){
                     setResult(RESULT_OK);
                     finish();
-                    //startActivity(new Intent(context, MainActivity.class));
                 }
                 else {
                     Toast.makeText(context, "Wrong PIN Code", Toast.LENGTH_SHORT).show();
@@ -51,10 +50,5 @@ public class LogInActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 }

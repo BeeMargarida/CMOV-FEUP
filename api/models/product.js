@@ -12,6 +12,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
+  qr_code: {
+    type: String,
+    required: true
+  },
   shopping_baskets: [
     {
       type: mongoose.Types.UUID,
