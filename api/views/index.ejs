@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ACME</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
+</head>
+
+<body>
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome To ACME Supermarket!</h1>
+            <p>Here are all our products, available to be bought by you!</p>
+            <p>Please buy a lot!</p>
+        </div>
+    </header>
+
+    <div class="row text-center" style="display: flex; flex-wrap: wrap;">
+        <% products.forEach(function(product) { %>
+        <div class="col-md-4 col-sm-6">
+            <div class="thumbnail">
+                <img src="<%=product.qr_code%>" width="300px">
+                <div class="caption">
+                    <h2><%= product.name %></h2>
+                    <h5><%= product._id %></h5>
+                </div>
+                <p><strong>Price: <%= product.price %>€</strong></p>
+            </div>
+        </div>
+        <% }); %>
+        
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

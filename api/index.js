@@ -7,6 +7,7 @@ const errorHandler = require('./controllers/error');
 const authRoutes = require('./routes/auth');
 const supermarketRoutes = require('./routes/supermarket');
 const qrCodeRoutes = require('./routes/qrcode');
+const db = require('./models');
 
 const PORT = 8080;
 const app = express();
@@ -22,6 +23,8 @@ console.log(process.env.SUPERMARKET_PRIVATE_KEY);
 
 app.use(cors());
 app.use(bodyParser.json());
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
 
 app.use('/auth', authRoutes);
 app.use('/supermarket', supermarketRoutes);
@@ -31,8 +34,13 @@ app.use('/supermarket', supermarketRoutes);
 
 app.use('/qrcode', qrCodeRoutes);
 
-app.use('/', (req, res, next) => {
-  res.send('Welcome to ACME Electronic Supermarket!');
+app.use('/', async (req, res, next) => {
+  await db.Product.find({})
+  .then((products) => {
+    console.log(products);
+    res.render("index", {products: products, page: 'index'});
+  })
+  .catch((error) => next(error));
 });
 
 app.use(function(req, res, next) {

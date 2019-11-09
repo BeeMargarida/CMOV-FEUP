@@ -1,0 +1,31 @@
+body {
+    overflow-x: hidden;
+}
+.row {
+    overflow: hidden; 
+    padding: 0 10px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: #d6632efd;
+    color: white;
+}
+
+.caption h2 {
+    color: #d44300;
+}
+
+[class*="col-"]{
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.thumbnail {
+    border-color: #d44300;
+    padding: 0;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+}
