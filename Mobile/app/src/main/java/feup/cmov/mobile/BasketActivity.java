@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -230,10 +231,19 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     private PrivateKey getUserKey() throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableEntryException, CertificateException, IOException {
+        
         KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
         ks.load(null);
-        KeyStore.Entry entry = ks.getEntry("userKey", null);
-        PrivateKey pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+
+        PrivateKey pri;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            pri = (PrivateKey) ks.getKey("key1", null);
+        } else {
+            KeyStore.Entry entry = ks.getEntry("key1", null);
+            pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+        }
+
         return pri;
     }
 
