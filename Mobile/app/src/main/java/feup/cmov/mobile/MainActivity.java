@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
                 thread.start();
 
             } catch (Exception e) {
+                e.printStackTrace();
                 Toast.makeText(context, "There was a problem getting the user information, please try again.", Toast.LENGTH_SHORT).show();
             }
         }
@@ -179,8 +181,17 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
     private PrivateKey getUserKey() throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableEntryException, CertificateException, IOException {
         KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
         ks.load(null);
-        KeyStore.Entry entry = ks.getEntry("userKey", null);
-        PrivateKey pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+
+        PrivateKey pri;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            pri = (PrivateKey) ks.getKey("key1", null);
+        } else {
+            KeyStore.Entry entry = ks.getEntry("key1", null);
+            pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+        }
+
+
         return pri;
     }
 
