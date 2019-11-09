@@ -26,20 +26,32 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.security.KeyFactory;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
+
+import javax.crypto.NoSuchPaddingException;
 
 import feup.cmov.mobile.common.Preferences;
 import feup.cmov.mobile.common.Product;
+import feup.cmov.mobile.operations.SupermarketOperation;
 
 public class BasketActivity extends AppCompatActivity {
 
@@ -71,8 +83,6 @@ public class BasketActivity extends AppCompatActivity {
         });
 
         t.start();
-
-        //TODO: Chamada a API para atualizar preferencias (n vouchers, dicounts) - fazer com encriptação do user id
 
         Button addProductButton = findViewById(R.id.addProductButton);
         addProductButton.setOnClickListener(new View.OnClickListener() {
@@ -111,14 +121,17 @@ public class BasketActivity extends AppCompatActivity {
                 Boolean useVouchers = checkboxVouchers.isChecked();
 
                 byte[] message = buildQRMessage(basketP, useDiscount, useVouchers);
-                System.out.println(new String(message));
-                Intent intent = new Intent(context, CheckoutActivity.class);
-                Bundle extras = new Bundle();
-                extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
-                extras.putByteArray("data", message);
-                intent.putExtras(extras);
-                startActivity(intent);
-
+                if(message == null) {
+                    Toast.makeText(context, "Checkout can't be processed at the moment, try again later.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(context, CheckoutActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
+                    extras.putByteArray("data", message);
+                    intent.putExtras(extras);
+                    startActivityForResult(intent, 1);
+                }
                 //TODO: Atualizar preferencias (n vouchers, discount)
             }
         });
@@ -185,53 +198,94 @@ public class BasketActivity extends AppCompatActivity {
         Preferences preferences = new Preferences(context);
         float discount = preferences.getDiscount();
         CheckBox checkboxDiscount = findViewById(R.id.checkbox_discount);
-        checkboxDiscount.setText("Use accumulated discount of " + Float.toString(discount) + "€");
+        if(discount == 0) {
+            checkboxDiscount.setVisibility(View.GONE);
+        }
+        else {
+            checkboxDiscount.setText("Use accumulated discount of " + Float.toString(discount) + "€");
+        }
     }
 
     private void setVouchersSize() throws JSONException {
         Preferences preferences = new Preferences(context);
         int vouchersSize = preferences.getVouchers().size();
         CheckBox checkboxVouchers = findViewById(R.id.checkbox_vouchers);
-        checkboxVouchers.setText("Use one of the " + vouchersSize + " voucher");
+        if(vouchersSize == 0) {
+            checkboxVouchers.setVisibility(View.GONE);
+        }
+        else {
+            checkboxVouchers.setText("Use one of the " + vouchersSize + " voucher");
+        }
+    }
+
+    private byte[] getUserUUID() {
+        Preferences preferences = new Preferences(context);
+        String userUUIDString = preferences.getUserUUID();
+        UUID userUUID = UUID.fromString(userUUIDString);
+
+        ByteBuffer bb = ByteBuffer.allocate(16);
+        bb.putLong(userUUID.getMostSignificantBits());
+        bb.putLong(userUUID.getLeastSignificantBits());
+        return bb.array();
+    }
+
+    private PrivateKey getUserKey() throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableEntryException, CertificateException, IOException {
+        KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+        ks.load(null);
+        KeyStore.Entry entry = ks.getEntry("userKey", null);
+        PrivateKey pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+        return pri;
     }
 
     private byte[] buildQRMessage(ArrayList<Product> products, boolean useDiscount, boolean useVoucher) {
-        Preferences preferences = new Preferences(context);
-        String userUUID = preferences.getUserUUID();
-        UUID uuid = UUID.fromString(userUUID);
-
-        ArrayList<UUID> prod_uuids = new ArrayList<>();
-        for(int i = 0; i < products.size(); i++) {
-            prod_uuids.add(products.get(i).getUuid());
-        }
-        ByteBuffer bb = ByteBuffer.allocate((prod_uuids.size()*16) + 16 + 1 + 1 + 1 + 512/8);
-        bb.put((byte)prod_uuids.size());
-        for(int i = 0; i < prod_uuids.size(); i++) {
-            System.out.println(prod_uuids.get(i));
-            bb.putLong(prod_uuids.get(i).getMostSignificantBits());
-            bb.putLong(prod_uuids.get(i).getLeastSignificantBits());
-        }
-        bb.putLong(uuid.getMostSignificantBits());
-        bb.putLong(uuid.getLeastSignificantBits());
-        bb.put((byte)(useDiscount ? 1 : 0));
-        bb.put((byte)(useVoucher ? 1 : 0));
-        byte[] message = bb.array();
-
         try {
-            KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
-            ks.load(null);
-            KeyStore.Entry entry = ks.getEntry("userKey", null);
-            PrivateKey pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
+            Preferences preferences = new Preferences(context);
+            String userUUIDString = preferences.getUserUUID();
+            UUID userUUID = UUID.fromString(userUUIDString);
+            System.out.println(userUUIDString);
+
+            ArrayList<UUID> prod_uuids = new ArrayList<>();
+            for(int i = 0; i < products.size(); i++) {
+                prod_uuids.add(products.get(i).getUuid());
+            }
+            ByteBuffer bb = ByteBuffer.allocate(1 + (prod_uuids.size()*16) + 16 + 1 + 16 + 512/8);
+            bb.put((byte)prod_uuids.size());
+            for(int i = 0; i < prod_uuids.size(); i++) {
+                System.out.println(prod_uuids.get(i));
+                bb.putLong(prod_uuids.get(i).getMostSignificantBits());
+                bb.putLong(prod_uuids.get(i).getLeastSignificantBits());
+            }
+            // User uuid
+            bb.putLong(userUUID.getMostSignificantBits());
+            bb.putLong(userUUID.getLeastSignificantBits());
+            bb.put((byte)(useDiscount ? 1 : 0));
+
+            String voucherUUIDString = preferences.getVoucher();
+            if(voucherUUIDString != null) {
+                UUID voucherUUID = UUID.fromString(voucherUUIDString);
+                bb.putLong(voucherUUID.getMostSignificantBits());
+                bb.putLong(voucherUUID.getLeastSignificantBits());
+            }
+            else {
+                bb.putLong(0);
+                bb.putLong(0);
+            }
+
+            //bb.put((byte)(useVoucher ? 1 : 0));
+            byte[] message = bb.array();
+
+            PrivateKey pri = getUserKey();
 
             Signature sg = Signature.getInstance("SHA256WithRSA");
             sg.initSign(pri);
-            sg.update(message, 0, (prod_uuids.size()*16) + 16 + 1 + 1 + 1);
-            sg.sign(message, (prod_uuids.size()*16) + 16 + 1 + 1 + 1, 512/8);
+            sg.update(message, 0, 1 + (prod_uuids.size()*16) + 16 + 1 + 16);
+            sg.sign(message, 1 + (prod_uuids.size()*16) + 16 + 1 + 16, 512/8);
+            return message;
         }
         catch (Exception e) {
             System.out.println("AN ERROR OCCURRED: " + e.getMessage());
         }
-        return message;
+        return null;
     }
 
     @Override
@@ -267,9 +321,16 @@ public class BasketActivity extends AppCompatActivity {
                 setTotal();
 
             }
-            if (resultCode == Activity.RESULT_CANCELED) {
+            else if (resultCode == Activity.RESULT_CANCELED) {
                 //Toast.makeText(context, "QRCode isn't valid.", Toast.LENGTH_SHORT).show();
             }
         }
+        else if(requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                finish();
+            }
+        }
     }
+
+
 }

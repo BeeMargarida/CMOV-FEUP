@@ -39,6 +39,8 @@ public class RegisterOperation implements Runnable {
         this.cardCvc = cardCvc;
         this.userPublicKey = userPublicKey;
 
+        System.out.println(userPublicKey);
+
         try {
             Activity activity = (Activity)context;
             register = (Register) activity;
@@ -53,7 +55,7 @@ public class RegisterOperation implements Runnable {
 
         try {
             RequestQueue queue = Volley.newRequestQueue((Context) register);
-            String url = "http://319c5d33.ngrok.io/auth/signup";
+            String url = "http://6168e437.ngrok.io/auth/signup";
             JSONObject auth = new JSONObject();
             auth.put("name", this.name);
             auth.put("username", this.username);

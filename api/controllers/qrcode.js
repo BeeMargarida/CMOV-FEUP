@@ -1,6 +1,5 @@
 const QRCode = require('qrcode');
 const uuid = require('uuid/v4');
-var ByteBuffer = require("bytebuffer");
 const nodeRSA = require('node-rsa');
 const fs = require('fs');
 const path = require('path');
@@ -15,9 +14,18 @@ exports.mangaQRCode = async function (req, res, next) {
     generateQRCode("Manga", 3, 0, res, next);
 }
 
+exports.melonQRCode = async function (req, res, next) {
+    generateQRCode("Expensive Melon", 99, 0, res, next);
+}
+
+exports.lettuceQRCode = async function (req, res, next) {
+    generateQRCode("Fresh Lettuce", 1, 0, res, next);
+} 
+
 function generateQRCode(name, priceEuros, priceCents, res, next) {
     const prod_uuid = new Array();
     uuid(null, prod_uuid, 0);
+    console.log(prod_uuid);
     const prod_uuid_string = uuid({ random: prod_uuid });
     const len = 4 + 16 + 4 + 4 + 1 + name.length;
     if (name.length > 35) {
@@ -33,7 +41,7 @@ function generateQRCode(name, priceEuros, priceCents, res, next) {
     tag.writeInt32BE(priceEuros, 20);
     tag.writeInt32BE(priceCents, 24);
     tag[28] = name.length;
-    iconv.encode(name, 'ISO-8859-1').copy(tag, 29, 0, 5);
+    iconv.encode(name, 'ISO-8859-1').copy(tag, 29, 0, name.length);
 
     const key = new nodeRSA();
     key.importKey(process.env.SUPERMARKET_PRIVATE_KEY, 'pkcs1-private')

@@ -1,9 +1,13 @@
 package feup.cmov.mobile;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +25,7 @@ import java.nio.ByteBuffer;
 import java.security.KeyStore;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.util.Arrays;
 import java.util.Hashtable;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -28,6 +33,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private final String TAG = "QR_Code";
     private final String ISO_SET = "ISO-8859-1";
 
+    Context context;
     ImageView qrCodeImageview;
     String qr_content = null;
 
@@ -37,8 +43,33 @@ public class CheckoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_checkout);
         qrCodeImageview = findViewById(R.id.img_qr_code_image);
+        context = this;
+        System.out.println(getIntent().getExtras().getBoolean("isLoggedIn"));
+
+        Button goBack = findViewById(R.id.back_basket);
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Button checkoutDone = findViewById(R.id.checkout_done);
+        checkoutDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent data = new Intent();
+                Bundle extras = new Bundle();
+                System.out.println(getIntent().getExtras().getBoolean("isLoggedIn"));
+                extras.putBoolean("isLoggedIn", getIntent().getExtras().getBoolean("isLoggedIn"));
+                data.putExtras(extras);
+                setResult(RESULT_OK, data);
+                finish();
+            }
+        });
 
         byte[] content = getIntent().getByteArrayExtra("data");
+        System.out.println(Arrays.toString(content));
         int sign_size = 512/8;
         int mess_size = content.length - sign_size;
 
@@ -119,4 +150,5 @@ public class CheckoutActivity extends AppCompatActivity {
         }
         return verified;
     }
+
 }

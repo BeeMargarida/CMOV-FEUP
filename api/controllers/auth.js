@@ -5,7 +5,7 @@ exports.signup = async function (req, res, next) {
 
     console.log(req.body);
     // req.body contains username, name, email, password and user public key
-    let user_info = { username: req.body.username, name: req.body.name, email: req.body.email, public_key: req.body.user_public_key, total_accumulated: 0 };
+    let user_info = { username: req.body.username, name: req.body.name, email: req.body.email, public_key: req.body.user_public_key, accumulated_discount: 0, total_accumulated: 0 };
     let user = await db.User.create(user_info);
 
     let card_info = {

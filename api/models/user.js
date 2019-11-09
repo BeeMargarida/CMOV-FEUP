@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  accumulated_discount: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
   total_accumulated: {
     type: Number,
     required: true
@@ -33,13 +38,15 @@ const userSchema = new mongoose.Schema({
   shopping_baskets: [
     {
       type: mongoose.Types.UUID,
-      ref: 'ShoppingBasket'
+      ref: 'ShoppingBasket',
+      autopopulate: true
     }
   ],
   vouchers: [
     {
       type: mongoose.Types.UUID,
-      ref: 'Voucher'
+      ref: 'Voucher',
+      autopopulate: true
     }
   ]
 });
