@@ -75,7 +75,7 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
             byte[] msgByte = msg.getBytes("ISO-8859-1");
 
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "http://6168e437.ngrok.io/supermarket/checkout";
+            String url = "http://64a65fe9.ngrok.io/supermarket/checkout";
             JSONObject checkout = new JSONObject();
             checkout.put("basket", msg);
 

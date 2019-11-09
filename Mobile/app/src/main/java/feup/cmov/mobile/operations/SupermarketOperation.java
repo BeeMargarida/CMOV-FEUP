@@ -13,17 +13,17 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.security.PrivateKey;
 import java.security.Signature;
 
-public class SupermarketOperation implements Runnable {
+import feup.cmov.mobile.common.Utils;
+
+public class SupermarketOperation implements Runnable, Utils {
 
     public Supermarket supermarket;
     public byte[] userUUID;
     public PrivateKey userKey;
-    private final String ISO_SET = "ISO-8859-1";
 
     public interface Supermarket {
         void done(boolean success, int requestCode, JSONObject response, String error);
@@ -58,7 +58,7 @@ public class SupermarketOperation implements Runnable {
             sg.sign(request, 16, 512/8);
 
             RequestQueue queue = Volley.newRequestQueue((Context) supermarket);
-            String url = "http://6168e437.ngrok.io/supermarket/vouchers" + "?user_id=\"" + new String(Base64.encode(request, Base64.URL_SAFE)).replaceAll("\n", "") + "\"";
+            String url = URL + "/supermarket/vouchers" + "?user_id=\"" + new String(Base64.encode(request, Base64.URL_SAFE)).replaceAll("\n", "") + "\"";
 
             JsonObjectRequest jsonObjectRequestVoucher = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -78,7 +78,7 @@ public class SupermarketOperation implements Runnable {
             // Access the RequestQueue through your singleton class.
             queue.add(jsonObjectRequestVoucher);
 
-            url = "http://6168e437.ngrok.io/supermarket/discount" + "?user_id=\"" + new String(Base64.encode(request, Base64.URL_SAFE)).replaceAll("\n", "") + "\"";
+            url = URL + "/supermarket/discount" + "?user_id=\"" + new String(Base64.encode(request, Base64.URL_SAFE)).replaceAll("\n", "") + "\"";
             JsonObjectRequest jsonObjectRequestDiscount = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -97,24 +97,24 @@ public class SupermarketOperation implements Runnable {
             // Access the RequestQueue through your singleton class.
             queue.add(jsonObjectRequestDiscount);
 
-            /*url = "http://82d4fb6d.ngrok.io/supermarket/discount" + "?user_id=\"" + new String(Base64.encode(request, Base64.URL_SAFE)).replaceAll("\n", "") + "\"";
+            url = URL + "/supermarket/list" + "?user_id=\"" + new String(Base64.encode(request, Base64.URL_SAFE)).replaceAll("\n", "") + "\"";
             JsonObjectRequest jsonObjectRequestTransactions = new JsonObjectRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                         @Override
                         public void onResponse(JSONObject response) {
-                            supermarket.done(true, 1, response, "");
+                            supermarket.done(true, 2, response, "");
                         }
                     }, new Response.ErrorListener() {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            supermarket.done(false, 1, null, "There was a problem getting your vouchers, please try again.");
+                            supermarket.done(false, 2, null, "There was a problem getting your vouchers, please try again.");
                         }
                     });
 
             // Access the RequestQueue through your singleton class.
-            queue.add(jsonObjectRequestTransactions);*/
+            queue.add(jsonObjectRequestTransactions);
 
         }
         catch (Exception e) {

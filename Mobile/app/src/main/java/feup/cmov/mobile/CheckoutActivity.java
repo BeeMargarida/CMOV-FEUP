@@ -25,8 +25,12 @@ import java.nio.ByteBuffer;
 import java.security.KeyStore;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
+
+import feup.cmov.mobile.common.Preferences;
+import feup.cmov.mobile.common.Product;
 
 public class CheckoutActivity extends AppCompatActivity {
 
@@ -58,6 +62,10 @@ public class CheckoutActivity extends AppCompatActivity {
         checkoutDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Clear basket
+                Preferences preferences = new Preferences(context);
+                preferences.saveBasket(new ArrayList<Product>());
+
                 Intent data = new Intent();
                 Bundle extras = new Bundle();
                 System.out.println(getIntent().getExtras().getBoolean("isLoggedIn"));

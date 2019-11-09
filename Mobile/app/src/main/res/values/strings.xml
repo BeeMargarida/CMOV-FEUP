@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Acme</string>
-    <string name="ok">Ok</string>
-    <string name="cancel">Cancel</string>
     <string-array name="months">
         <item>January</item>
         <item>February</item>
@@ -41,7 +39,6 @@
         <item>2040</item>
     </string-array>
     <string name="login">login</string>
-    <string name="private_key">private_key</string>
     <string name="supermarket_public_key">supermarket_public_key</string>
     <string name="user_uuid">user_uuid</string>
     <string name="password">password</string>

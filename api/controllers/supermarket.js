@@ -43,11 +43,7 @@ exports.checkoutBasket = async function (req, res, next) {
       .then(async (foundUser) => {
 
         // Validate signature
-        const publicKey = foundUser.public_key.replace(/\n/g, '');
-        const decryptionKey = new nodeRSA();
-        decryptionKey.importKey(publicKey, 'public');
-        decryptionKey.setOptions({ signingScheme: 'pkcs1-sha256' });
-        let result = decryptionKey.verify(content, signature);
+        let result = validateSignature(content, signature, foundUser);
         if (!result) {
           next({ status: 401, message: "Signature invalid." })
         }
@@ -93,7 +89,9 @@ exports.checkoutBasket = async function (req, res, next) {
         let transaction = await db.ShoppingBasket.create({
           _id: uuid(),
           products: basket.map(prod => prod._id),
-          user: foundUser._id
+          user: foundUser._id,
+          total_price: totalPrice,
+          paid_price: finalPrice
         });
 
         console.log(transaction);
@@ -124,19 +122,18 @@ exports.listBaskets = async function (req, res, next) {
 
 
     await db.User.findOne({ _id: uuid_user_string })
-      .then(async (user) => {
-
-        const publicKey = user.public_key.replace(/\n/g, '');
-        const decryptionKey = new nodeRSA();
-        decryptionKey.importKey(publicKey, 'public');
-        decryptionKey.setOptions({ signingScheme: 'pkcs1-sha256' });
-        let result = decryptionKey.verify(content, signature);
+      .then(async (foundUser) => {
+        let result = validateSignature(content, signature, foundUser);
 
         if (!result) {
           next({ status: 401, message: "Signature invalid." })
         }
 
-        res.status(200).json(user.shopping_baskets);
+        let shopping_baskets = await db.ShoppingBasket.find({ user: foundUser._id }).populate('products');
+        if (shopping_baskets.length !== 0) {
+          shopping_baskets = shopping_baskets.map(sb => ({ "_id": sb._id, "products": getProducts(sb.products), "createdAt": sb.createdAt, "total_price": sb.total_price, "paid_price": sb.paid_price }));
+        }
+        res.status(200).json({ "transactions": shopping_baskets });
 
       })
       .catch((err) => next(err));
@@ -155,17 +152,13 @@ exports.listVouchers = async function (req, res, next) {
 
     await db.User.findOne({ _id: uuid_user_string })
       .then(async (foundUser) => {
-        const publicKey = foundUser.public_key.replace(/\n/g, '');
-        const decryptionKey = new nodeRSA();
-        decryptionKey.importKey(publicKey, 'public');
-        decryptionKey.setOptions({ signingScheme: 'pkcs1-sha256' });
-        let result = decryptionKey.verify(content, signature);
+        let result = validateSignature(content, signature, foundUser);
 
         if (!result) {
           next({ status: 401, message: "Signature invalid." })
         }
         let vouchers = await db.Voucher.find({ user: foundUser._id }, '_id');
-        vouchers = vouchers.map(v => ({"_id": v._id}));
+        vouchers = vouchers.map(v => ({ "_id": v._id }));
         res.status(200).json({ "vouchers": vouchers });
       })
       .catch((err) => next(err));
@@ -184,12 +177,7 @@ exports.getDiscount = async function (req, res, next) {
 
     await db.User.findOne({ _id: uuid_user_string })
       .then((foundUser) => {
-        console.log(foundUser);
-        const publicKey = foundUser.public_key.replace(/\n/g, '');
-        const decryptionKey = new nodeRSA();
-        decryptionKey.importKey(publicKey, 'public');
-        decryptionKey.setOptions({ signingScheme: 'pkcs1-sha256' });
-        let result = decryptionKey.verify(content, signature);
+        let result = validateSignature(content, signature, foundUser);
 
         if (!result) {
           next({ status: 401, message: "Signature invalid." })
@@ -202,4 +190,17 @@ exports.getDiscount = async function (req, res, next) {
   } catch (error) {
     next(error);
   }
+}
+
+function validateSignature(content, signature, user) {
+  const publicKey = user.public_key.replace(/\n/g, '');
+  const decryptionKey = new nodeRSA();
+  decryptionKey.importKey(publicKey, 'public');
+  decryptionKey.setOptions({ signingScheme: 'pkcs1-sha256' });
+  return decryptionKey.verify(content, signature);
+}
+
+
+function getProducts(products) {
+  return products.map(p => ({ "_id": p._id, "name": p.name, "price": p.price }));
 }

@@ -273,9 +273,9 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
                     break;
                 case 2:
                     try {
-
                         JSONArray transactions = response.getJSONArray("transactions");
                         Preferences preferences = new Preferences(context);
+                        preferences.saveTransactions(transactions);
 
                     } catch(JSONException e) {
                         Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();

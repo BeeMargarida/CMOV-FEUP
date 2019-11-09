@@ -2,35 +2,18 @@ package feup.cmov.mobile;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.UUID;
 
 import feup.cmov.mobile.common.Preferences;
-import feup.cmov.mobile.operations.SupermarketOperation;
+import feup.cmov.mobile.common.Transaction;
 
 public class HistoryActivity extends AppCompatActivity{
 
@@ -41,19 +24,24 @@ public class HistoryActivity extends AppCompatActivity{
         context=this;
         setContentView(R.layout.activity_history);
 
-        //TODO: Chamada à API para obter as transferencias
-        //TODO: Set history
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         try {
+            setHistory();
             setDiscount();
             setVouchersSize();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Toast.makeText(context, "There was a problem getting info, please try again.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void setHistory() throws JSONException, ParseException {
+        Preferences preferences = new Preferences(context);
+        ArrayList<Transaction> transactions = preferences.getTransactions();
+
     }
 
     private void setVouchersSize() throws JSONException {

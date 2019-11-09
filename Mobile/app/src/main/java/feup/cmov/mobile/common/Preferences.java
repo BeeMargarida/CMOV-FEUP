@@ -2,18 +2,18 @@ package feup.cmov.mobile.common;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Base64;
-import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.security.PrivateKey;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.Locale;
+import java.util.UUID;
 
 import feup.cmov.mobile.R;
 
@@ -86,7 +86,7 @@ public class Preferences {
         return vouchers;
     }
 
-    public String getVoucher() throws JSONException, UnsupportedEncodingException {
+    public String getVoucher() throws JSONException {
         ArrayList<String> vouchers = getVouchers();
         if(vouchers.size() != 0) {
             JSONObject obj = new JSONObject(vouchers.get(0));
@@ -104,6 +104,48 @@ public class Preferences {
     public float getDiscount(){
         float discount = sharedPreferences.getFloat("discount", 0);
         return discount;
+    }
+
+    public void saveTransactions(JSONArray transactions) {
+        String jsonString = transactions.toString();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("transactions" , jsonString);
+        editor.commit();
+    }
+
+    public ArrayList<Transaction> getTransactions() throws JSONException, ParseException {
+        String jsonString = sharedPreferences.getString("transactions", (new JSONArray()).toString());
+        JSONArray arr = new JSONArray(jsonString);
+        ArrayList<Transaction> transactions = new ArrayList<>();
+
+        if (arr != null) {
+            for (int i = 0;i < arr.length(); i++){
+                JSONObject obj = new JSONObject(arr.getString(i));
+                DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'",  Locale.ENGLISH);
+                UUID uuid = UUID.fromString(obj.getString("_id"));
+                System.out.println(obj.getString("createdAt"));
+                Date date = format.parse(obj.getString("createdAt"));
+                float totalPrice = (float) obj.getDouble("total_price");
+                float paidPrice = (float) obj.getDouble("paid_price");
+
+                ArrayList<Product> products = new ArrayList<>();
+                JSONArray prods = obj.getJSONArray("products");
+                for (int j = 0; j < prods.length(); j++) {
+                    Product product = getProduct(prods.getJSONObject(j));
+                    products.add(product);
+                }
+                transactions.add(new Transaction(uuid, products, date, totalPrice, paidPrice));
+            }
+        }
+
+        return transactions;
+    }
+
+    public Product getProduct(JSONObject obj) throws JSONException{
+        UUID uuid = UUID.fromString(obj.getString("_id"));
+        String name = obj.getString("name");
+        float price = (float) obj.getDouble("price");
+        return new Product(uuid, name, price);
     }
 
     public void saveBasket(ArrayList<Product> basket){

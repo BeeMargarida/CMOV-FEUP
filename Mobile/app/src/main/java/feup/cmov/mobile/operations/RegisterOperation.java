@@ -14,8 +14,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import feup.cmov.mobile.common.Utils;
 
-public class RegisterOperation implements Runnable {
+
+public class RegisterOperation implements Runnable, Utils {
 
     String name, username, email, cardName, cardNumber, userPublicKey;
     int cardCvc, cardMonth, cardYear;
@@ -55,7 +57,7 @@ public class RegisterOperation implements Runnable {
 
         try {
             RequestQueue queue = Volley.newRequestQueue((Context) register);
-            String url = "http://6168e437.ngrok.io/auth/signup";
+            String url = URL + "/auth/signup";
             JSONObject auth = new JSONObject();
             auth.put("name", this.name);
             auth.put("username", this.username);

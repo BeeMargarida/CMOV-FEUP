@@ -15,6 +15,14 @@ const shoppingBasketSchema = new mongoose.Schema(
     user: {
       type: mongoose.Types.UUID,
       ref: 'User'
+    },
+    total_price: {
+      type: Number,
+      required: true
+    },
+    paid_price: {
+      type: Number,
+      required: true
     }
   },
   {
