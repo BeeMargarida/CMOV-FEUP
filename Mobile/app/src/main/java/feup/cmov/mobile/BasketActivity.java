@@ -134,6 +134,8 @@ public class BasketActivity extends AppCompatActivity {
                 preferences.saveBasket(basketP);
                 try {
                     setBasket();
+                    TextView textviewTotal = findViewById(R.id.textview_total);
+                    textviewTotal.setText("0.00€");
                 } catch (JSONException e) {
                     Toast.makeText(context, "An error occurred while clearing the basket, please try again.",Toast.LENGTH_SHORT).show();
                 }
