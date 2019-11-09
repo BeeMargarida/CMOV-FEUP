@@ -2,6 +2,7 @@ package feup.cmov.mobile.auth;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.security.KeyPairGeneratorSpec;
 import android.text.TextUtils;
@@ -145,7 +146,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
         try {
             KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
             ks.load(null);
-            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            KeyStore.Entry entry = ks.getEntry("key1", null);
+            //PublicKey pub = ks.getCertificate("key1").getPublicKey();
             if (entry == null) {
                 Calendar start = new GregorianCalendar();
                 Calendar end = new GregorianCalendar();
@@ -153,8 +155,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
                 KeyPairGenerator kgen = KeyPairGenerator.getInstance("RSA", "AndroidKeyStore");
                 AlgorithmParameterSpec spec = new KeyPairGeneratorSpec.Builder(this)
                         .setKeySize(512)
-                        .setAlias("userKey")
-                        .setSubject(new X500Principal("CN=" + "userKey"))   // Usually the full name of the owner (person or organization)
+                        .setAlias("key1")
+                        .setSubject(new X500Principal("CN=" + "key1"))   // Usually the full name of the owner (person or organization)
                         .setSerialNumber(BigInteger.valueOf(12121212))
                         .setStartDate(start.getTime())
                         .setEndDate(end.getTime())
@@ -173,8 +175,14 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
         try {
             KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
             ks.load(null);
-            KeyStore.Entry entry = ks.getEntry("userKey", null);
-            PublicKey pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+            PublicKey pub;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                pub = ks.getCertificate("key1").getPublicKey();
+            } else {
+                KeyStore.Entry entry = ks.getEntry("key1", null);
+                pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
+            }
+
             pkey.publicKey = pub;
             pkey.modulus = ((RSAPublicKey)pub).getModulus().toByteArray();
             pkey.exponent = ((RSAPublicKey)pub).getPublicExponent().toByteArray();
