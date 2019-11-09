@@ -106,17 +106,17 @@ public class Preferences {
         return discount;
     }
 
-    public void saveTransactions(JSONArray transactions) {
+    public void savePurchases(JSONArray transactions) {
         String jsonString = transactions.toString();
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("transactions" , jsonString);
         editor.commit();
     }
 
-    public ArrayList<Transaction> getTransactions() throws JSONException, ParseException {
+    public ArrayList<Purchase> getPurchases() throws JSONException, ParseException {
         String jsonString = sharedPreferences.getString("transactions", (new JSONArray()).toString());
         JSONArray arr = new JSONArray(jsonString);
-        ArrayList<Transaction> transactions = new ArrayList<>();
+        ArrayList<Purchase> transactions = new ArrayList<>();
 
         if (arr != null) {
             for (int i = 0;i < arr.length(); i++){
@@ -134,7 +134,7 @@ public class Preferences {
                     Product product = getProduct(prods.getJSONObject(j));
                     products.add(product);
                 }
-                transactions.add(new Transaction(uuid, products, date, totalPrice, paidPrice));
+                transactions.add(new Purchase(uuid, products, date, totalPrice, paidPrice));
             }
         }
 

@@ -1,10 +1,12 @@
 package feup.cmov.mobile.common;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public class Transaction {
+public class Purchase {
 
     private UUID uuid;
     private ArrayList<Product> products;
@@ -12,7 +14,7 @@ public class Transaction {
     private float totalPrice;
     private float paidPrice;
 
-    public Transaction(UUID uuid, ArrayList<Product> products, Date date, float totalPrice, float paidPrice) {
+    public Purchase(UUID uuid, ArrayList<Product> products, Date date, float totalPrice, float paidPrice) {
         this.uuid = uuid;
         this.products = products;
         this.date = date;
@@ -38,6 +40,12 @@ public class Transaction {
 
     public Date getDate() {
         return date;
+    }
+
+    public String getDateString() {
+        String pattern = "MM/dd/yyyy HH:mm:ss";
+        DateFormat df = new SimpleDateFormat(pattern);
+        return df.format(date);
     }
 
     public void setDate(Date date) {

@@ -89,7 +89,18 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="25dp"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="10dp"
+        />
+
+
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbarStyle="outsideInset"
@@ -418,6 +429,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </ScrollView>-->
 
 </LinearLayout>

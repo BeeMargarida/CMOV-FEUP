@@ -63,7 +63,7 @@ public class BasketAdapter extends ArrayAdapter<Product> implements View.OnClick
         lastPosition = position;*/
 
         viewHolder.productName.setText(product.getName());
-        viewHolder.productPrice.setText(Float.toString(product.getPrice()));
+        viewHolder.productPrice.setText(Float.toString(product.getPrice()) +"€");
 
         // Return the completed view to render on screen
         return convertView;

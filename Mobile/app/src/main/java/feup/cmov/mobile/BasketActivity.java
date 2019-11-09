@@ -6,17 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,32 +19,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.security.KeyFactory;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.Signature;
 import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.UUID;
-
-import javax.crypto.NoSuchPaddingException;
 
 import feup.cmov.mobile.common.Preferences;
 import feup.cmov.mobile.common.Product;
-import feup.cmov.mobile.operations.SupermarketOperation;
 
 public class BasketActivity extends AppCompatActivity {
 
@@ -132,7 +115,6 @@ public class BasketActivity extends AppCompatActivity {
                     intent.putExtras(extras);
                     startActivityForResult(intent, 1);
                 }
-                //TODO: Atualizar preferencias (n vouchers, discount)
             }
         });
 
@@ -147,6 +129,8 @@ public class BasketActivity extends AppCompatActivity {
                 preferences.saveBasket(basketP);
                 try {
                     setBasket();
+                    TextView textviewTotal = findViewById(R.id.textview_total);
+                    textviewTotal.setText("0.00€");
                 } catch (JSONException e) {
                     Toast.makeText(context, "An error occurred while clearing the basket, please try again.",Toast.LENGTH_SHORT).show();
                 }
@@ -318,9 +302,6 @@ public class BasketActivity extends AppCompatActivity {
                 preferences.saveBasket(basketP);
                 setTotal();
 
-            }
-            else if (resultCode == Activity.RESULT_CANCELED) {
-                //Toast.makeText(context, "QRCode isn't valid.", Toast.LENGTH_SHORT).show();
             }
         }
         else if(requestCode == 1) {

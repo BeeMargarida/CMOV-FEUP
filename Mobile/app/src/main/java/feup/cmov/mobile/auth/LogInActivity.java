@@ -1,7 +1,6 @@
 package feup.cmov.mobile.auth;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import feup.cmov.mobile.MainActivity;
 import feup.cmov.mobile.R;
 import feup.cmov.mobile.common.Preferences;
 
@@ -47,7 +45,6 @@ public class LogInActivity extends AppCompatActivity {
                     Toast.makeText(context, "Wrong PIN Code", Toast.LENGTH_SHORT).show();
                     passwordInput.getText().clear();
                 }
-
             }
         });
     }
