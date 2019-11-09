@@ -21,11 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.math.BigInteger;
-import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.AlgorithmParameterSpec;
@@ -116,15 +114,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
 
                         // generate private/public key
                         generateAndStoreKeys();
-                        /*KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
-                        kpg.initialize(512);
-                        KeyPair keyPair = kpg.generateKeyPair();
-                        PrivateKey privateKey = keyPair.getPrivate();
-                        PublicKey publicKey = keyPair.getPublic();*/
-
-                        // save private key
-                        /*Preferences preferences = new Preferences(context);
-                        preferences.saveKey(privateKey);*/
 
                         // make request to server
                         RegisterOperation registerOperation = new RegisterOperation(context,

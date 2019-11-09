@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -64,6 +65,13 @@ public class Preferences {
         editor.commit();
     }
 
+    public void saveVouchers(JSONArray vouchers) {
+        String jsonString = vouchers.toString();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("vouchers" , jsonString);
+        editor.commit();
+    }
+
     public ArrayList<String> getVouchers() throws JSONException {
         String jsonString = sharedPreferences.getString("vouchers", (new JSONArray()).toString());
         JSONArray arr = new JSONArray(jsonString);
@@ -76,6 +84,15 @@ public class Preferences {
         }
 
         return vouchers;
+    }
+
+    public String getVoucher() throws JSONException, UnsupportedEncodingException {
+        ArrayList<String> vouchers = getVouchers();
+        if(vouchers.size() != 0) {
+            JSONObject obj = new JSONObject(vouchers.get(0));
+            return obj.getString("_id");
+        }
+        return null;
     }
 
     public void saveDiscount(float discount){

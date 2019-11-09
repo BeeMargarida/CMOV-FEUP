@@ -15,13 +15,7 @@ const productSchema = new mongoose.Schema({
   qr_code: {
     type: String,
     required: true
-  },
-  shopping_baskets: [
-    {
-      type: mongoose.Types.UUID,
-      ref: 'ShoppingBasket'
-    }
-  ]
+  }
 });
 
 const Product = mongoose.model('Product', productSchema);

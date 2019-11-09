@@ -6,5 +6,4 @@ router.post('/checkout', checkoutBasket);
 router.get('/list', listBaskets);
 router.get('/vouchers', listVouchers);
 router.get('/discount', getDiscount);
-
 module.exports = router;
