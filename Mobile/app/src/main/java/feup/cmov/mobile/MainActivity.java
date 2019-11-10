@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         context = this;
 
         // check if user is logged in or registered
@@ -50,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
         else if(!isLoggedIn) {
             startActivityForResult(new Intent(this, LogInActivity.class), 0);
         }
+
+        setContentView(R.layout.activity_main);
 
         Button historyButton = findViewById(R.id.historyButton);
         Button basketButton = findViewById(R.id.basketButton);
