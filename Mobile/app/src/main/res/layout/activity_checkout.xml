@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginRight="4sp"
-    android:layout_marginLeft="4sp"
     android:gravity="center"
     android:fitsSystemWindows="true"
-    >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorGrey"
+    android:orientation="vertical"
+    android:paddingLeft="25dp"
+    android:paddingTop="20dp"
+    android:paddingRight="25dp">
 
     <ImageView
         android:id="@+id/img_qr_code_image"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="10dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:layout_marginBottom="20dp"/>
 
     <Button
         android:id="@+id/back_basket"
         style="@android:style/Widget.Button.Inset"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/secondary_button"
         android:elevation="5dp"
         android:fontFamily="@font/raleway_bold"
         android:foreground="?android:attr/selectableItemBackground"
-        android:text="Go back to basket"
+        android:text="GO BACK TO BASKET"
         android:textColor="@color/colorOrange"
-        android:textSize="18sp"/>
+        android:textSize="17sp"/>
 
     <Button
         android:id="@+id/checkout_done"
         style="@android:style/Widget.Button.Inset"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="CHECKOUT COMPLETED"
+        android:layout_gravity="right"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginBottom="20dp"
         android:background="@drawable/primary_button"
-        android:foreground="?android:attr/selectableItemBackground"
         android:fontFamily="@font/raleway_bold"
-        android:text="Checkout completed"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp"/>
+        android:textSize="17dp"
+        android:layout_marginTop="20dp"/>
+
 
 
 </LinearLayout>

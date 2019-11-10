@@ -132,7 +132,7 @@ public class CheckoutActivity extends AppCompatActivity {
         for (int y = 0; y < h; y++) {
             int offset = y * w;
             for (int x = 0; x < w; x++) {
-                pixels[offset + x] = result.get(x, y) ? getResources().getColor(R.color.colorPrimary) : Color.WHITE;
+                pixels[offset + x] = result.get(x, y) ? getResources().getColor(R.color.colorOrange) : getResources().getColor(R.color.colorGrey);
             }
         }
         Bitmap bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
