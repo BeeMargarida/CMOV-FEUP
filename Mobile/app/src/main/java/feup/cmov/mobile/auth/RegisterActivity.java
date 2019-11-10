@@ -129,12 +129,12 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
                 }
                 catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
-                    Toast.makeText(context, "Error generating private/public keys, please try again.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error generating private/public keys, please try again.", Toast.LENGTH_LONG).show();
                 }
                 catch (Exception e) {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
-                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -166,7 +166,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
             }
         }
         catch (Exception ex) {
-            Toast.makeText(context, "Problem generating the user keys.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Problem generating the user keys.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -196,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
     @Override
     public void done(boolean success, JSONObject response, String error) {
         if(!success) {
-            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show();
         }
         else {
             try {
@@ -215,7 +215,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
 
             } catch (JSONException e) {
                 System.out.println(e.getMessage());
-                Toast.makeText(context, "Something went wrong, please try registering again", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Something went wrong, please try registering again", Toast.LENGTH_LONG).show();
             }
         }
     }

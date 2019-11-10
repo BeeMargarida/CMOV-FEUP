@@ -61,7 +61,7 @@ public class BasketActivity extends AppCompatActivity {
                     setVouchersSize();
                 }
                 catch (JSONException e) {
-                    Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -75,7 +75,7 @@ public class BasketActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(basketP.size() >= 10){
-                    Toast.makeText(context, "You can only add 10 items to your basket.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "You can only add 10 items to your basket.",Toast.LENGTH_LONG).show();
                 }
                 else if (ContextCompat.checkSelfPermission(context,
                         Manifest.permission.CAMERA)
@@ -108,7 +108,7 @@ public class BasketActivity extends AppCompatActivity {
 
                 byte[] message = buildQRMessage(basketP, useDiscount, useVouchers);
                 if(message == null) {
-                    Toast.makeText(context, "Checkout can't be processed at the moment, try again later.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Checkout can't be processed at the moment, try again later.", Toast.LENGTH_LONG).show();
                 }
                 else {
                     Intent intent = new Intent(context, CheckoutActivity.class);
@@ -136,10 +136,12 @@ public class BasketActivity extends AppCompatActivity {
                     textviewTotal.setText("0.00€");
                     handleButtons();
                 } catch (JSONException e) {
-                    Toast.makeText(context, "An error occurred while clearing the basket, please try again.",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "An error occurred while clearing the basket, please try again.",Toast.LENGTH_LONG).show();
                 }
             }
         });
+
+        handleButtons();
     }
 
     @Override
@@ -153,7 +155,7 @@ public class BasketActivity extends AppCompatActivity {
             handleButtons();
         }
         catch (JSONException e) {
-            Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_LONG).show();
         }
     }
 

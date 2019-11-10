@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(context, "There was a problem getting the user information, please try again.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "There was a problem getting the user information, please try again.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
     @Override
     public void done(boolean success, int requestCode, JSONObject response, String error) {
         if(!success) {
-            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, error, Toast.LENGTH_LONG).show();
         }
         else {
 
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
                         preferences.saveVouchers(vouchers);
 
                     } catch(JSONException e) {
-                        Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case 1:
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
                         preferences.saveDiscount(discount);
 
                     } catch(JSONException e) {
-                        Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_LONG).show();
                     }
                     break;
                 case 2:
@@ -185,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements SupermarketOperat
                         preferences.savePurchases(transactions);
 
                     } catch(JSONException e) {
-                        Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_LONG).show();
                     }
                     break;
                 default:

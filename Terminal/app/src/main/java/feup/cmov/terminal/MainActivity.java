@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else {
-                    Toast.makeText(context, "Can't access the camera. Try again later.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Can't access the camera. Try again later.", Toast.LENGTH_LONG).show();
                 }
             }
         }

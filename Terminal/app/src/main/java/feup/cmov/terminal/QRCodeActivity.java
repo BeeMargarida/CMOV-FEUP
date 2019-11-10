@@ -75,7 +75,7 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
             byte[] msgByte = msg.getBytes("ISO-8859-1");
 
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "http://64a65fe9.ngrok.io/supermarket/checkout";
+            String url = "http://760e5bd4.ngrok.io/supermarket/checkout";
             JSONObject checkout = new JSONObject();
             checkout.put("basket", msg);
 
@@ -95,7 +95,7 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
                                 startActivity(intent);
 
                             } catch(JSONException e) {
-                                Toast.makeText(context, "There was an error, please try again later.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "There was an error, please try again later.", Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -103,6 +103,7 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
                             Log.d("CHECKOUT", "Checkout not successful");
                             finish();
                         }
@@ -116,9 +117,9 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
             queue.add(jsonObjectRequest);
 
         } catch(JSONException e) {
-            Toast.makeText(this, "There was a problem creating the request, please try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "There was a problem creating the request, please try again.", Toast.LENGTH_LONG).show();
         } catch (UnsupportedEncodingException e){
-            Toast.makeText(this, "There was a problem creating the request, please try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "There was a problem creating the request, please try again.", Toast.LENGTH_LONG).show();
         }
     }
 

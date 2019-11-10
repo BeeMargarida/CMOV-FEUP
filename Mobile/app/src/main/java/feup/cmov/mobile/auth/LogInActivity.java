@@ -35,7 +35,7 @@ public class LogInActivity extends AppCompatActivity {
                 String passwordString = passwordInput.getText().toString();
 
                 if(passwordString.equals("")) {
-                    Toast.makeText(context, "Please insert your PIN Code.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please insert your PIN Code.", Toast.LENGTH_LONG).show();
                 }
                 else if(Long.parseLong(passwordString) == storedPassword){
                     setResult(RESULT_OK);

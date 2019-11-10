@@ -9,8 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import java.util.ArrayList;
+import android.widget.Toast;
 
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
+
+import feup.cmov.mobile.common.Preferences;
+import feup.cmov.mobile.common.Product;
 import feup.cmov.mobile.common.Purchase;
 
 public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnClickListener{
@@ -20,6 +28,7 @@ public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnCli
 
     // View lookup cache
     private static class ViewHolder {
+        LinearLayout item;
         TextView purchaseID;
         TextView purchaseDate;
         LinearLayout purchaseProducts;
@@ -35,7 +44,8 @@ public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        //TODO: DELETE PRODUCT
+
+
     }
 
     private int lastPosition = -1;
@@ -59,6 +69,7 @@ public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnCli
             viewHolder.totalPrice = (TextView) convertView.findViewById(R.id.purchase_price);
             viewHolder.paidPrice = (TextView) convertView.findViewById(R.id.purchase_paid_price);
             viewHolder.purchaseProducts = (LinearLayout)  convertView.findViewById(R.id.purchase_prdsucts);
+            viewHolder.item = (LinearLayout) convertView.findViewById(R.id.item);
 
             result=convertView;
 
@@ -88,6 +99,42 @@ public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnCli
 
             viewHolder.purchaseProducts.addView(textView);
         }
+
+        //TODO: EXTRA FEATURE
+        viewHolder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                LinearLayout itemView = (LinearLayout) v;
+                TextView objectID = (TextView) itemView.findViewById(R.id.purchase_id);
+                ArrayList<Product> newProducts = new ArrayList<>();
+
+                Toast.makeText(mContext, "ID: " + objectID.getText(), Toast.LENGTH_SHORT).show();
+
+                /*ArrayList <Purchase> history = new ArrayList();
+                //TODO: Get history from preferences
+                for(int i=0; i<history.size(); i++){
+                    String id = history.get(i).getUuid().toString().substring(0, 6);
+                    if(objectID.equals(id)){
+                        newProducts = history.get(i).getProducts();
+                        break;
+                    }
+                }
+
+                try {
+                    Preferences preferences = new Preferences(mContext);
+                    ArrayList <Product> basketP = null;
+                    basketP = preferences.getBasket();
+                    for(int i = 0; i < newProducts.size(); i++){
+                        basketP.add(newProducts.get(i));
+                    }
+                    preferences.saveBasket(basketP);
+                    Toast.makeText(mContext, "Products added to basket with success", Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    Toast.makeText(mContext, "There was a problem adding products to basket, please try again.", Toast.LENGTH_LONG).show();
+                }*/
+            }
+        });
 
         return convertView;
     }
