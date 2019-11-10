@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/colorGrey" />
-            <stroke android:width="2dp" android:color="@color/colorOrange" />
-            <corners android:radius="10dp"/>
-        </shape>
-    </item>
+    <item
+        android:state_enabled="false"
+        android:drawable="@drawable/secondary_button_disabled" />
+    <item
+        android:state_enabled="true"
+        android:drawable="@drawable/secondary_button_enabled" />
 </selector>

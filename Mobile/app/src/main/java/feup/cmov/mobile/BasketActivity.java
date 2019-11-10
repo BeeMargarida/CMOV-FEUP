@@ -68,6 +68,8 @@ public class BasketActivity extends AppCompatActivity {
 
         t.start();
 
+        handleButtons();
+
         Button addProductButton = findViewById(R.id.addProductButton);
         addProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +134,7 @@ public class BasketActivity extends AppCompatActivity {
                     setBasket();
                     TextView textviewTotal = findViewById(R.id.textview_total);
                     textviewTotal.setText("0.00€");
+                    handleButtons();
                 } catch (JSONException e) {
                     Toast.makeText(context, "An error occurred while clearing the basket, please try again.",Toast.LENGTH_SHORT).show();
                 }
@@ -147,6 +150,7 @@ public class BasketActivity extends AppCompatActivity {
             setTotal();
             setDiscount();
             setVouchersSize();
+            handleButtons();
         }
         catch (JSONException e) {
             Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_SHORT).show();
@@ -198,6 +202,24 @@ public class BasketActivity extends AppCompatActivity {
         }
         else {
             checkboxVouchers.setText("Use one of the " + vouchersSize + " voucher");
+        }
+    }
+
+    private void handleButtons(){
+        if(basketP.size()==0){
+            Button checkoutButton = findViewById(R.id.checkoutButton);
+            checkoutButton.setEnabled(false);
+
+            Button clearBasketButton = findViewById(R.id.clearBasketButton);
+            clearBasketButton.setTextColor(getResources().getColor(R.color.colorDarkGrey));
+            clearBasketButton.setEnabled(false);
+        } else {
+            Button checkoutButton = findViewById(R.id.checkoutButton);
+            checkoutButton.setEnabled(true);
+
+            Button clearBasketButton = findViewById(R.id.clearBasketButton);
+            clearBasketButton.setTextColor(getResources().getColor(R.color.colorOrange));
+            clearBasketButton.setEnabled(true);
         }
     }
 
