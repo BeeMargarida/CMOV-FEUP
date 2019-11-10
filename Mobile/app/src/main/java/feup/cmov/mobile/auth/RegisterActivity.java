@@ -179,7 +179,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterOpera
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 pub = ks.getCertificate("key1").getPublicKey();
             } else {
-                KeyStore.Entry entry = ks.getEntry("key1", null);
+                KeyStore.Entry entry = ks.getEntry("userKey", null);
                 pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
             }
 

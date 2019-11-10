@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     public final int CAMERA_PERMISSIONS_CODE = 0;
     Context context;
+    String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +41,25 @@ public class MainActivity extends AppCompatActivity {
                 } else {
 
                     Intent intent = new Intent(context, QRCodeActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, 0);
 
                 }
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(errorMessage != null) {
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        this.errorMessage = null;
     }
 
     @Override
@@ -54,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     Intent intent = new Intent(context, QRCodeActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, 0);
 
                 } else {
                     Toast.makeText(context, "Can't access the camera. Try again later.", Toast.LENGTH_LONG).show();
@@ -63,4 +78,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            if(bundle != null && bundle.getString("error") != null) {
+                errorMessage = bundle.getString("error");
+            }
+        }
+    }
 }

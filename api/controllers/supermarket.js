@@ -8,7 +8,6 @@ const uuid = require('uuid/v4');
  */
 exports.checkoutBasket = async function (req, res, next) {
   try {
-    console.log(req.body);
     const buffer = Buffer.from(req.body.basket, "latin1");
     const sizeBasket = buffer.readInt8();
     const basket = [];
@@ -20,14 +19,12 @@ exports.checkoutBasket = async function (req, res, next) {
       uuid_prod.writeBigUInt64LE(buffer.readBigUInt64LE(9 + i * 16), 8);
       let uuid_string = uuid({ random: [...uuid_prod] });
 
-      await db.Product.findOne({ _id: uuid_string })
-        .then((product) => {
-          basket.push(product);
-        })
-        .catch((err) => next({ status: 400, message: `Product with id ${uuid_string} doesn't exist` }));
+      let product = await db.Product.findOne({ _id: uuid_string });
+      if(product === null) {
+        return res.status(400).json({ message: `Product with id ${uuid_string} doesn't exist` });
+      }
+      basket.push(product);
     }
-
-    console.log(basket);
 
     // Get user UUID
     let uuid_user = Buffer.alloc(16);
@@ -66,7 +63,6 @@ exports.checkoutBasket = async function (req, res, next) {
 
         if (voucher_uuid.readBigInt64LE() !== 0n) {
           voucher_uuid_string = uuid({ random: [...voucher_uuid] });
-          console.log(voucher_uuid_string);
 
           await db.Voucher.findOne({ _id: voucher_uuid_string, user: foundUser._id })
             .then(async (voucher) => {
@@ -75,7 +71,6 @@ exports.checkoutBasket = async function (req, res, next) {
               await voucher.remove();
             })
             .catch((error) => {
-              console.log(error);
               next({ status: 401, message: "Voucher not valid." });
             });
         }
@@ -94,21 +89,17 @@ exports.checkoutBasket = async function (req, res, next) {
           paid_price: finalPrice
         });
 
-        console.log(transaction);
-
         await foundUser.shopping_baskets.push(transaction._id);
         await foundUser.update({ total_accumulated: total_accumulated, accumulated_discount: accumulated_discount });
         await foundUser.save();
 
-        res.status(200).json({ totalPrice: finalPrice });
+        return res.status(200).json({ totalPrice: finalPrice });
       })
       .catch((error) => {
-        console.log(error);
         next(error);
       });
 
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
@@ -173,7 +164,6 @@ exports.getDiscount = async function (req, res, next) {
     let content = buffer.slice(0, 16);
     let signature = buffer.slice(16, buffer.length);
     const uuid_user_string = uuid({ random: [...content] });
-    console.log(uuid_user_string);
 
     await db.User.findOne({ _id: uuid_user_string })
       .then((foundUser) => {

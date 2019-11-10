@@ -1,5 +1,6 @@
 package feup.cmov.terminal;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -69,13 +70,12 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result result) {
 
-        Intent data = new Intent();
         try {
             String msg = result.getText();
             byte[] msgByte = msg.getBytes("ISO-8859-1");
 
             RequestQueue queue = Volley.newRequestQueue(this);
-            String url = "http://760e5bd4.ngrok.io/supermarket/checkout";
+            String url = "http://63d1a908.ngrok.io/supermarket/checkout";
             JSONObject checkout = new JSONObject();
             checkout.put("basket", msg);
 
@@ -104,7 +104,19 @@ public class QRCodeActivity extends AppCompatActivity implements ZXingScannerVie
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            Log.d("CHECKOUT", "Checkout not successful");
+                            try {
+                                Intent data = new Intent();
+
+                                JSONObject obj = new JSONObject(new String(error.networkResponse.data));
+                                String errorMessage = obj.getString("message");
+
+                                Bundle extra = new Bundle();
+                                extra.putString("error", errorMessage);
+                                data.putExtras(extra);
+                                setResult(Activity.RESULT_OK,data);
+
+                            } catch (JSONException e) {
+                            }
                             finish();
                         }
                     });

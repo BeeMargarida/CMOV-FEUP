@@ -246,7 +246,7 @@ public class BasketActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             pri = (PrivateKey) ks.getKey("key1", null);
         } else {
-            KeyStore.Entry entry = ks.getEntry("key1", null);
+            KeyStore.Entry entry = ks.getEntry("userKey", null);
             pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
         }
 
