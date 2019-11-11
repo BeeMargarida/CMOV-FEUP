@@ -76,7 +76,9 @@ exports.checkoutBasket = async function (req, res, next) {
         }
 
         const total_accumulated = finalPrice + foundUser.total_accumulated;
-        if ((total_accumulated % 100) == 0) {
+        let number_vouchers = Math.floor((total_accumulated - foundUser.total_accumulated)/100);
+        number_vouchers = number_vouchers < 0 ? 0 : number_vouchers;
+        for (let i = 0; i < number_vouchers; i++) {
           let newVoucher = await db.Voucher.create({ _id: uuid(), user: foundUser._id });
           await foundUser.vouchers.push(newVoucher._id);
         }
