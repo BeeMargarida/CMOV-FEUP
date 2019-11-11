@@ -59,6 +59,7 @@ public class BasketActivity extends AppCompatActivity {
                     setTotal();
                     setDiscount();
                     setVouchersSize();
+                    handleButtons();
                 }
                 catch (JSONException e) {
                     Toast.makeText(context, "An error occurred, please try again.",Toast.LENGTH_LONG).show();
