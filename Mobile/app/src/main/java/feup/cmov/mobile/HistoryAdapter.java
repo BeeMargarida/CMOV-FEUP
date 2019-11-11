@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
@@ -107,32 +108,47 @@ public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnCli
 
                 LinearLayout itemView = (LinearLayout) v;
                 TextView objectID = (TextView) itemView.findViewById(R.id.purchase_id);
-                ArrayList<Product> newProducts = new ArrayList<>();
 
                 Toast.makeText(mContext, "ID: " + objectID.getText(), Toast.LENGTH_SHORT).show();
 
-                /*ArrayList <Purchase> history = new ArrayList();
-                //TODO: Get history from preferences
+                Preferences preferences = new Preferences(mContext);
+                ArrayList<Purchase> history = new ArrayList<>();
+                try {
+                    history = preferences.getPurchases();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                ArrayList<Product> newProducts = new ArrayList<>();
                 for(int i=0; i<history.size(); i++){
                     String id = history.get(i).getUuid().toString().substring(0, 6);
-                    if(objectID.equals(id)){
+                    if(objectID.getText().equals(id)){
                         newProducts = history.get(i).getProducts();
                         break;
                     }
                 }
 
                 try {
-                    Preferences preferences = new Preferences(mContext);
-                    ArrayList <Product> basketP = null;
+                    ArrayList<Product> basketP = null;
                     basketP = preferences.getBasket();
-                    for(int i = 0; i < newProducts.size(); i++){
-                        basketP.add(newProducts.get(i));
+
+                    if (basketP.size() + newProducts.size() <= 10) {
+                        for (int i = 0; i < newProducts.size(); i++) {
+                            basketP.add(newProducts.get(i));
+                        }
+
+                        preferences.saveBasket(basketP);
+                        Toast.makeText(mContext, "Products added to your basket with success.", Toast.LENGTH_SHORT).show();
                     }
-                    preferences.saveBasket(basketP);
-                    Toast.makeText(mContext, "Products added to basket with success", Toast.LENGTH_SHORT).show();
+                    else{
+                        Toast.makeText(mContext, "You can only have 10 items in basket.", Toast.LENGTH_SHORT).show();
+                    }
+
                 } catch (JSONException e) {
                     Toast.makeText(mContext, "There was a problem adding products to basket, please try again.", Toast.LENGTH_LONG).show();
-                }*/
+                }
             }
         });
 
