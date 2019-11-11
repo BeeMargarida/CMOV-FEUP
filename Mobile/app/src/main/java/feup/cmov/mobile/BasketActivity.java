@@ -226,17 +226,6 @@ public class BasketActivity extends AppCompatActivity {
         }
     }
 
-    private byte[] getUserUUID() {
-        Preferences preferences = new Preferences(context);
-        String userUUIDString = preferences.getUserUUID();
-        UUID userUUID = UUID.fromString(userUUIDString);
-
-        ByteBuffer bb = ByteBuffer.allocate(16);
-        bb.putLong(userUUID.getMostSignificantBits());
-        bb.putLong(userUUID.getLeastSignificantBits());
-        return bb.array();
-    }
-
     private PrivateKey getUserKey() throws KeyStoreException, NoSuchAlgorithmException, UnrecoverableEntryException, CertificateException, IOException {
         
         KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
@@ -247,7 +236,7 @@ public class BasketActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             pri = (PrivateKey) ks.getKey("key1", null);
         } else {
-            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            KeyStore.Entry entry = ks.getEntry("key1", null);
             pri = ((KeyStore.PrivateKeyEntry)entry).getPrivateKey();
         }
 
@@ -278,7 +267,7 @@ public class BasketActivity extends AppCompatActivity {
             bb.put((byte)(useDiscount ? 1 : 0));
 
             String voucherUUIDString = preferences.getVoucher();
-            if(voucherUUIDString != null) {
+            if(useVoucher && voucherUUIDString != null) {
                 UUID voucherUUID = UUID.fromString(voucherUUIDString);
                 bb.putLong(voucherUUID.getMostSignificantBits());
                 bb.putLong(voucherUUID.getLeastSignificantBits());
@@ -287,6 +276,7 @@ public class BasketActivity extends AppCompatActivity {
                 bb.putLong(0);
                 bb.putLong(0);
             }
+
 
             //bb.put((byte)(useVoucher ? 1 : 0));
             byte[] message = bb.array();

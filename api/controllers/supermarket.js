@@ -95,7 +95,7 @@ exports.checkoutBasket = async function (req, res, next) {
         await foundUser.update({ total_accumulated: total_accumulated, accumulated_discount: accumulated_discount });
         await foundUser.save();
 
-        return res.status(200).json({ totalPrice: finalPrice });
+        return res.status(200).json({ totalPrice: finalPrice.toFixed(2) });
       })
       .catch((error) => {
         next(error);

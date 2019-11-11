@@ -145,7 +145,7 @@ public class CheckoutActivity extends AppCompatActivity {
         try {
             KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
             ks.load(null);
-            KeyStore.Entry entry = ks.getEntry("userKey", null);
+            KeyStore.Entry entry = ks.getEntry("key1", null);
             PublicKey pub = ((KeyStore.PrivateKeyEntry)entry).getCertificate().getPublicKey();
             Signature sg = Signature.getInstance("SHA256WithRSA");
             sg.initVerify(pub);
