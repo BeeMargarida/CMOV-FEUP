@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Acme</string>
+    <string name="app_name">ACME Customer</string>
     <string-array name="months">
         <item>January</item>
         <item>February</item>

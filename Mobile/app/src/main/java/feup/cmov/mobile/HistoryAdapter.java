@@ -15,8 +15,6 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
 
 import feup.cmov.mobile.common.Preferences;
 import feup.cmov.mobile.common.Product;
@@ -101,7 +99,7 @@ public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnCli
             viewHolder.purchaseProducts.addView(textView);
         }
 
-        //TODO: EXTRA FEATURE
+        //EXTRA FEATURE
         viewHolder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
