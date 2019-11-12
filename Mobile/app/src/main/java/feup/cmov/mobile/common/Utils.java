@@ -1,6 +1,6 @@
 package feup.cmov.mobile.common;
 
 public interface Utils {
-    String URL = "http://9b520a08.ngrok.io";
+    String URL = "http://69015b8b.ngrok.io";
     String ISO_SET = "ISO-8859-1";
 }

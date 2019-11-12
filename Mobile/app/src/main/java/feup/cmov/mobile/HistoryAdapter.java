@@ -80,13 +80,13 @@ public class HistoryAdapter extends ArrayAdapter<Purchase> implements View.OnCli
 
         viewHolder.purchaseID.setText(purchase.getUuid().toString().substring(0, 6));
         viewHolder.purchaseDate.setText(purchase.getDateString());
-        viewHolder.totalPrice.setText(Float.toString(purchase.getTotalPrice()) +"€");
-        viewHolder.paidPrice.setText(Float.toString(purchase.getPaidPrice()) +"€");
+        viewHolder.totalPrice.setText(String.format ("%.2f", purchase.getTotalPrice()) +"€");
+        viewHolder.paidPrice.setText(String.format ("%.2f", purchase.getPaidPrice()) +"€");
         viewHolder.purchaseProducts.removeAllViews();
 
         for(int i = 0; i < purchase.getProducts().size(); i++){
             TextView textView = new TextView(this.mContext);
-            textView.setText(purchase.getProducts().get(i).getName() + " - " + purchase.getProducts().get(i).getPrice()+"€");
+            textView.setText(purchase.getProducts().get(i).getName() + " - " + String.format ("%.2f", purchase.getProducts().get(i).getPrice())+"€");
             textView.setTextSize((float) 17);
             textView.setTextColor(Color.parseColor("#003845"));
             Typeface font = Typeface.createFromAsset(mContext.getAssets(), "raleway.ttf");

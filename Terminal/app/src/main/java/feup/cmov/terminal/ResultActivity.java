@@ -26,7 +26,7 @@ public class ResultActivity extends AppCompatActivity {
         double price = (double) getIntent().getExtras().getDouble("totalPrice");
 
         TextView priceText = (TextView) findViewById(R.id.price);
-        priceText.setText(price + "€");
+        priceText.setText(String.format ("%.2f", price) + "€");
 
         Button goBackButton = findViewById(R.id.go_back);
         goBackButton.setOnClickListener(new View.OnClickListener() {

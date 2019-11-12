@@ -28,7 +28,6 @@ public class BasketAdapter extends ArrayAdapter<Product> implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        //TODO: DELETE PRODUCT
     }
 
     private int lastPosition = -1;
@@ -63,7 +62,7 @@ public class BasketAdapter extends ArrayAdapter<Product> implements View.OnClick
         lastPosition = position;*/
 
         viewHolder.productName.setText(product.getName());
-        viewHolder.productPrice.setText(Float.toString(product.getPrice()) +"€");
+        viewHolder.productPrice.setText(String.format ("%.2f", product.getPrice()) +"€");
 
         // Return the completed view to render on screen
         return convertView;

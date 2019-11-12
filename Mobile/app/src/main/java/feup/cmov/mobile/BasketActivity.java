@@ -192,7 +192,7 @@ public class BasketActivity extends AppCompatActivity {
             checkboxDiscount.setVisibility(View.GONE);
         }
         else {
-            checkboxDiscount.setText("Use accumulated discount of " + Float.toString(discount) + "€");
+            checkboxDiscount.setText("Use accumulated discount of " + String.format ("%.2f", discount) + "€");
         }
     }
 
