@@ -3,13 +3,13 @@
 
 namespace Weather.Utils
 {
-    class ForecastData
+    public class ForecastData
     {
         [JsonProperty("list")]
         public ForecastEntry[] Entries { get; set; }
     }
 
-    class ForecastEntry
+    public class ForecastEntry
     {
         [JsonProperty("dt")]
         public string DateTime { get; set; }

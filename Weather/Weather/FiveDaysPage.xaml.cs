@@ -5,10 +5,10 @@ using Weather.Models;
 namespace Weather
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TodayPage : ContentPage
+    public partial class FiveDaysPage : ContentPage
     {
         private City city;
-        public TodayPage(City city)
+        public FiveDaysPage(City city)
         {
             this.city = city;
             InitializeComponent();

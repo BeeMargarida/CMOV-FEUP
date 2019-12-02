@@ -6,7 +6,5 @@
              mc:Ignorable="d"
              xmlns:local="clr-namespace:Weather"
              x:Class="Weather.CityPage">
-    <local:TodayPage />
-    <local:TomorrowPage />
-    <local:TenDaysPage />
+
 </TabbedPage>

@@ -4,11 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             Title="today"
-             x:Class="Weather.TodayPage">
+             Title="5 days"
+             x:Class="Weather.FiveDaysPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding city.Name}"
+            <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

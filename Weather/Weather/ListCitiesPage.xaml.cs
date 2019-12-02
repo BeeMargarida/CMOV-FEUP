@@ -28,8 +28,6 @@ namespace Weather
         {
             base.OnAppearing();
 
-            //listView.ItemsSource = new List<City>();
-
             if (IsBusy)
                 return;
             try
@@ -46,7 +44,7 @@ namespace Weather
                         if(word != "")
                         {
                             City city = new City(word);
-                            ResultData data = await Client.getData(Client.generateUri(word));
+                            ResultData data = await Client.getCurrentWeather(Client.generateUri("weather", word));
                             city.setData(data);
 
                             Cities.Add(city);
@@ -77,7 +75,7 @@ namespace Weather
 
             if (searchBar.Text != "")
             {
-                ResultData data = await Client.getData(Client.generateUri(searchBar.Text));
+                ResultData data = await Client.getCurrentWeather(Client.generateUri("weather", searchBar.Text));
 
                 if (data == null)
                 {

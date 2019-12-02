@@ -16,6 +16,7 @@ namespace Weather.Models
         public long Humidity { get; set; }
         public double MinTemperature { get; set; }
         public double MaxTemperature { get; set; }
+        public ForecastData Forecast { get; set; }
 
         public City(string name)
         {

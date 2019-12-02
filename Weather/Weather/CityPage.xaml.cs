@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Weather.Models;
+using Weather.Utils;
 
 namespace Weather
 {
@@ -11,21 +12,21 @@ namespace Weather
         private City city;
         public CityPage(City city)
         {
-            InitializeComponent();
             this.city = city;
+            InitializeComponent();    
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            //listView.ItemsSource = new List<City>();
-
             if (IsBusy)
                 return;
             try
             {
-               
+                HttpService client = new HttpService();
+                ForecastData data = await client.getForecast(client.generateUri("forecast", this.city.Name));
+                city.Forecast = data;
             }
             catch (Exception e)
             {
@@ -39,6 +40,10 @@ namespace Weather
             {
                 IsBusy = false;
             }
+
+            this.Children.Add(new TodayPage(this.city));
+            this.Children.Add(new TomorrowPage(this.city));
+            this.Children.Add(new FiveDaysPage(this.city));
         }
     }
 }

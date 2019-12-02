@@ -15,7 +15,7 @@ namespace Weather.Utils
             client = new HttpClient();
         }
 
-        public async Task<ResultData> getData(string uri)
+        public async Task<ResultData> getCurrentWeather(string uri)
         {
             ResultData data = null;
             try
@@ -36,9 +36,30 @@ namespace Weather.Utils
             return data;
         }
 
-        public string generateUri(string city)
+        public async Task<ForecastData> getForecast(string uri)
         {
-            return Constants.OpenWeatherMapEndpoint + "?q=" + city + ",pt&units=metric&appid=" + Constants.OpenWeatherMapAPIKey;
+            ForecastData data = null;
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    data = JsonConvert.DeserializeObject<ForecastData>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("\tERROR {0}", ex.Message);
+                return null;
+            }
+
+            return data;
+        }
+
+        public string generateUri(string action, string city)
+        {
+            return Constants.OpenWeatherMapEndpoint + action + "?q=" + city + ",pt&units=metric&appid=" + Constants.OpenWeatherMapAPIKey;
         }
     }
 }
