@@ -24,8 +24,8 @@ namespace Weather
                 return;
             try
             {
-                HttpService client = new HttpService();
-                ForecastData data = await client.getForecast(client.generateUri("forecast", this.city.Name));
+                HttpService Client = new HttpService();
+                ForecastData data = await Client.getForecast(Client.generateUri("forecast", this.city.Name));
                 city.Forecast = data;
             }
             catch (Exception e)

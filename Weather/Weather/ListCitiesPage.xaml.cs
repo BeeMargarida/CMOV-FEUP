@@ -105,10 +105,7 @@ namespace Weather
         {
             if (e.SelectedItem != null)
             {
-                await Navigation.PushAsync(new CityPage
-                {
-                    BindingContext = e.SelectedItem as City
-                });
+                await Navigation.PushAsync(new CityPage((City) e.SelectedItem));
             }
         }
 

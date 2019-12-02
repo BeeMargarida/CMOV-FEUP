@@ -10,8 +10,9 @@ namespace Weather
         private City city;
         public TodayPage(City city)
         {
-            this.city = city;
             InitializeComponent();
+            this.city = city;
+            this.BindingContext = city;
         }
     }
 }

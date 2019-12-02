@@ -8,9 +8,52 @@
              x:Class="Weather.TodayPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding city.Name}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <FlexLayout Direction="Column" AlignItems="Start" JustifyContent="Start">
+                <Image Source="{Binding CurrentWeatherIcon}"/>
+                <Label Text="{Binding Name}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+            </FlexLayout>
+            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start">
+                <Label Text="{Binding Temperature}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                <StackLayout>
+                    <Label Text="{Binding MaxTemperature}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <Label Text="{Binding MinTemperature}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                </StackLayout>
+            </FlexLayout>
+            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+                <StackLayout>
+                    <Label Text="pressure"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <Label Text="{Binding Pressure}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="wind"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <Label Text="{Binding WindSpeed}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="humidity"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <Label Text="{Binding Humidity}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                </StackLayout>
+            </FlexLayout>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
