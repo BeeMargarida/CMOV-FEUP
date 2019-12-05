@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5F66CE42-DC67-4B63-8E88-7D40C035E3DC}</ProjectGuid>
+    <ProjectGuid>{56FFADEF-950D-4A57-8825-C61F3FEAE2A6}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
     <OutputType>Library</OutputType>
@@ -90,7 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Weather\Weather.csproj">
-      <Project>{F6E229FB-75F7-4E67-A700-DB6251EA9BFA}</Project>
+      <Project>{37F9D9A5-33FD-4690-9A9D-011CE22F4F3F}</Project>
       <Name>Weather</Name>
     </ProjectReference>
   </ItemGroup>

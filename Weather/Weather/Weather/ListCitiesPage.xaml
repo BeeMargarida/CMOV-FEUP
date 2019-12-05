@@ -33,9 +33,12 @@
                             <Label Grid.Row="0" Grid.Column="0"
                                Text="Delete Icon"
                             />
-                            <Label Grid.Row="0" Grid.Column="1"
-                               Text="{Binding CurrentWeatherStatus}"
-                            />
+                            <FlexLayout Grid.Row="0" Grid.Column="1" Direction="Row" AlignItems="End" JustifyContent="End">
+                                <Label 
+                                   Text="{Binding CurrentWeatherStatus}"
+                                />
+                                <Image Source="{Binding CurrentWeatherIcon}"/>
+                            </FlexLayout>
                             <Label Grid.Row="1" Grid.Column="0"
                                Text="{Binding Name}"
                                FontAttributes="Bold" />

@@ -16,11 +16,11 @@ namespace Weather.Models
         [JsonProperty("main")]
         public Main Main { get; set; }
 
-        [JsonProperty("visibility")]
-        public long Visibility { get; set; }
-
         [JsonProperty("wind")]
         public Wind Wind { get; set; }
+
+        [JsonProperty("rain")]
+        public Rain Rain{ get; set; }
     }
 
     public class Main
@@ -63,5 +63,11 @@ namespace Weather.Models
 
         [JsonProperty("degree")]
         public long Degree { get; set; }
+    }
+
+    public class Rain
+    {
+        [JsonProperty("1h")]
+        public double RainVolume { get; set; }
     }
 }

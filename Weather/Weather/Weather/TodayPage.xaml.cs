@@ -5,13 +5,14 @@ using Weather.Models;
 namespace Weather
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TomorrowPage : ContentPage
+    public partial class TodayPage : ContentPage
     {
         private City city;
-        public TomorrowPage(City city)
+        public TodayPage(City city)
         {
-            this.city = city;
             InitializeComponent();
+            this.city = city;
+            this.BindingContext = city.Today;
         }
     }
 }

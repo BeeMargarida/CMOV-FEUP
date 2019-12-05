@@ -10,7 +10,7 @@
         <StackLayout>
             <FlexLayout Direction="Column" AlignItems="Start" JustifyContent="Start">
                 <Image Source="{Binding CurrentWeatherIcon}"/>
-                <Label Text="{Binding Name}"
+                <Label Text="{Binding CurrentWeatherStatus}"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
             </FlexLayout>
@@ -33,6 +33,14 @@
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                     <Label Text="{Binding Pressure}"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="rain"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <Label Text="{Binding Rain}"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 </StackLayout>
