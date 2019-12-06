@@ -12,6 +12,13 @@ namespace Weather
         {
             this.city = city;
             InitializeComponent();
+            this.BindingContext = this.city.FiveDays;
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            listView.ItemsSource = this.city.FiveDays;
         }
     }
 }

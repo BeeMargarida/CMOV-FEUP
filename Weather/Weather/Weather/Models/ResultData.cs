@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Weather.Models
 {
@@ -41,7 +42,7 @@ namespace Weather.Models
         public double MaxTemperature { get; set; }
     }
 
-    public class WeatherStatus
+    public class WeatherStatus : IComparable<WeatherStatus>
     {
         [JsonProperty("id")]
         public long ID { get; set; }
@@ -49,11 +50,14 @@ namespace Weather.Models
         [JsonProperty("main")]
         public string Status { get; set; }
 
-        [JsonProperty("description")]
-        public string StatusDescription { get; set; }
-
         [JsonProperty("icon")]
         public string Icon { get; set; }
+
+        public int CompareTo(WeatherStatus that)
+        {
+            if (this.ID > that.ID) return 0;
+            return -1;
+        }
     }
 
     public class Wind

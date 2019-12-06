@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Weather.Models
@@ -33,7 +34,7 @@ namespace Weather.Models
             this.CurrentWeatherStatus = data.Weather[0].Status;
             this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png");
             this.Temperature = Math.Round(data.Main.Temperature).ToString();
-            this.Today.setData(data);
+            this.Today.setData(data, DateTime.Now);
         }
 
         public void setForecastData(ForecastData data)
@@ -41,6 +42,7 @@ namespace Weather.Models
             ForecastEntry[] entries = data.Entries;
             List<GraphData> graphDataToday = new List<GraphData>();
             List<GraphData> graphDataTomorrow = new List<GraphData>();
+            SortedDictionary<WeatherStatus, int> averageStatusTomorrow = new SortedDictionary<WeatherStatus, int>();
 
             double maxTemperature = 0;
             double minTemperature = 0;
@@ -78,10 +80,26 @@ namespace Weather.Models
                     windSpeed += entry.Wind.Speed;
                     windDegree += entry.Wind.Degree;
                     n_entries_days += 1;
+                       
+                    // Saving status for tomorrow to later check what was the most common
+                    if(averageStatusTomorrow.ContainsKey(entry.Weather[0]))
+                    {
+                        averageStatusTomorrow[entry.Weather[0]] = averageStatusTomorrow[entry.Weather[0]] + 1;
+                    }
+                    else
+                    {
+                        averageStatusTomorrow.Add(entry.Weather[0], 1);
+                    }
 
                     // saving graph data
                     GraphData gr = new GraphData(current, Math.Round(entry.Main.MaxTemperature).ToString(), Math.Round(entry.Main.MinTemperature).ToString(), entry.Weather[0].Status, entry.Weather[0].Icon);
                     graphDataTomorrow.Add(gr);
+                }
+                else if ((dateDiff >= 2 || dateDiff <= 6) && date.Hour == 12)
+                {
+                    Status status = new Status();
+                    status.setData(entry);
+                    this.FiveDays.Add(status);
                 }
             }
 
@@ -95,10 +113,16 @@ namespace Weather.Models
             windSpeed = windSpeed / n_entries_days;
             windDegree = windDegree / n_entries_days;
 
-            this.Tomorrow.setData(currentWeatherStatus, currentWeatherIcon, rain, windSpeed, windDegree, temperature, pressure, humidity, minTemperature, maxTemperature);
+            // Get the most common status in the forecast for tomorrow
+            WeatherStatus statusTomorrow = averageStatusTomorrow.Aggregate((left, right) => left.Value > right.Value ? left : right).Key;
+
+            this.Tomorrow.setData(statusTomorrow.Status, statusTomorrow.Icon, rain, windSpeed, windDegree, temperature, pressure, humidity, minTemperature, maxTemperature, (DateTime.Now).AddDays(1));
             this.Tomorrow.GraphData = graphDataTomorrow;
 
             this.Today.GraphData = graphDataToday;
+
+            this.FiveDays.Insert(0, this.Tomorrow);
+            this.FiveDays.Insert(0, this.Today);
         }
 
     }
@@ -116,18 +140,21 @@ namespace Weather.Models
         public string MinTemperature { get; set; }
         public string MaxTemperature { get; set; }
         public List<GraphData> GraphData { get; set; }
+        public DateTime Date { get; set; }
 
-        public void setData(ResultData data)
+        public void setData(ResultData data, DateTime date)
         {
             this.CurrentWeatherStatus = data.Weather[0].Status;
             this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png");
-            this.WindSpeed = data.Wind.Speed;
+            this.WindSpeed = Math.Round(data.Wind.Speed,1);
             this.WindDegree = data.Wind.Degree;
             this.Temperature = Math.Round(data.Main.Temperature).ToString();
             this.Pressure = data.Main.Pressure;
             this.Humidity = data.Main.Humidity;
             this.MinTemperature = Math.Round(data.Main.MinTemperature).ToString();
             this.MaxTemperature = Math.Round(data.Main.MaxTemperature).ToString();
+            this.Date = date;
+
             if(data.Rain != null)
             {
                 this.Rain = data.Rain.RainVolume;
@@ -138,18 +165,42 @@ namespace Weather.Models
             }
         }
 
-        public void setData(string currentWeatherStatus, string currentWeatherIcon, double rain, double windSpeed, long windDegree, double temperature, long pressure, long humidity, double minTemperature, double maxTemperature)
+        public void setData(ForecastEntry data)
+        {
+            this.CurrentWeatherStatus = data.Weather[0].Status;
+            this.CurrentWeatherIcon = ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png"));
+            this.WindSpeed = Math.Round(data.Wind.Speed, 1);
+            this.WindDegree = data.Wind.Degree;
+            this.Temperature = Math.Round(data.Main.Temperature).ToString();
+            this.Pressure = data.Main.Pressure;
+            this.Humidity = data.Main.Humidity;
+            this.MinTemperature = Math.Round(data.Main.MinTemperature).ToString();
+            this.MaxTemperature = Math.Round(data.Main.MaxTemperature).ToString();
+            this.Date = DateTime.Parse(data.DateTimeText);
+
+            if (data.Rain != null)
+            {
+                this.Rain = data.Rain.RainVolume;
+            }
+            else
+            {
+                this.Rain = 0;
+            }
+        }
+
+        public void setData(string currentWeatherStatus, string currentWeatherIcon, double rain, double windSpeed, long windDegree, double temperature, long pressure, long humidity, double minTemperature, double maxTemperature, DateTime date)
         {
             this.CurrentWeatherStatus = currentWeatherStatus;
-            this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png");
+            this.CurrentWeatherIcon = ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png"));
             this.Rain = rain;
-            this.WindSpeed = windSpeed;
+            this.WindSpeed = Math.Round(windSpeed, 1);
             this.WindDegree = windDegree;
             this.Temperature = Math.Round(temperature).ToString();
             this.Pressure = pressure;
             this.Humidity = humidity;
             this.MinTemperature = Math.Round(minTemperature).ToString();
             this.MaxTemperature = Math.Round(maxTemperature).ToString();
+            this.Date = date;
         }
     }
 
@@ -167,7 +218,7 @@ namespace Weather.Models
             this.MaxTemperature = maxTemperature;
             this.MinTemperature = minTemperature;
             this.CurrentWeatherStatus = currentWeatherStatus;
-            this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png");
+            this.CurrentWeatherIcon = ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png"));
         }
     }
 }

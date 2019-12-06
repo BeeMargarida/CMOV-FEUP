@@ -8,9 +8,40 @@
              x:Class="Weather.FiveDaysPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView x:Name="listView"
+              Margin="20">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <FlexLayout Grid.Row="0" Grid.Column="0" Direction="Row" AlignItems="Start" JustifyContent="Start">
+                                    <Label 
+                                       Text="{Binding CurrentWeatherStatus}"
+                                    />
+                                    <Image Source="{Binding CurrentWeatherIcon}"/>
+                                </FlexLayout>
+                                <Label Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding MaxTemperature}"
+                                />
+                                <Label Grid.Row="1" Grid.Column="0"
+                                   Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"
+                                   FontAttributes="Bold" />
+                                <Label Grid.Row="1" Grid.Column="1"
+                                   Text="{Binding MinTemperature}"
+                                   FontAttributes="Bold" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
