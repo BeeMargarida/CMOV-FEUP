@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using SkiaSharp;
 using Xamarin.Forms;
 
 namespace Weather.Models
@@ -37,7 +39,7 @@ namespace Weather.Models
             this.Today.setData(data, DateTime.Now);
         }
 
-        public void setForecastData(ForecastData data)
+        public async Task<int> setForecastData(ForecastData data)
         {
             ForecastEntry[] entries = data.Entries;
             List<GraphData> graphDataToday = new List<GraphData>();
@@ -56,8 +58,6 @@ namespace Weather.Models
             long humidity = 0;
             int n_entries_days = 0;
 
-            //TODO: Check average of status of the weather - maybe use hashmap?
-
             foreach (ForecastEntry entry in entries)
             {
                 DateTime current = DateTime.Today;
@@ -66,7 +66,8 @@ namespace Weather.Models
 
                 if (dateDiff == 0)
                 {
-                    GraphData gr = new GraphData(current, Math.Round(entry.Main.MaxTemperature).ToString(), Math.Round(entry.Main.MinTemperature).ToString(), entry.Weather[0].Status, entry.Weather[0].Icon);
+                    GraphData gr = new GraphData(date, Math.Round(entry.Main.MaxTemperature).ToString(), Math.Round(entry.Main.MinTemperature).ToString(), entry.Weather[0].Status, entry.Weather[0].Icon);
+                    await gr.setImage(entry.Weather[0].Icon);
                     graphDataToday.Add(gr);
                 }
                 else if (dateDiff == 1)
@@ -92,7 +93,8 @@ namespace Weather.Models
                     }
 
                     // saving graph data
-                    GraphData gr = new GraphData(current, Math.Round(entry.Main.MaxTemperature).ToString(), Math.Round(entry.Main.MinTemperature).ToString(), entry.Weather[0].Status, entry.Weather[0].Icon);
+                    GraphData gr = new GraphData(date, Math.Round(entry.Main.MaxTemperature).ToString(), Math.Round(entry.Main.MinTemperature).ToString(), entry.Weather[0].Status, entry.Weather[0].Icon);
+                    await gr.setImage(entry.Weather[0].Icon);
                     graphDataTomorrow.Add(gr);
                 }
                 else if ((dateDiff >= 2 || dateDiff <= 6) && date.Hour == 12)
@@ -123,6 +125,8 @@ namespace Weather.Models
 
             this.FiveDays.Insert(0, this.Tomorrow);
             this.FiveDays.Insert(0, this.Today);
+
+            return 0;
         }
 
     }
@@ -210,7 +214,7 @@ namespace Weather.Models
         public string MaxTemperature { get; set; }
         public string MinTemperature { get; set; }
         public string CurrentWeatherStatus { get; set; }
-        public ImageSource CurrentWeatherIcon { get; set; }
+        public SKBitmap CurrentWeatherIcon { get; set; }
 
         public GraphData(DateTime dateTime, string maxTemperature, string minTemperature, string currentWeatherStatus, string currentWeatherIcon)
         {
@@ -218,7 +222,21 @@ namespace Weather.Models
             this.MaxTemperature = maxTemperature;
             this.MinTemperature = minTemperature;
             this.CurrentWeatherStatus = currentWeatherStatus;
-            this.CurrentWeatherIcon = ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png"));
+            //this.CurrentWeatherIcon = SKBitmapImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png"));
+        }
+
+        public async Task<int> setImage(string currentWeatherIcon)
+        {
+            var httpClient = new System.Net.Http.HttpClient();
+            var bytes = await httpClient.GetByteArrayAsync("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png");
+
+            // wrap the bytes in a stream
+            var stream = new MemoryStream(bytes);
+
+            // decode the bitmap stream
+            this.CurrentWeatherIcon = SKBitmap.Decode(stream);
+
+            return 0;
         }
     }
 }
