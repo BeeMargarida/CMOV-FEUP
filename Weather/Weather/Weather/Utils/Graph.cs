@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SkiaSharp;
+﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
 using Weather.Models;
 
@@ -8,6 +6,8 @@ namespace Weather.Utils
 {
     class Graph
     {
+        public static double MAX_TEMPERATURE = 50;
+        public static double MIN_TEMPERATURE = -10;
         public static void Draw(SKPaintSurfaceEventArgs e, Status day)
         {
             SKCanvas canvas = e.Surface.Canvas;
@@ -16,8 +16,6 @@ namespace Weather.Utils
             int height = e.Info.Height;
             int marginX = (int)(width * 0.1);
             int marginY = (int)(height * 0.20);
-            double maxTemperature = getMaxTemperature(day.GraphData);
-            double minTemperature = getMinTemperature(day.GraphData);
 
             // Paint background
             canvas.Clear(SKColors.Cyan);
@@ -26,14 +24,19 @@ namespace Weather.Utils
             SKPaint axisPaint = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = SKColors.Black,
-                StrokeWidth = 2,
+                Color = SKColors.White,
+                StrokeWidth = 3,
             };
 
             SKPath axisLines = new SKPath();
 
-            axisLines.MoveTo(marginX, marginY);
-            axisLines.LineTo(marginX, height - marginY);
+            // Both axis
+            //axisLines.MoveTo(marginX, marginY);
+            //axisLines.LineTo(marginX, height - marginY);
+            //axisLines.LineTo(width - marginX, height - marginY);
+
+            // Only X Axis
+            axisLines.MoveTo(marginX, height - marginY);
             axisLines.LineTo(width - marginX, height - marginY);
 
             canvas.DrawPath(axisLines, axisPaint);
@@ -75,27 +78,50 @@ namespace Weather.Utils
             int spacing = day.GraphData.Count == 2 ? width - 3*marginX:  (width - 2*marginX) / day.GraphData.Count;
             foreach(GraphData point in day.GraphData)
             {
-                float x = marginX + (float)n * spacing;
-                float y = height - marginY / 2 - 20;
+                float x = marginX + (float)n * spacing - 10;
+                float y = height - marginY / 2 - 30;
                 SKPoint label = new SKPoint
                 {
                     X = x,
-                    Y = height - marginY / 2 - 20,
+                    Y = height - marginY / 2 - 30,
                 };
                 string labelText = point.DateTime.ToString("HH:mm");
                 canvas.DrawText(labelText, label, labelPaint);
                 SKPoint labelImage = new SKPoint
                 {
-                    X = x,
-                    Y = height - marginY / 2 - 30,
+                    X = x - 15,
+                    Y = height - marginY / 2 - 40,
                 };
                 SKBitmap image = point.CurrentWeatherIcon;
                 canvas.DrawBitmap(image, labelImage);
 
-                double maxY = getTemperatureYCoord(height, marginY, maxTemperature, minTemperature, double.Parse(point.MaxTemperature));
+                // Draw and write max temperature point
+                x += 25;
+                double maxY = getTemperatureYCoord(height, marginY, MAX_TEMPERATURE, MIN_TEMPERATURE, double.Parse(point.MaxTemperature));
                 canvas.DrawCircle(x, (float)maxY, 10, whitePaint);
-                double minY = getTemperatureYCoord(height, marginY, maxTemperature, minTemperature, double.Parse(point.MinTemperature));
+                SKPoint labelTempPoint = new SKPoint
+                {
+                    X = x - 15,
+                    Y = (float)(maxY - 30)
+                };
+                string labelTemp = point.MaxTemperature;
+                canvas.DrawText(labelTemp, labelTempPoint, labelPaint);
+
+                // Draw and write min temperature point
+                double minY = getTemperatureYCoord(height, marginY, MAX_TEMPERATURE, MIN_TEMPERATURE, double.Parse(point.MinTemperature));
                 canvas.DrawCircle(x, (float)minY, 10, whitePaint);
+                // if min and max temperature are different, write min temperature label
+                if (double.Parse(point.MinTemperature) != double.Parse(point.MaxTemperature))
+                {
+                    labelTempPoint = new SKPoint
+                    {
+                        X = x - 15,
+                        Y = (float)(minY + 50)
+                    };
+                    labelTemp = point.MinTemperature;
+                    canvas.DrawText(labelTemp, labelTempPoint, labelPaint);
+                }
+                
                 if (n == 0)
                 {
                     graphLinesMax.MoveTo(x, (float)maxY);
@@ -115,32 +141,6 @@ namespace Weather.Utils
 
             #endregion
 
-        }
-
-        private static double getMaxTemperature(List<GraphData> data)
-        {
-            double max = 0;
-            foreach(GraphData entry in data)
-            {
-                if(Double.Parse(entry.MaxTemperature) > max)
-                {
-                    max = Double.Parse(entry.MaxTemperature);
-                }
-            }
-            return max;
-        }
-
-        private static double getMinTemperature(List<GraphData> data)
-        {
-            double min = 100000;
-            foreach (GraphData entry in data)
-            {
-                if (Double.Parse(entry.MinTemperature) < min)
-                {
-                    min = Double.Parse(entry.MinTemperature);
-                }
-            }
-            return min;
         }
 
         private static double getTemperatureYCoord(int height, int marginY, double maxValue, double minValue, double temperature)
