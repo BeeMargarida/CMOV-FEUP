@@ -8,7 +8,7 @@
              Title="tomorrow"
              x:Class="Weather.TomorrowPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout BackgroundColor="#2b5567">
             <FlexLayout Direction="Column" AlignItems="Start" JustifyContent="Start">
                 <Image Source="{Binding CurrentWeatherIcon}"/>
                 <Label Text="{Binding CurrentWeatherStatus}"

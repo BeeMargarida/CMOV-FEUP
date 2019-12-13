@@ -47,7 +47,7 @@ namespace Weather
             {
                 IsBusy = false;
             }
-
+            this.Children.Clear();
             this.Children.Add(new TodayPage(this.city));
             this.Children.Add(new TomorrowPage(this.city));
             this.Children.Add(new FiveDaysPage(this.city));

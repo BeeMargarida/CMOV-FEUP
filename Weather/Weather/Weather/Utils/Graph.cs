@@ -18,7 +18,7 @@ namespace Weather.Utils
             int marginY = (int)(height * 0.20);
 
             // Paint background
-            canvas.Clear(SKColors.Cyan);
+            canvas.Clear(SKColors.Transparent);
 
             #region Draw Axis
             SKPaint axisPaint = new SKPaint
@@ -47,7 +47,7 @@ namespace Weather.Utils
             SKPaint labelPaint = new SKPaint
             {
                 Style = SKPaintStyle.Fill,
-                Color = SKColors.Black,
+                Color = SKColors.White,
                 StrokeWidth = 2,
             };
             labelPaint.TextSize = (float)(height / 40);
@@ -60,13 +60,13 @@ namespace Weather.Utils
             SKPaint maxStroke = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = SKColors.DarkRed,
+                Color = SKColors.White,
                 StrokeWidth = 5,
             };
             SKPaint minStroke = new SKPaint
             {
                 Style = SKPaintStyle.Stroke,
-                Color = SKColors.DarkBlue,
+                Color = SKColors.White,
                 StrokeWidth = 5,
             };
 
@@ -104,7 +104,7 @@ namespace Weather.Utils
                     X = x - 15,
                     Y = (float)(maxY - 30)
                 };
-                string labelTemp = point.MaxTemperature;
+                string labelTemp = point.MaxTemperature + "ºC";
                 canvas.DrawText(labelTemp, labelTempPoint, labelPaint);
 
                 // Draw and write min temperature point
@@ -118,7 +118,7 @@ namespace Weather.Utils
                         X = x - 15,
                         Y = (float)(minY + 50)
                     };
-                    labelTemp = point.MinTemperature;
+                    labelTemp = point.MinTemperature + "ºC";
                     canvas.DrawText(labelTemp, labelTempPoint, labelPaint);
                 }
                 
