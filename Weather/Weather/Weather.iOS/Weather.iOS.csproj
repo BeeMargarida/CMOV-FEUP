@@ -65,6 +65,12 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <BundleResource Include="Resources\Raleway-BoldItalic.ttf" />
+    <BundleResource Include="Resources\Raleway-Italic.ttf" />
+    <BundleResource Include="Resources\Raleway-Light.ttf" />
+    <BundleResource Include="Resources\Raleway-LightItalic.ttf" />
+    <BundleResource Include="Resources\Raleway-Regular.ttf" />
+    <BundleResource Include="Resources\Raleway-Bold.ttf" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

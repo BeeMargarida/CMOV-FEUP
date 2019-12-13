@@ -7,9 +7,16 @@ using Weather.Utils;
 
 namespace Weather
 {
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TodayPage : ContentPage
     {
+        //TODO: DELETE, IT'S JUST FOR PREVIEW
+        public TodayPage()
+        {
+            InitializeComponent();
+        }
+
         private City city;
         public TodayPage(City city)
         {

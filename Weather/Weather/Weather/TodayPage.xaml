@@ -8,22 +8,40 @@
              Title="today"
              x:Class="Weather.TodayPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout  BackgroundColor="#2b5567">
             <FlexLayout Direction="Column" AlignItems="Start" JustifyContent="Start">
                 <Image Source="{Binding CurrentWeatherIcon}"/>
-                <Label Text="{Binding CurrentWeatherStatus}"
+                <!--<Label Text="{Binding CurrentWeatherStatus}"
+                FontFamily="{StaticResource LightFont}"-->
+                <Label Text="Rain"  
+                    FontFamily="Raleway-Light.ttf"  
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
             </FlexLayout>
             <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start">
-                <Label Text="{Binding Temperature}"
+                <!--<Label Text="{Binding Temperature}"
+                FontFamily="{StaticResource BoldFont}"-->
+                <Label Text="17ºC"
+                    FontSize="70"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 <StackLayout>
-                    <Label Text="{Binding MaxTemperature}"
+                    <!--<Label Text="{Binding MaxTemperature}"
+                    FontFamily="{StaticResource LightFont}"-->
+                    <Label Text="19ºC"
+                    FontFamily="Raleway-Light.ttf" 
+                    FontSize="35"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
-                    <Label Text="{Binding MinTemperature}"
+                    <!--<Label Text="{Binding MinTemperature}"
+                    FontFamily="{StaticResource LightFont}"-->
+                    <Label Text="10ºC"
+                    FontFamily="Raleway-Light.ttf"
+                    FontSize="35"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 </StackLayout>
@@ -31,33 +49,45 @@
             <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
                 <StackLayout>
                     <Label Text="pressure"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
-                    <Label Text="{Binding Pressure}"
+                    <!--Label Text="{Binding Pressure}"-->
+                    <Label Text="1234 hPa"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout>
-                    <Label Text="rain"
+                    <Label Text="rainy"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
-                    <Label Text="{Binding Rain}"
+                    <!--<Label Text="{Binding Rain}"-->
+                    <Label Text="0%"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout>
                     <Label Text="wind"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
-                    <Label Text="{Binding WindSpeed}"
+                    <!--<Label Text="{Binding WindSpeed}"-->
+                    <Label Text="3.6km/h"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 </StackLayout>
                 <StackLayout>
                     <Label Text="humidity"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
-                    <Label Text="{Binding Humidity}"
+                    <!--<Label Text="{Binding Humidity}"-->
+                    <Label Text="100%"
+                    TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 </StackLayout>

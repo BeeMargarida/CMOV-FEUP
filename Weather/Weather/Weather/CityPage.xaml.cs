@@ -9,6 +9,12 @@ namespace Weather
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CityPage : TabbedPage
     {
+        //TODO: DELETE, IT'S JUST FOR PREVIEW
+        public CityPage()
+        {
+            InitializeComponent();
+        }
+
         private City city;
         public CityPage(City city)
         {

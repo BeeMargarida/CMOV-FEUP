@@ -23,19 +23,28 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <FlexLayout Grid.Row="0" Grid.Column="0" Direction="Row" AlignItems="Start" JustifyContent="Start">
-                                    <Label 
+                                    <!--<Label 
                                        Text="{Binding CurrentWeatherStatus}"
+                                    />-->
+                                    <Label 
+                                       Text="Rain"
                                     />
-                                    <Image Source="{Binding CurrentWeatherIcon}"/>
+                                    <!--<Image Source="{Binding CurrentWeatherIcon}"/>-->
                                 </FlexLayout>
+                                <!--<Label Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding MaxTemperature}"-->
                                 <Label Grid.Row="0" Grid.Column="1"
-                                   Text="{Binding MaxTemperature}"
+                                   Text="20"
                                 />
+                                <!--<Label Grid.Row="1" Grid.Column="0"
+                                   Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"-->
                                 <Label Grid.Row="1" Grid.Column="0"
-                                   Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"
+                                   Text="Friday, Dec 13"
                                    FontAttributes="Bold" />
+                                <!--<Label Grid.Row="1" Grid.Column="1"
+                                   Text="{Binding MinTemperature}"-->
                                 <Label Grid.Row="1" Grid.Column="1"
-                                   Text="{Binding MinTemperature}"
+                                   Text="10"
                                    FontAttributes="Bold" />
                             </Grid>
                         </ViewCell>

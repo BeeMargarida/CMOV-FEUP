@@ -6,6 +6,37 @@
              mc:Ignorable="d"
              x:Class="Weather.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <OnPlatform x:Key="BoldFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Bold.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Bold.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Bold" />
+            </OnPlatform>
+            <OnPlatform x:Key="BoldItalicFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-BoldItalic.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-BoldItalic.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-BoldItalic" />
+            </OnPlatform>
+            <OnPlatform x:Key="RegularFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Regular.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Regular.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Regular"/>
+            </OnPlatform>
+            <OnPlatform x:Key="ItalicFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Italic.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Italic.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Italic"/>
+            </OnPlatform>
+            <OnPlatform x:Key="LightFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Light.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Light.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Light"/>
+            </OnPlatform>
+            <OnPlatform x:Key="LightItalicFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-LightItalic.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-LightItalic.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-LightItalic"/>
+            </OnPlatform>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
