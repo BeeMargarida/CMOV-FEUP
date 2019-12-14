@@ -36,7 +36,7 @@ namespace Weather.Models
             this.CurrentWeatherStatus = data.Weather[0].Status;
             this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png");
             this.Temperature = Math.Round(data.Main.Temperature).ToString();
-            this.Today.setData(data, DateTime.Now);
+            this.Today.setData("Today", data, DateTime.Now);
         }
 
         public async Task<int> setForecastData(ForecastData data)
@@ -118,7 +118,7 @@ namespace Weather.Models
             // Get the most common status in the forecast for tomorrow
             WeatherStatus statusTomorrow = averageStatusTomorrow.Aggregate((left, right) => left.Value > right.Value ? left : right).Key;
 
-            this.Tomorrow.setData(statusTomorrow.Status, statusTomorrow.Icon, rain, windSpeed, windDegree, temperature, pressure, humidity, minTemperature, maxTemperature, (DateTime.Now).AddDays(1));
+            this.Tomorrow.setData("Tomorrow", statusTomorrow.Status, statusTomorrow.Icon, rain, windSpeed, windDegree, temperature, pressure, humidity, minTemperature, maxTemperature, (DateTime.Now).AddDays(1));
             this.Tomorrow.GraphData = graphDataTomorrow;
 
             this.Today.GraphData = graphDataToday;
@@ -133,6 +133,7 @@ namespace Weather.Models
 
     public class Status
     {
+        public string Day { get; set; }
         public string CurrentWeatherStatus { get; set; }
         public ImageSource CurrentWeatherIcon { get; set; }
         public double WindSpeed { get; set; }
@@ -146,8 +147,9 @@ namespace Weather.Models
         public List<GraphData> GraphData { get; set; }
         public DateTime Date { get; set; }
 
-        public void setData(ResultData data, DateTime date)
+        public void setData(string day, ResultData data, DateTime date)
         {
+            this.Day = day;
             this.CurrentWeatherStatus = data.Weather[0].Status;
             this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png");
             this.WindSpeed = Math.Round(data.Wind.Speed,1);
@@ -192,8 +194,9 @@ namespace Weather.Models
             }
         }
 
-        public void setData(string currentWeatherStatus, string currentWeatherIcon, double rain, double windSpeed, long windDegree, double temperature, long pressure, long humidity, double minTemperature, double maxTemperature, DateTime date)
+        public void setData(string day, string currentWeatherStatus, string currentWeatherIcon, double rain, double windSpeed, long windDegree, double temperature, long pressure, long humidity, double minTemperature, double maxTemperature, DateTime date)
         {
+            this.Day = day;
             this.CurrentWeatherStatus = currentWeatherStatus;
             this.CurrentWeatherIcon = ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png"));
             this.Rain = rain;

@@ -8,14 +8,25 @@ using Weather.Utils;
 namespace Weather
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TomorrowPage : ContentPage
+    public partial class SingleDayPage : ContentPage
     {
-        private City city;
-        public TomorrowPage(City city)
+        //TODO: DELETE, IT'S JUST FOR PREVIEW
+        public SingleDayPage()
         {
-            this.city = city;
             InitializeComponent();
-            this.BindingContext = this.city.Tomorrow;
+        }
+
+        private City city;
+        public SingleDayPage(City city, String day)
+        {
+            InitializeComponent();
+            this.city = city;
+
+            if(day.Equals("Today"))
+                this.BindingContext = city.Today;
+            else if(day.Equals("Tomorrow"))
+                this.BindingContext = city.Tomorrow;
+
             this.DrawGraph();
         }
 
@@ -29,7 +40,7 @@ namespace Weather
 
         private void GraphPaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
-            Graph.Draw(e, city.Tomorrow);
+            Graph.Draw(e, city.Today);
         }
 
         private void onGraphTapped(object sender, EventArgs args)

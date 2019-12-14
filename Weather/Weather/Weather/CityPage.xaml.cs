@@ -19,6 +19,7 @@ namespace Weather
         public CityPage(City city)
         {
             this.city = city;
+            this.BindingContext = this.city;
             InitializeComponent();    
         }
 
@@ -48,8 +49,11 @@ namespace Weather
                 IsBusy = false;
             }
             this.Children.Clear();
-            this.Children.Add(new TodayPage(this.city));
-            this.Children.Add(new TomorrowPage(this.city));
+            //TODO: Delete this lines and classes
+            //this.Children.Add(new TodayPage(this.city));
+            //this.Children.Add(new TomorrowPage(this.city));
+            this.Children.Add(new SingleDayPage(this.city, "Today"));
+            this.Children.Add(new SingleDayPage(this.city, "Tomorrow"));
             this.Children.Add(new FiveDaysPage(this.city));
         }
     }

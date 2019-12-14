@@ -5,8 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
-             Title="today"
-             x:Class="Weather.TodayPage">
+             Title="{Binding Day}"
+             x:Class="Weather.SingleDayPage">
     <ContentPage.Content>
         <StackLayout  BackgroundColor="#2b5567">
             <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start">
