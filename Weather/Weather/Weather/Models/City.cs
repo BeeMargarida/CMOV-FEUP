@@ -44,6 +44,7 @@ namespace Weather.Models
             ForecastEntry[] entries = data.Entries;
             List<GraphData> graphDataToday = new List<GraphData>();
             List<GraphData> graphDataTomorrow = new List<GraphData>();
+            this.FiveDays = new List<Status>();
             SortedDictionary<WeatherStatus, int> averageStatusTomorrow = new SortedDictionary<WeatherStatus, int>();
 
             double maxTemperature = 0;
@@ -64,13 +65,13 @@ namespace Weather.Models
                 DateTime date = DateTime.Parse(entry.DateTimeText);
                 double dateDiff = (date.Date - current).TotalDays;
 
-                if (dateDiff == 0)
+                if (dateDiff == 0 || (dateDiff == 1 && date.Hour == 0))
                 {
                     GraphData gr = new GraphData(date, Math.Round(entry.Main.MaxTemperature).ToString(), Math.Round(entry.Main.MinTemperature).ToString(), entry.Weather[0].Status, entry.Weather[0].Icon);
                     await gr.setImage(entry.Weather[0].Icon);
                     graphDataToday.Add(gr);
                 }
-                else if (dateDiff == 1)
+                else if (dateDiff == 1 || (dateDiff == 2 && date.Hour == 0))
                 {
                     temperature += entry.Main.Temperature;
                     rain += entry.Rain != null ? entry.Rain.RainVolume : 0;
