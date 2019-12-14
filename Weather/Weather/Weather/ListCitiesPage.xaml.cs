@@ -7,6 +7,7 @@ using Xamarin.Forms;
 using Weather.Models;
 using Weather.Utils;
 using System.ComponentModel;
+using Weather.Themes;
 
 namespace Weather
 {
@@ -67,7 +68,18 @@ namespace Weather
             {
                 IsBusy = false;
                 listView.ItemsSource = Cities.ToList();
-            } 
+            }
+            changeTheme();
+        }
+
+        private void changeTheme()
+        {
+            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            if (mergedDictionaries != null)
+            {
+                mergedDictionaries.Clear();
+                mergedDictionaries.Add(new BasicTheme());
+            }
         }
 
         async void onSearchButtonPressed(object sender, EventArgs e)

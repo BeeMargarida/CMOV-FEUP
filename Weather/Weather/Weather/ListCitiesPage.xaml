@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Weather.ListCitiesPage"
              Title="Cities"
-              BackgroundColor="{DynamicResource PageBackgroundColor}">
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
     <StackLayout>
         <SearchBar 
             Placeholder="Add City"

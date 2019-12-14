@@ -3,16 +3,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="Weather.Themes.BasicTheme">
     <Color x:Key="PageBackgroundColor">WhiteSmoke</Color>
-    <Color x:Key="NavigationBarColor">WhiteSmoke</Color>
-    <Color x:Key="Primary">WhiteSmoke</Color>
-    <Color x:Key="PrimaryDark">Black</Color>
-    <Color x:Key="SecondaryColor">Black</Color>
-    <Color x:Key="PrimaryTextColor">Black</Color>
-    <Color x:Key="SecondaryTextColor">White</Color>
-    <Color x:Key="TertiaryTextColor">Gray</Color>
-    <Color x:Key="TransparentColor">Transparent</Color>
+    <Color x:Key="BarBackgroundColor">Gray</Color>
     <Style TargetType="NavigationPage">
-        <Setter Property="BarBackgroundColor" Value="WhiteSmoke" />
-        <Setter Property="BarTextColor" Value="Black" />
+        <Setter Property="BarBackgroundColor" Value="Gray" />
+        <Setter Property="BackgroundColor" Value="WhiteSmoke" />
+        <Setter Property="BarTextColor" Value="White" />
     </Style>
 </ResourceDictionary>

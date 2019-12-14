@@ -14,7 +14,7 @@ namespace Weather.Utils
 
             int width = e.Info.Width;
             int height = e.Info.Height;
-            int marginX = (int)(width * 0.1);
+            int marginX = (int)(width * 0.05);
             int marginY = (int)(height * 0.20);
 
             // Paint background

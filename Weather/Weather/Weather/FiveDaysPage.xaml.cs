@@ -1,6 +1,8 @@
 ﻿using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Weather.Models;
+using System.Collections.Generic;
+using Weather.Themes;
 
 namespace Weather
 {
@@ -25,6 +27,18 @@ namespace Weather
         {
             base.OnAppearing();
             listView.ItemsSource = this.city.FiveDays;
+
+            changeTheme();
+        }
+
+        private void changeTheme()
+        {
+            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            if (mergedDictionaries != null)
+            {
+                mergedDictionaries.Clear();
+                mergedDictionaries.Add(new BasicTheme());
+            }
         }
     }
 }

@@ -2,16 +2,10 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="Weather.Themes.CloudyTheme">
-    <Color x:Key="PageBackgroundColor">Gray</Color>
-    <Color x:Key="NavigationBarColor">Gray</Color>
-    <Color x:Key="PrimaryColor">Gray</Color>
-    <Color x:Key="SecondaryColor">White</Color>
-    <Color x:Key="PrimaryTextColor">White</Color>
-    <Color x:Key="SecondaryTextColor">White</Color>
-    <Color x:Key="TertiaryTextColor">WhiteSmoke</Color>
-    <Color x:Key="TransparentColor">Transparent</Color>
+    <Color x:Key="PageBackgroundColor">#999999</Color>
+    <Color x:Key="BarBackgroundColor">#4d4d4d</Color>
     <Style TargetType="NavigationPage">
-        <Setter Property="BarBackgroundColor" Value="Gray" />
+        <Setter Property="BarBackgroundColor" Value="#4d4d4d" />
         <Setter Property="BarTextColor" Value="White" />
     </Style>
 </ResourceDictionary>

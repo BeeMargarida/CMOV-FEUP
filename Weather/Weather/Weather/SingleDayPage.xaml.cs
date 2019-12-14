@@ -28,6 +28,12 @@ namespace Weather
             InitializeComponent();
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            changeTheme();
+        }
+
         private void changeTheme()
         {
 

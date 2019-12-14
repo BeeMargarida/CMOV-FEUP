@@ -9,8 +9,9 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="Weather.SingleDayPage">
     <ContentPage.Content>
-        <StackLayout>
-            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start">
+        <StackLayout Padding="20,0,20,10">
+
+            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 60, 0, 0">
                 <Image Source="{Binding CurrentWeatherIcon}"/>
                 <Label Text="{Binding CurrentWeatherStatus}"
                     FontFamily="{StaticResource LightFont}"  
@@ -19,7 +20,7 @@
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
             </FlexLayout>
-            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start">
+            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 0, 0, 60">
                 <Label Text="{Binding Temperature}"
                     FontFamily="{StaticResource BoldFont}" 
                     FontSize="80"
@@ -32,7 +33,7 @@
                     TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
-                <StackLayout>
+                <StackLayout Margin="20, 0, 0, 0">
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding MaxTemperature}"
                         FontFamily="{StaticResource LightFont}"
@@ -68,42 +69,42 @@
                     <Label Text="pressure"
                     FontFamily="{StaticResource BoldFont}" 
                     TextColor="White"
-                    FontSize="20"
+                    FontSize="15"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Pressure}"
                         FontFamily="{StaticResource LightFont}"
-                        FontSize="30"
+                        FontSize="20"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="hPa"
                         FontFamily="{StaticResource LightFont}"
-                        FontSize="15"
+                        FontSize="10"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                     </StackLayout>
                 </StackLayout>
                 <StackLayout>
-                    <Label Text="rainy"
+                    <Label Text="rain"
                     FontFamily="{StaticResource BoldFont}" 
                     TextColor="White"
-                    FontSize="20"
+                    FontSize="15"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Rain}"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="30"
+                        FontSize="20"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="%"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="15"
+                        FontSize="10"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                     </StackLayout>
@@ -111,7 +112,7 @@
                 <StackLayout>
                     <Label Text="wind"
                     TextColor="White"
-                    FontSize="20"
+                    FontSize="15"
                     FontFamily="{StaticResource BoldFont}" 
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
@@ -119,13 +120,13 @@
                         <Label Text="{Binding WindSpeed}"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="30"
+                        FontSize="20"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="km/h"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="15"
+                        FontSize="10"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                     </StackLayout>
@@ -134,20 +135,20 @@
                     <Label Text="humidity"
                     FontFamily="{StaticResource BoldFont}" 
                     TextColor="White"
-                    FontSize="20"
+                    FontSize="15"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Humidity}"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="30"
+                        FontSize="20"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="%"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="15"
+                        FontSize="10"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                     </StackLayout>

@@ -7,6 +7,6 @@
              xmlns:local="clr-namespace:Weather"
              Title="{Binding Name}"
              x:Class="Weather.CityPage"
-             BarBackgroundColor="{DynamicResource PageBackgroundColor}"
+             BarBackgroundColor="{DynamicResource BarBackgroundColor}"
             >
 </TabbedPage>

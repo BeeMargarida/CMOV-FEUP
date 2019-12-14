@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              Title="5 days"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="Weather.FiveDaysPage">
     <ContentPage.Content>
         <StackLayout>
