@@ -6,9 +6,10 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
              Title="{Binding Day}"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="Weather.SingleDayPage">
     <ContentPage.Content>
-        <StackLayout  BackgroundColor="#2b5567">
+        <StackLayout>
             <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start">
                 <Image Source="{Binding CurrentWeatherIcon}"/>
                 <Label Text="{Binding CurrentWeatherStatus}"

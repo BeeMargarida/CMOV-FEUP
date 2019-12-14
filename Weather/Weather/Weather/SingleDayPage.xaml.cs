@@ -4,30 +4,54 @@ using Xamarin.Forms.Xaml;
 using SkiaSharp.Views.Forms;
 using Weather.Models;
 using Weather.Utils;
+using System.Collections.Generic;
+using Weather.Themes;
 
 namespace Weather
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SingleDayPage : ContentPage
     {
-        //TODO: DELETE, IT'S JUST FOR PREVIEW
-        public SingleDayPage()
-        {
-            InitializeComponent();
-        }
-
         private City city;
         public SingleDayPage(City city, String day)
         {
-            InitializeComponent();
             this.city = city;
 
-            if(day.Equals("Today"))
+            if (day.Equals("Today"))
                 this.BindingContext = city.Today;
-            else if(day.Equals("Tomorrow"))
+            else if (day.Equals("Tomorrow"))
                 this.BindingContext = city.Tomorrow;
-
+               
             this.DrawGraph();
+            this.changeTheme();
+
+            InitializeComponent();
+        }
+
+        private void changeTheme()
+        {
+
+            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
+            if (mergedDictionaries != null)
+            {
+                mergedDictionaries.Clear();
+                //TODO: Ter em conta o estado do tempo em vez da cidade
+                switch (this.city.Name)
+                {
+                    case "Porto":
+                        mergedDictionaries.Add(new SunnyTheme());
+                        break;
+                    case "Lisbon":
+                        mergedDictionaries.Add(new CloudyTheme());
+                        break;
+                    case "Faro":
+                        mergedDictionaries.Add(new RainyTheme());
+                        break;
+                    default:
+                        mergedDictionaries.Add(new BasicTheme());
+                        break;
+                }
+            }
         }
 
         private void DrawGraph()

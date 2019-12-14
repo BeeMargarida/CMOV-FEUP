@@ -18,7 +18,9 @@ namespace Weather
         private bool IsBusy;
         public ListCitiesPage()
         {
+          
             InitializeComponent();
+
             IsBusy = false;
             Client = new HttpService();
             Cities = new List<City>();

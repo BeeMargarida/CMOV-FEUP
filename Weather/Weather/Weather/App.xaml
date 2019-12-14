@@ -7,6 +7,9 @@
              x:Class="Weather.App">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/BasicTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <OnPlatform x:Key="BoldFont" x:TypeArguments="x:String" >
                 <On Platform="Android" Value="Raleway-Bold.ttf#Raleway"/>
                 <On Platform="UWP" Value="/Assets/Raleway-Bold.ttf#Raleway"/>
