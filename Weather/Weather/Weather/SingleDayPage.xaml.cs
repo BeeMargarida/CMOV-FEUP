@@ -13,13 +13,15 @@ namespace Weather
     public partial class SingleDayPage : ContentPage
     {
         private City city;
+        private String day;
         public SingleDayPage(City city, String day)
         {
             this.city = city;
+            this.day = day;
 
-            if (day.Equals("Today"))
+            if (this.day.Equals("Today"))
                 this.BindingContext = city.Today;
-            else if (day.Equals("Tomorrow"))
+            else if (this.day.Equals("Tomorrow"))
                 this.BindingContext = city.Tomorrow;
                
             this.DrawGraph();
@@ -70,7 +72,10 @@ namespace Weather
 
         private void GraphPaintSurface(object sender, SKPaintSurfaceEventArgs e)
         {
-            Graph.Draw(e, city.Today);
+            if (this.day.Equals("Today"))
+                Graph.Draw(e, city.Today);
+            else if (this.day.Equals("Tomorrow"))
+                Graph.Draw(e, city.Tomorrow);
         }
 
         private void onGraphTapped(object sender, EventArgs args)
