@@ -2,8 +2,15 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Weather.ListCitiesPage"
+             xmlns:local="clr-namespace:Weather.Utils"
              Title="Cities"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBoolConverter x:Key="inverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <StackLayout>
         <SearchBar 
             Placeholder="Add City"
@@ -16,7 +23,7 @@
             SearchButtonPressed="onSearchButtonPressed"/>
         <ListView x:Name="listView"
               Margin="20"
-              IsVisible="{Binding IsLoading}"
+              IsVisible="{Binding IsBusy , Converter={StaticResource inverter}}"
               ItemSelected="OnListViewItemSelected"
               ItemsSource="{Binding Cities}">
             <ListView.ItemTemplate>
@@ -31,9 +38,11 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0"
-                               Text="Delete Icon"
-                            />
+                            <Button Text="Delete"
+                                VerticalOptions="CenterAndExpand"
+                                HorizontalOptions="Center"
+                                CommandParameter="{Binding Name}"
+                                Clicked="OnDeleteButtonClicked" />
                             <FlexLayout Grid.Row="0" Grid.Column="1" Direction="Row" AlignItems="End" JustifyContent="End">
                                 <Label 
                                    Text="{Binding CurrentWeatherStatus}"

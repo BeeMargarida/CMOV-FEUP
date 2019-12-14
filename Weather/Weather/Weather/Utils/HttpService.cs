@@ -26,6 +26,10 @@ namespace Weather.Utils
                     string content = await response.Content.ReadAsStringAsync();
                     data = JsonConvert.DeserializeObject<ResultData>(content);
                 }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
@@ -46,6 +50,9 @@ namespace Weather.Utils
                     string content = await response.Content.ReadAsStringAsync();
                     data = JsonConvert.DeserializeObject<ForecastData>(content);
                 }
+                else
+                {
+                    return null;                }
             }
             catch (Exception ex)
             {

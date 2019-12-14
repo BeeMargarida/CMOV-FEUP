@@ -48,6 +48,11 @@ namespace Weather
                         {
                             City city = new City(word);
                             ResultData data = await Client.getCurrentWeather(Client.generateUri("weather", word));
+
+                            if(data == null)
+                            {
+                                throw new Exception();
+                            }
                             city.setData(data);
 
                             Cities.Add(city);
@@ -59,7 +64,7 @@ namespace Weather
             catch (Exception e)
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "An error occurred",
+                    "An error occurred, please try again later.",
                     e.Message,
                     "Ok"
                 );
@@ -89,11 +94,23 @@ namespace Weather
 
             if (searchBar.Text != "")
             {
+                foreach (City c in this.Cities)
+                {
+                    if (c.Name.ToLower() == searchBar.Text.ToLower())
+                    {
+                        await Application.Current.MainPage.DisplayAlert(
+                            "Repeated City",
+                            "City " + searchBar.Text + " is already in your list.",
+                            "Ok"
+                        );
+                        return;
+                    }
+                }
+
                 ResultData data = await Client.getCurrentWeather(Client.generateUri("weather", searchBar.Text));
 
                 if (data == null)
                 {
-                    Debug.WriteLine("\tERROR {0}", "City doesn't exist");
                     await Application.Current.MainPage.DisplayAlert(
                         "Not Valid",
                         "City " + searchBar.Text + " does not exist",
@@ -123,6 +140,22 @@ namespace Weather
             }
         }
 
+        async void OnDeleteButtonClicked(object sender, EventArgs args)
+        {
+            Debug.WriteLine("INFO: " + (sender as Button).CommandParameter.ToString());
+            string name = (sender as Button).CommandParameter.ToString();
+            foreach(City city in this.Cities)
+            {
+                if(city.Name == name)
+                {
+                    this.Cities.Remove(city);
+                    break;
+                }
+            }
+            listView.ItemsSource = this.Cities.ToList();
+            this.saveCities();
+        }
+
         void saveCities()
         {
             string citiesString = "";
@@ -132,6 +165,18 @@ namespace Weather
             }
             Preferences.Set("cities", citiesString);
 
+        }
+    }
+
+    public class NegateBooleanConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return !(bool)value;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return !(bool)value;
         }
     }
 }

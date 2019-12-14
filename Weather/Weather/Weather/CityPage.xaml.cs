@@ -39,7 +39,7 @@ namespace Weather
             catch (Exception e)
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "An error occurred",
+                    "An error occurred, please try again later.",
                     e.Message,
                     "Ok"
                 );
