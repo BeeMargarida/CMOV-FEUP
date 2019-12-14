@@ -9,8 +9,8 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="Weather.SingleDayPage">
     <ContentPage.Content>
-        <StackLayout Padding="20,0,20,10">
-
+        <StackLayout>
+            <StackLayout Padding="20,0,20,0">
             <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 60, 0, 0">
                 <Image Source="{Binding CurrentWeatherIcon}"/>
                 <Label Text="{Binding CurrentWeatherStatus}"
@@ -20,7 +20,7 @@
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
             </FlexLayout>
-            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 0, 0, 60">
+            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 0, 0, 90">
                 <Label Text="{Binding Temperature}"
                     FontFamily="{StaticResource BoldFont}" 
                     FontSize="80"
@@ -88,7 +88,7 @@
                     </StackLayout>
                 </StackLayout>
                 <StackLayout>
-                    <Label Text="rain"
+                    <Label Text="precipitation"
                     FontFamily="{StaticResource BoldFont}" 
                     TextColor="White"
                     FontSize="15"
@@ -101,7 +101,7 @@
                         FontSize="20"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
-                        <Label Text="%"
+                        <Label Text="mm"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
                         FontSize="10"
@@ -154,16 +154,18 @@
                     </StackLayout>
                 </StackLayout>
             </FlexLayout>
-            <skia:SKCanvasView x:Name="weatherGraph"
+        </StackLayout>
+            <StackLayout>
+                <skia:SKCanvasView x:Name="weatherGraph"
                            PaintSurface="GraphPaintSurface" 
                            HeightRequest="400">
-                <skia:SKCanvasView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="onGraphTapped" />
-                    <SwipeGestureRecognizer Direction="Right" Swiped="OnGraphRightSwiped"/>
-                    <SwipeGestureRecognizer Direction="Left" Swiped="OnGraphLeftSwiped"/>
-                </skia:SKCanvasView.GestureRecognizers>
-            </skia:SKCanvasView>
-
+                    <skia:SKCanvasView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="onGraphTapped" />
+                        <SwipeGestureRecognizer Direction="Right" Swiped="OnGraphRightSwiped"/>
+                        <SwipeGestureRecognizer Direction="Left" Swiped="OnGraphLeftSwiped"/>
+                    </skia:SKCanvasView.GestureRecognizers>
+                </skia:SKCanvasView>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
