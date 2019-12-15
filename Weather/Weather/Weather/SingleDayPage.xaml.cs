@@ -29,38 +29,6 @@ namespace Weather
             InitializeComponent();
         }
 
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            //changeTheme();
-        }
-
-        private void changeTheme()
-        {
-
-            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-            if (mergedDictionaries != null)
-            {
-                mergedDictionaries.Clear();
-                //TODO: Ter em conta o estado do tempo em vez da cidade
-                switch (this.city.Name)
-                {
-                    case "Porto":
-                        mergedDictionaries.Add(new SunnyTheme());
-                        break;
-                    case "Lisbon":
-                        mergedDictionaries.Add(new CloudyTheme());
-                        break;
-                    case "Faro":
-                        mergedDictionaries.Add(new RainyTheme());
-                        break;
-                    default:
-                        mergedDictionaries.Add(new BasicTheme());
-                        break;
-                }
-            }
-        }
-
         private void DrawGraph()
         {
             Device.BeginInvokeOnMainThread(() =>

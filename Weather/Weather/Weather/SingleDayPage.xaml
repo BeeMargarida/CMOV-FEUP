@@ -167,7 +167,12 @@
                     </skia:SKCanvasView.GestureRecognizers>
                 </skia:SKCanvasView>
             </StackLayout>
-        </StackLayout>
+                <ActivityIndicator 
+			IsVisible="{Binding Page.IsBusy}"
+			IsRunning="{Binding Page.IsBusy}" 
+		/>
+            </StackLayout>
+            
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
