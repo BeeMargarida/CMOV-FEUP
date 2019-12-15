@@ -10,34 +10,61 @@
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="listView"
-              Margin="20"
-                      SelectionMode="None">
-                <ListView.ItemTemplate>
+              Margin="20,20,20,0"
+              SelectionMode="None"
+              SeparatorVisibility="None"
+              HasUnevenRows="True">
+              <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <FlexLayout Grid.Row="0" Grid.Column="0" Direction="Row" AlignItems="Start" JustifyContent="Start">
-                                    <Label 
-                                       Text="{Binding CurrentWeatherStatus}"/>
-                                    <Image Source="{Binding CurrentWeatherIcon}"/>
-                                </FlexLayout>
-                                <Label Grid.Row="0" Grid.Column="1"
-                                   Text="{Binding MaxTemperature}"/>
-                                <Label Grid.Row="1" Grid.Column="0"
-                                   Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"                          
-                                   FontAttributes="Bold" />
-                                <Label Grid.Row="1" Grid.Column="1"
-                                   Text="{Binding MinTemperature}"                         
-                                   FontAttributes="Bold" />
-                            </Grid>
+                            <Frame Padding="0" CornerRadius="10" Margin="0,0,0,10" BackgroundColor="Gray">
+                                <StackLayout >
+                                    <StackLayout>
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="10,18,18,0">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Image Source="{Binding CurrentWeatherIcon}"/>
+                                                <Label Text="{Binding CurrentWeatherStatus}"
+                                                   Padding="0,3,0,0"
+                                                   FontSize="Title"
+                                                   FontFamily="{StaticResource LightFont}"
+                                                   TextColor="White"/>
+                                            </StackLayout>
+                                            <StackLayout  Orientation="Horizontal">
+                                                <Label
+                                                    Text="{Binding MaxTemperature}" 
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Title"/>
+                                                <Label 
+                                                    Text="ºC"
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Small"/>
+                                            </StackLayout>
+                                        </FlexLayout>
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="18,0,18,18">
+                                            <Label 
+                                                Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"
+                                                FontFamily="{StaticResource BoldFont}"
+                                                TextColor="White"
+                                                FontSize="Title"
+                                             />
+                                            <StackLayout  Orientation="Horizontal">
+                                                <Label
+                                                    Text="{Binding MinTemperature}" 
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Title"/>
+                                                <Label 
+                                                    Text="ºC"
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Small"/>
+                                            </StackLayout>
+                                        </FlexLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -40,6 +40,22 @@
                 <On Platform="UWP" Value="/Assets/Raleway-LightItalic.ttf#Raleway"/>
                 <On Platform="iOS" Value="Raleway-LightItalic"/>
             </OnPlatform>
+
+            <Color x:Key="Thunderstorm">#19445e</Color>
+            <Color x:Key="Drizzle">#19445e</Color>
+            <Color x:Key="Rain">#19445e</Color>
+            <Color x:Key="Snow">#999999</Color>
+            <Color x:Key="Clear">#d18213</Color>
+            <Color x:Key="Clouds">#999999</Color>
+            <Color x:Key="Mist">#999999</Color>
+            <Color x:Key="Smoke">#999999</Color>
+            <Color x:Key="Haze">#999999</Color>
+            <Color x:Key="Dust">#999999</Color>
+            <Color x:Key="Fog">#999999</Color>
+            <Color x:Key="Sand">#999999</Color>
+            <Color x:Key="Ash">#999999</Color>
+            <Color x:Key="Squall">#999999</Color>
+            <Color x:Key="Tornado">#999999</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
