@@ -134,10 +134,13 @@ namespace Weather
 
         async void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+
             if (e.SelectedItem != null)
             {
+                ((ListView)sender).SelectedItem = null;
                 await Navigation.PushAsync(new CityPage((City) e.SelectedItem));
             }
+
         }
 
         async void OnDeleteButtonClicked(object sender, EventArgs args)

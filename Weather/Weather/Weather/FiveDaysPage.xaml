@@ -10,7 +10,8 @@
     <ContentPage.Content>
         <StackLayout>
             <ListView x:Name="listView"
-              Margin="20">
+              Margin="20"
+                      SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -24,28 +25,17 @@
                                     <ColumnDefinition Width="*" />
                                 </Grid.ColumnDefinitions>
                                 <FlexLayout Grid.Row="0" Grid.Column="0" Direction="Row" AlignItems="Start" JustifyContent="Start">
-                                    <!--<Label 
-                                       Text="{Binding CurrentWeatherStatus}"
-                                    />-->
                                     <Label 
-                                       Text="Rain"
-                                    />
-                                    <!--<Image Source="{Binding CurrentWeatherIcon}"/>-->
+                                       Text="{Binding CurrentWeatherStatus}"/>
+                                    <Image Source="{Binding CurrentWeatherIcon}"/>
                                 </FlexLayout>
-                                <!--<Label Grid.Row="0" Grid.Column="1"
-                                   Text="{Binding MaxTemperature}"-->
                                 <Label Grid.Row="0" Grid.Column="1"
-                                   Text="20"
-                                />
-                                <!--<Label Grid.Row="1" Grid.Column="0"
-                                   Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"-->
+                                   Text="{Binding MaxTemperature}"/>
                                 <Label Grid.Row="1" Grid.Column="0"
-                                   Text="Friday, Dec 13"
+                                   Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"                          
                                    FontAttributes="Bold" />
-                                <!--<Label Grid.Row="1" Grid.Column="1"
-                                   Text="{Binding MinTemperature}"-->
                                 <Label Grid.Row="1" Grid.Column="1"
-                                   Text="10"
+                                   Text="{Binding MinTemperature}"                         
                                    FontAttributes="Bold" />
                             </Grid>
                         </ViewCell>

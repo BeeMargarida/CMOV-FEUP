@@ -14,48 +14,68 @@
     <StackLayout>
         <SearchBar 
             Placeholder="Add City"
-            CancelButtonColor="Orange"
-            PlaceholderColor="Orange"
-            TextColor="Orange"
+            CancelButtonColor="Gray"
+            PlaceholderColor="Gray"
+            TextColor="Gray"
             HorizontalTextAlignment="Start"
             FontSize="Medium"
+            FontFamily="{StaticResource RegularFont}"
             FontAttributes="None"
             SearchButtonPressed="onSearchButtonPressed"/>
         <ListView x:Name="listView"
-              Margin="20"
+              Margin="20,20,20,0"
               IsVisible="{Binding IsBusy , Converter={StaticResource inverter}}"
               ItemSelected="OnListViewItemSelected"
-              ItemsSource="{Binding Cities}">
+              ItemsSource="{Binding Cities}"
+              SeparatorVisibility="None"
+              HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Button Text="Delete"
-                                VerticalOptions="CenterAndExpand"
-                                HorizontalOptions="Center"
-                                CommandParameter="{Binding Name}"
-                                Clicked="OnDeleteButtonClicked" />
-                            <FlexLayout Grid.Row="0" Grid.Column="1" Direction="Row" AlignItems="End" JustifyContent="End">
-                                <Label 
-                                   Text="{Binding CurrentWeatherStatus}"
-                                />
-                                <Image Source="{Binding CurrentWeatherIcon}"/>
-                            </FlexLayout>
-                            <Label Grid.Row="1" Grid.Column="0"
-                               Text="{Binding Name}"
-                               FontAttributes="Bold" />
-                            <Label Grid.Row="1" Grid.Column="1"
-                               Text="{Binding Temperature}"
-                               FontAttributes="Bold" />
-                        </Grid>
+                        <Frame Padding="0" CornerRadius="10" Margin="0,0,0,10" BackgroundColor="#808080">
+                            <StackLayout >
+                                <StackLayout>
+                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="0,15,15,0">
+                                        <Button Text="Delete"  
+                                            HorizontalOptions="Start"
+                                            TextColor="White"
+                                            BorderColor="Transparent"
+                                            BackgroundColor="Transparent"
+                                            CommandParameter="{Binding Name}"
+                                            Clicked="OnDeleteButtonClicked" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding CurrentWeatherStatus}"
+                                                   Padding="0,7,0,0"
+                                                   FontSize="Title"
+                                                   FontFamily="{StaticResource LightFont}"
+                                                   TextColor="White"/>
+                                            <Image Source="{Binding CurrentWeatherIcon}"/>
+                                        </StackLayout>
+                                    </FlexLayout>
+                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="18,0,18,20">
+                                        <Label 
+                                        Text="{Binding Name}"
+                                        FontFamily="{StaticResource BoldFont}"
+                                        TextColor="White"
+                                        FontSize="Title"
+                                         />
+                                        <StackLayout  Orientation="Horizontal">
+                                            <Label
+                                            Text="{Binding Temperature}"
+                                            FontFamily="{StaticResource BoldFont}"
+                                            TextColor="White"
+                                            FontSize="Title"/>
+                                            <Label 
+                                            Text="ºC"
+                                            FontFamily="{StaticResource BoldFont}"
+                                            TextColor="White"
+                                            FontSize="Small"/>
+                                        </StackLayout>
+                                    </FlexLayout>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                        
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

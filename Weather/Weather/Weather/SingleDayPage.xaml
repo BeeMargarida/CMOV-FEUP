@@ -9,7 +9,8 @@
              BackgroundColor="{DynamicResource PageBackgroundColor}"
              x:Class="Weather.SingleDayPage">
     <ContentPage.Content>
-        <StackLayout>
+        <ScrollView>
+            <StackLayout>
             <StackLayout Padding="20,0,20,0">
             <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 60, 0, 0">
                 <Image Source="{Binding CurrentWeatherIcon}"/>
@@ -23,13 +24,13 @@
             <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 0, 0, 90">
                 <Label Text="{Binding Temperature}"
                     FontFamily="{StaticResource BoldFont}" 
-                    FontSize="80"
+                    FontSize="Header"
                     TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                 <Label Text="ºC"
                     FontFamily="{StaticResource BoldFont}" 
-                    FontSize="40"
+                    FontSize="Title"
                     TextColor="White"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
@@ -37,13 +38,13 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding MaxTemperature}"
                         FontFamily="{StaticResource LightFont}"
-                        FontSize="40"
+                        FontSize="Title"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="ºC"
                         FontFamily="{StaticResource LightFont}" 
-                        FontSize="20"
+                        FontSize="Small"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
@@ -51,13 +52,13 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding MinTemperature}"
                         FontFamily="{StaticResource LightFont}"
-                        FontSize="40"
+                        FontSize="Title"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="ºC"
                         FontFamily="{StaticResource LightFont}" 
-                        FontSize="20"
+                        FontSize="Small"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
@@ -69,19 +70,19 @@
                     <Label Text="pressure"
                     FontFamily="{StaticResource BoldFont}" 
                     TextColor="White"
-                    FontSize="15"
+                    FontSize="Medium"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Pressure}"
                         FontFamily="{StaticResource LightFont}"
-                        FontSize="20"
+                        FontSize="Large"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="hPa"
                         FontFamily="{StaticResource LightFont}"
-                        FontSize="10"
+                        FontSize="Micro"
                         TextColor="White"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
@@ -91,20 +92,20 @@
                     <Label Text="precipitation"
                     FontFamily="{StaticResource BoldFont}" 
                     TextColor="White"
-                    FontSize="15"
+                    FontSize="Medium"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Rain}"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="20"
+                        FontSize="Large"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="mm"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="10"
+                        FontSize="Micro"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                     </StackLayout>
@@ -112,7 +113,7 @@
                 <StackLayout>
                     <Label Text="wind"
                     TextColor="White"
-                    FontSize="15"
+                    FontSize="Medium"
                     FontFamily="{StaticResource BoldFont}" 
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
@@ -120,13 +121,13 @@
                         <Label Text="{Binding WindSpeed}"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="20"
+                        FontSize="Large"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="km/h"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="10"
+                        FontSize="Micro"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                     </StackLayout>
@@ -135,20 +136,20 @@
                     <Label Text="humidity"
                     FontFamily="{StaticResource BoldFont}" 
                     TextColor="White"
-                    FontSize="15"
+                    FontSize="Medium"
                     VerticalOptions="CenterAndExpand" 
                     HorizontalOptions="CenterAndExpand" />
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Humidity}"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="20"
+                        FontSize="Large"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                         <Label Text="%"
                         FontFamily="{StaticResource LightFont}"
                         TextColor="White"
-                        FontSize="10"
+                        FontSize="Micro"
                         VerticalOptions="CenterAndExpand" 
                         HorizontalOptions="CenterAndExpand" />
                     </StackLayout>
@@ -158,7 +159,7 @@
             <StackLayout>
                 <skia:SKCanvasView x:Name="weatherGraph"
                            PaintSurface="GraphPaintSurface" 
-                           HeightRequest="400">
+                           HeightRequest="359">
                     <skia:SKCanvasView.GestureRecognizers>
                         <TapGestureRecognizer Tapped="onGraphTapped" />
                         <SwipeGestureRecognizer Direction="Right" Swiped="OnGraphRightSwiped"/>
@@ -167,5 +168,6 @@
                 </skia:SKCanvasView>
             </StackLayout>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
