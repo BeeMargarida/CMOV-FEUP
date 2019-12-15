@@ -8,5 +8,6 @@
              Title="{Binding Name}"
              x:Class="Weather.CityPage"
              BarBackgroundColor="{DynamicResource BarBackgroundColor}"
+            BarTextColor="#333333"
             >
 </TabbedPage>

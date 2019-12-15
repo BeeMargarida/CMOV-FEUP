@@ -13,6 +13,7 @@ namespace Weather.Models
         public string Name { get; set; }
         public long ID { get; set; }
         public string CurrentWeatherStatus { get; set; }
+        public string CurrentWeatherStatusColor { get; set; }
         public ImageSource CurrentWeatherIcon { get; set; }
         public string Temperature { get; set; }
         public ForecastData Forecast { get; set; }
@@ -34,9 +35,11 @@ namespace Weather.Models
             this.Name = data.Name;
             this.ID = data.ID;
             this.CurrentWeatherStatus = data.Weather[0].Status;
+            this.CurrentWeatherStatusColor = (String)Application.Current.Resources[this.CurrentWeatherStatus];
             this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png");
             this.Temperature = Math.Round(data.Main.Temperature).ToString();
             this.Today.setData("Today", data, DateTime.Now);
+            
         }
 
         public async Task<int> setForecastData(ForecastData data)
@@ -136,6 +139,7 @@ namespace Weather.Models
     {
         public string Day { get; set; }
         public string CurrentWeatherStatus { get; set; }
+        public String CurrentWeatherStatusColor { get; set; }
         public ImageSource CurrentWeatherIcon { get; set; }
         public double WindSpeed { get; set; }
         public long WindDegree { get; set; }
@@ -152,6 +156,7 @@ namespace Weather.Models
         {
             this.Day = day;
             this.CurrentWeatherStatus = data.Weather[0].Status;
+            this.CurrentWeatherStatusColor = (String)Application.Current.Resources[this.CurrentWeatherStatus];
             this.CurrentWeatherIcon = new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png");
             this.WindSpeed = Math.Round(data.Wind.Speed,1);
             this.WindDegree = data.Wind.Degree;
@@ -175,6 +180,7 @@ namespace Weather.Models
         public void setData(ForecastEntry data)
         {
             this.CurrentWeatherStatus = data.Weather[0].Status;
+            this.CurrentWeatherStatusColor = (String)Application.Current.Resources[this.CurrentWeatherStatus];
             this.CurrentWeatherIcon = ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + data.Weather[0].Icon + "@2x.png"));
             this.WindSpeed = Math.Round(data.Wind.Speed, 1);
             this.WindDegree = data.Wind.Degree;
@@ -199,6 +205,7 @@ namespace Weather.Models
         {
             this.Day = day;
             this.CurrentWeatherStatus = currentWeatherStatus;
+            this.CurrentWeatherStatusColor = (String)Application.Current.Resources[this.CurrentWeatherStatus];
             this.CurrentWeatherIcon = ImageSource.FromUri(new Uri("http://openweathermap.org/img/wn/" + currentWeatherIcon + "@2x.png"));
             this.Rain = rain;
             this.WindSpeed = Math.Round(windSpeed, 1);

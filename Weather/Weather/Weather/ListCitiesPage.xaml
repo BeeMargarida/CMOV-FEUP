@@ -32,8 +32,10 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame Padding="0" CornerRadius="10" Margin="0,0,0,10" BackgroundColor="#808080">
-                            <StackLayout >
+                        <Frame Padding="0" Margin="0,0,0,10">
+                            <Grid HeightRequest="120">
+                                <Image Source="{Binding CurrentWeatherStatusColor}" Aspect="AspectFill"/>
+                                <StackLayout>
                                 <StackLayout>
                                     <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="0,15,15,0">
                                         <Button Text="Delete"  
@@ -74,6 +76,7 @@
                                     </FlexLayout>
                                 </StackLayout>
                             </StackLayout>
+                            </Grid>
                         </Frame>
                         
                     </ViewCell>

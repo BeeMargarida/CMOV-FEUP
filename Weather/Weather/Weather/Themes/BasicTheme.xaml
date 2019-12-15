@@ -2,11 +2,11 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="Weather.Themes.BasicTheme">
-    <Color x:Key="PageBackgroundColor">WhiteSmoke</Color>
-    <Color x:Key="BarBackgroundColor">Gray</Color>
+    <Color x:Key="PageBackgroundColor">#f2f2f2</Color>
+    <Color x:Key="BarBackgroundColor">#f2f2f2</Color>
     <Style TargetType="NavigationPage">
-        <Setter Property="BarBackgroundColor" Value="Gray" />
-        <Setter Property="BackgroundColor" Value="WhiteSmoke" />
-        <Setter Property="BarTextColor" Value="White" />
+        <Setter Property="BarBackgroundColor" Value="#f2f2f2" />
+        <Setter Property="BackgroundColor" Value="#f2f2f2" />
+        <Setter Property="BarTextColor" Value="#333333" />
     </Style>
 </ResourceDictionary>

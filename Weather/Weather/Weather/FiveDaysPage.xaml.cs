@@ -10,11 +10,6 @@ namespace Weather
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FiveDaysPage : ContentPage
     {
-        //TODO: DELETE, IT'S JUST FOR PREVIEW
-        public FiveDaysPage()
-        {
-            InitializeComponent();
-        }
 
         private City city;
         public FiveDaysPage(City city)
@@ -29,7 +24,6 @@ namespace Weather
             base.OnAppearing();
             listView.ItemsSource = this.city.FiveDays;
 
-            changeTheme();
         }
 
         private void changeTheme()

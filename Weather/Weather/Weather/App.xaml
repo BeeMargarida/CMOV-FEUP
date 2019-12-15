@@ -41,7 +41,24 @@
                 <On Platform="iOS" Value="Raleway-LightItalic"/>
             </OnPlatform>
 
-            <Color x:Key="Thunderstorm">#19445e</Color>
+
+            <x:String x:Key="Thunderstorm">Rain.png</x:String>
+            <x:String x:Key="Drizzle">Rain.png</x:String>
+            <x:String x:Key="Rain">Rain.png</x:String>
+            <x:String x:Key="Snow">Rain.png</x:String>
+            <x:String x:Key="Clear">Sun.png</x:String>
+            <x:String x:Key="Clouds">Clouds.png</x:String>
+            <x:String x:Key="Mist">Clouds.png</x:String>
+            <x:String x:Key="Smoke">Clouds.png</x:String>
+            <x:String x:Key="Haze">Clouds.png</x:String>
+            <x:String x:Key="Dust">Clouds.png</x:String>
+            <x:String x:Key="Fog">Clouds.png</x:String>
+            <x:String x:Key="Sand">Clouds.png</x:String>
+            <x:String x:Key="Ash">Clouds.png</x:String>
+            <x:String x:Key="Squall">Clouds.png</x:String>
+            <x:String x:Key="Tornado">Clouds.png</x:String>
+
+            <!--<Color x:Key="Thunderstorm">#19445e</Color>
             <Color x:Key="Drizzle">#19445e</Color>
             <Color x:Key="Rain">#19445e</Color>
             <Color x:Key="Snow">#999999</Color>
@@ -55,7 +72,7 @@
             <Color x:Key="Sand">#999999</Color>
             <Color x:Key="Ash">#999999</Color>
             <Color x:Key="Squall">#999999</Color>
-            <Color x:Key="Tornado">#999999</Color>
+            <Color x:Key="Tornado">#999999</Color>-->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

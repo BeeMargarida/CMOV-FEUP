@@ -9,18 +9,19 @@ namespace Weather
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CityPage : TabbedPage
     {
-        //TODO: DELETE, IT'S JUST FOR PREVIEW
-        public CityPage()
-        {
-            InitializeComponent();
-        }
-
         private City city;
         public CityPage(City city)
         {
             this.city = city;
             this.BindingContext = this.city;
-            InitializeComponent();    
+
+
+            InitializeComponent();
+
+            if (Device.RuntimePlatform == "Android")
+            {
+                NavigationPage.SetHasBackButton(this, false);
+            }
         }
 
         protected override async void OnAppearing()

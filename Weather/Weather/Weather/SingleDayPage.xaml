@@ -6,7 +6,7 @@
              xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
              mc:Ignorable="d"
              Title="{Binding Day}"
-             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             BackgroundImageSource="{Binding CurrentWeatherStatusColor}"
              x:Class="Weather.SingleDayPage">
     <ContentPage.Content>
         <ScrollView>

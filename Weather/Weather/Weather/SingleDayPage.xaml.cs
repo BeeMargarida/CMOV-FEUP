@@ -25,7 +25,6 @@ namespace Weather
                 this.BindingContext = city.Tomorrow;
                
             this.DrawGraph();
-            this.changeTheme();
 
             InitializeComponent();
         }
@@ -33,7 +32,7 @@ namespace Weather
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            changeTheme();
+            //changeTheme();
         }
 
         private void changeTheme()
