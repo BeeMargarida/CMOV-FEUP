@@ -50,7 +50,7 @@ namespace Weather.Utils
                 Color = SKColors.White,
                 StrokeWidth = 2,
             };
-            labelPaint.TextSize = (float)(height / 40);
+            labelPaint.TextSize = (float)(height / 30);
             SKPaint whitePaint = new SKPaint
             {
                 Style = SKPaintStyle.Fill,
@@ -83,7 +83,7 @@ namespace Weather.Utils
                 SKPoint label = new SKPoint
                 {
                     X = x,
-                    Y = height - marginY / 2 - 30,
+                    Y = (float) (height - (marginY / 2) - (0.035 * height)),
                 };
                 string labelText = point.DateTime.ToString("HH:mm");
                 canvas.DrawText(labelText, label, labelPaint);

@@ -18,7 +18,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <Frame Padding="0" Margin="0,0,0,10">
-                                <Grid HeightRequest="120">
+                                <Grid HeightRequest="{x:OnPlatform Android=120, iOS=120, UWP=200}">
                                     <Image Source="{Binding CurrentWeatherStatusColor}" Aspect="AspectFill"/>
                                     <StackLayout>
                                         <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="10,18,18,0">

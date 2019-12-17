@@ -64,8 +64,8 @@ namespace Weather
             catch (Exception e)
             {
                 await Application.Current.MainPage.DisplayAlert(
-                    "An error occurred, please try again later.",
-                    e.Message,
+                    "An error occurred",
+                    "Try again with an Internet connection",
                     "Ok"
                 );
             }
@@ -73,17 +73,6 @@ namespace Weather
             {
                 IsBusy = false;
                 listView.ItemsSource = Cities.ToList();
-            }
-            changeTheme();
-        }
-
-        private void changeTheme()
-        {
-            ICollection<ResourceDictionary> mergedDictionaries = Application.Current.Resources.MergedDictionaries;
-            if (mergedDictionaries != null)
-            {
-                mergedDictionaries.Clear();
-                mergedDictionaries.Add(new BasicTheme());
             }
         }
 
