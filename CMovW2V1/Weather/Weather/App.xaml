@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Weather.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Themes/BasicTheme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <OnPlatform x:Key="BoldFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Bold.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Bold.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Bold" />
+            </OnPlatform>
+            <OnPlatform x:Key="BoldItalicFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-BoldItalic.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-BoldItalic.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-BoldItalic" />
+            </OnPlatform>
+            <OnPlatform x:Key="RegularFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Regular.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Regular.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Regular"/>
+            </OnPlatform>
+            <OnPlatform x:Key="ItalicFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Italic.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Italic.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Italic"/>
+            </OnPlatform>
+            <OnPlatform x:Key="LightFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-Light.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-Light.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-Light"/>
+            </OnPlatform>
+            <OnPlatform x:Key="LightItalicFont" x:TypeArguments="x:String" >
+                <On Platform="Android" Value="Raleway-LightItalic.ttf#Raleway"/>
+                <On Platform="UWP" Value="/Assets/Raleway-LightItalic.ttf#Raleway"/>
+                <On Platform="iOS" Value="Raleway-LightItalic"/>
+            </OnPlatform>
+
+
+            <x:String x:Key="Thunderstorm">Rain.png</x:String>
+            <x:String x:Key="Drizzle">Rain.png</x:String>
+            <x:String x:Key="Rain">Rain.png</x:String>
+            <x:String x:Key="Snow">Rain.png</x:String>
+            <x:String x:Key="Clear">Sun.png</x:String>
+            <x:String x:Key="Clouds">Clouds.png</x:String>
+            <x:String x:Key="Mist">Clouds.png</x:String>
+            <x:String x:Key="Smoke">Clouds.png</x:String>
+            <x:String x:Key="Haze">Clouds.png</x:String>
+            <x:String x:Key="Dust">Clouds.png</x:String>
+            <x:String x:Key="Fog">Clouds.png</x:String>
+            <x:String x:Key="Sand">Clouds.png</x:String>
+            <x:String x:Key="Ash">Clouds.png</x:String>
+            <x:String x:Key="Squall">Clouds.png</x:String>
+            <x:String x:Key="Tornado">Clouds.png</x:String>
+
+            <!--<Color x:Key="Thunderstorm">#19445e</Color>
+            <Color x:Key="Drizzle">#19445e</Color>
+            <Color x:Key="Rain">#19445e</Color>
+            <Color x:Key="Snow">#999999</Color>
+            <Color x:Key="Clear">#d18213</Color>
+            <Color x:Key="Clouds">#999999</Color>
+            <Color x:Key="Mist">#999999</Color>
+            <Color x:Key="Smoke">#999999</Color>
+            <Color x:Key="Haze">#999999</Color>
+            <Color x:Key="Dust">#999999</Color>
+            <Color x:Key="Fog">#999999</Color>
+            <Color x:Key="Sand">#999999</Color>
+            <Color x:Key="Ash">#999999</Color>
+            <Color x:Key="Squall">#999999</Color>
+            <Color x:Key="Tornado">#999999</Color>-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

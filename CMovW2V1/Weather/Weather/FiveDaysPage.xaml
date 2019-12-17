@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Title="5 days"
+             BackgroundColor="{DynamicResource PageBackgroundColor}"
+             x:Class="Weather.FiveDaysPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="listView"
+              Margin="20,20,20,0"
+              SelectionMode="None"
+              SeparatorVisibility="None"
+              HasUnevenRows="True">
+              <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="0" Margin="0,0,0,10">
+                                <Grid HeightRequest="{x:OnPlatform Android=120, iOS=120, UWP=200}">
+                                    <Image Source="{Binding CurrentWeatherStatusColor}" Aspect="AspectFill"/>
+                                    <StackLayout>
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="10,18,18,0">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Image Source="{Binding CurrentWeatherIcon}"/>
+                                                <Label Text="{Binding CurrentWeatherStatus}"
+                                                   Padding="0,3,0,0"
+                                                   FontSize="Title"
+                                                   FontFamily="{StaticResource LightFont}"
+                                                   TextColor="White"/>
+                                            </StackLayout>
+                                            <StackLayout  Orientation="Horizontal">
+                                                <Label
+                                                    Text="{Binding MaxTemperature}" 
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Title"/>
+                                                <Label 
+                                                    Text="ºC"
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Small"/>
+                                            </StackLayout>
+                                        </FlexLayout>
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="18,0,18,18">
+                                            <Label 
+                                                Text="{Binding Date, StringFormat='{0:dddd, MMM dd}'}"
+                                                FontFamily="{StaticResource BoldFont}"
+                                                TextColor="White"
+                                                FontSize="Title"
+                                             />
+                                            <StackLayout  Orientation="Horizontal">
+                                                <Label
+                                                    Text="{Binding MinTemperature}" 
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Title"/>
+                                                <Label 
+                                                    Text="ºC"
+                                                    FontFamily="{StaticResource BoldFont}"
+                                                    TextColor="White"
+                                                    FontSize="Small"/>
+                                            </StackLayout>
+                                        </FlexLayout>
+                                    </StackLayout>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

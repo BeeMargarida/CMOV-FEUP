@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Weather.ListCitiesPage"
+             xmlns:local="clr-namespace:Weather.Utils"
+             Title="Cities"
+             BackgroundColor="{DynamicResource PageBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InverseBoolConverter x:Key="inverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <SearchBar 
+            Placeholder="Add City"
+            CancelButtonColor="Gray"
+            PlaceholderColor="Gray"
+            TextColor="Gray"
+            HorizontalTextAlignment="Start"
+            FontSize="Medium"
+            FontFamily="{StaticResource RegularFont}"
+            FontAttributes="None"
+            SearchButtonPressed="onSearchButtonPressed"/>
+        <ListView x:Name="listView"
+              Margin="20,20,20,0"
+              IsVisible="{Binding IsBusy , Converter={StaticResource inverter}}"
+              ItemSelected="OnListViewItemSelected"
+              ItemsSource="{Binding Cities}"
+              SeparatorVisibility="None"
+              HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Padding="0" Margin="0,0,0,10">
+                            <Grid HeightRequest="{x:OnPlatform Android=120, iOS=120, UWP=200}">
+                                <Image Source="{Binding CurrentWeatherStatusColor}" Aspect="AspectFill"/>
+                                <StackLayout>
+                                <StackLayout>
+                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="0,15,15,0">
+                                        <Button Text="Delete"  
+                                            HorizontalOptions="Start"
+                                            TextColor="White"
+                                            BorderColor="Transparent"
+                                            BackgroundColor="Transparent"
+                                            CommandParameter="{Binding Name}"
+                                            Clicked="OnDeleteButtonClicked" />
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding CurrentWeatherStatus}"
+                                                   Padding="0,7,0,0"
+                                                   FontSize="Title"
+                                                   FontFamily="{StaticResource LightFont}"
+                                                   TextColor="White"/>
+                                            <Image Source="{Binding CurrentWeatherIcon}"/>
+                                        </StackLayout>
+                                    </FlexLayout>
+                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween" Padding="18,0,18,20">
+                                        <Label 
+                                        Text="{Binding Name}"
+                                        FontFamily="{StaticResource BoldFont}"
+                                        TextColor="White"
+                                        FontSize="Title"
+                                         />
+                                        <StackLayout  Orientation="Horizontal">
+                                            <Label
+                                            Text="{Binding Temperature}"
+                                            FontFamily="{StaticResource BoldFont}"
+                                            TextColor="White"
+                                            FontSize="Title"/>
+                                            <Label 
+                                            Text="ºC"
+                                            FontFamily="{StaticResource BoldFont}"
+                                            TextColor="White"
+                                            FontSize="Small"/>
+                                        </StackLayout>
+                                    </FlexLayout>
+                                </StackLayout>
+                            </StackLayout>
+                            </Grid>
+                        </Frame>
+                        
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ActivityIndicator 
+			IsVisible="{Binding IsBusy}"
+			IsRunning="{Binding IsBusy}" 
+		/>
+    </StackLayout>
+
+</ContentPage>

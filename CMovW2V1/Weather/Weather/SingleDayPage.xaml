@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             mc:Ignorable="d"
+             Title="{Binding Day}"
+             BackgroundImageSource="{Binding CurrentWeatherStatusColor}"
+             x:Class="Weather.SingleDayPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+            <StackLayout Padding="20,0,20,0">
+            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 60, 0, 0">
+                <Image Source="{Binding CurrentWeatherIcon}"/>
+                <Label Text="{Binding CurrentWeatherStatus}"
+                    FontFamily="{StaticResource LightFont}"  
+                    TextColor="White"
+                    FontSize="40"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+            </FlexLayout>
+            <FlexLayout Direction="Row" AlignItems="Start" JustifyContent="Start" Margin="0, 0, 0, 90">
+                <Label Text="{Binding Temperature}"
+                    FontFamily="{StaticResource BoldFont}" 
+                    FontSize="Header"
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                <Label Text="ºC"
+                    FontFamily="{StaticResource BoldFont}" 
+                    FontSize="Title"
+                    TextColor="White"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                <StackLayout Margin="20, 0, 0, 0">
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding MaxTemperature}"
+                        FontFamily="{StaticResource LightFont}"
+                        FontSize="Title"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                        <Label Text="ºC"
+                        FontFamily="{StaticResource LightFont}" 
+                        FontSize="Small"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding MinTemperature}"
+                        FontFamily="{StaticResource LightFont}"
+                        FontSize="Title"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                        <Label Text="ºC"
+                        FontFamily="{StaticResource LightFont}" 
+                        FontSize="Small"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+            </FlexLayout>
+            <FlexLayout Direction="Row" AlignItems="Center" JustifyContent="SpaceBetween">
+                <StackLayout>
+                    <Label Text="pressure"
+                    FontFamily="{StaticResource BoldFont}" 
+                    TextColor="White"
+                    FontSize="Medium"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Pressure}"
+                        FontFamily="{StaticResource LightFont}"
+                        FontSize="Large"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                        <Label Text="hPa"
+                        FontFamily="{StaticResource LightFont}"
+                        FontSize="Micro"
+                        TextColor="White"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="precipitation"
+                    FontFamily="{StaticResource BoldFont}" 
+                    TextColor="White"
+                    FontSize="Medium"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Rain}"
+                        FontFamily="{StaticResource LightFont}"
+                        TextColor="White"
+                        FontSize="Large"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                        <Label Text="mm"
+                        FontFamily="{StaticResource LightFont}"
+                        TextColor="White"
+                        FontSize="Micro"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="wind"
+                    TextColor="White"
+                    FontSize="Medium"
+                    FontFamily="{StaticResource BoldFont}" 
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding WindSpeed}"
+                        FontFamily="{StaticResource LightFont}"
+                        TextColor="White"
+                        FontSize="Large"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                        <Label Text="km/h"
+                        FontFamily="{StaticResource LightFont}"
+                        TextColor="White"
+                        FontSize="Micro"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="humidity"
+                    FontFamily="{StaticResource BoldFont}" 
+                    TextColor="White"
+                    FontSize="Medium"
+                    VerticalOptions="CenterAndExpand" 
+                    HorizontalOptions="CenterAndExpand" />
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Humidity}"
+                        FontFamily="{StaticResource LightFont}"
+                        TextColor="White"
+                        FontSize="Large"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                        <Label Text="%"
+                        FontFamily="{StaticResource LightFont}"
+                        TextColor="White"
+                        FontSize="Micro"
+                        VerticalOptions="CenterAndExpand" 
+                        HorizontalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+            </FlexLayout>
+        </StackLayout>
+            <StackLayout>
+                <skia:SKCanvasView x:Name="weatherGraph"
+                           PaintSurface="GraphPaintSurface" 
+                           HeightRequest="359">
+                    <skia:SKCanvasView.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="onGraphTapped" />
+                        <SwipeGestureRecognizer Direction="Right" Swiped="OnGraphRightSwiped"/>
+                        <SwipeGestureRecognizer Direction="Left" Swiped="OnGraphLeftSwiped"/>
+                    </skia:SKCanvasView.GestureRecognizers>
+                </skia:SKCanvasView>
+            </StackLayout>
+                <ActivityIndicator 
+			IsVisible="{Binding Page.IsBusy}"
+			IsRunning="{Binding Page.IsBusy}" 
+		/>
+            </StackLayout>
+            
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
